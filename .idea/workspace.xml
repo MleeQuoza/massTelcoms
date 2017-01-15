@@ -51,8 +51,8 @@
       <file leaf-file-name="money_transaction_service.rb" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/services/money_transaction_service.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="525">
-              <caret line="41" column="98" lean-forward="false" selection-start-line="41" selection-start-column="98" selection-end-line="41" selection-end-column="98" />
+            <state relative-caret-position="510">
+              <caret line="40" column="27" lean-forward="true" selection-start-line="40" selection-start-column="27" selection-end-line="40" selection-end-column="27" />
               <folding />
             </state>
           </provider>
@@ -524,7 +524,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="89054000" />
+    <option name="totallyTimeSpent" value="89179000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="4" y="23" width="1428" height="806" extended-state="0" />
@@ -969,8 +969,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/services/money_transaction_service.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="525">
-          <caret line="41" column="98" lean-forward="false" selection-start-line="41" selection-start-column="98" selection-end-line="41" selection-end-column="98" />
+        <state relative-caret-position="510">
+          <caret line="40" column="27" lean-forward="true" selection-start-line="40" selection-start-column="27" selection-end-line="40" selection-end-column="27" />
           <folding />
         </state>
       </provider>

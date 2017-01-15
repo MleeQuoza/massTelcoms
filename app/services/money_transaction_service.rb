@@ -29,7 +29,7 @@ class MoneyTransactionService
   end
 
   def match_with_donation
-    Donation.where("balance >= #{amount} AND status = #{MoneyRequest.statuses[:pending]}").first
+    Donation.where("balance >= #{amount} AND status = #{MoneyRequest.statuses[:pending]}").first&id
   end
 
   def donation_id
@@ -39,7 +39,7 @@ class MoneyTransactionService
   end
 
   def match_with_withdrawal
-    Withdrawal.where("balance >= #{amount} AND status = #{MoneyRequest.statuses[:pending]}").first
+    Withdrawal.where("balance >= #{amount} AND status = #{MoneyRequest.statuses[:pending]}").first&id
   end
 
   def transaction_params
