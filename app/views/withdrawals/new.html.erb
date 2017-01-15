@@ -1,0 +1,10 @@
+<h1>New Withdrawal Request</h1>
+<%= form_for (@withdrawal) do |f| %>
+  <div class="field">
+    <%= f.hidden_field :user_id, :value => current_user.id %>
+    <p><%= f.label :amount %>: <%= f.number_field(:amount) %></p>
+  </div>
+  <div class="field">
+    <p><%= f.submit %></p>
+  </div>
+<% end %>

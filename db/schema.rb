@@ -10,10 +10,44 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161208151107) do
+ActiveRecord::Schema.define(version: 20170115112922) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "money_requests", force: :cascade do |t|
+    t.integer  "user_id",                                                null: false
+    t.text     "type"
+    t.decimal  "amount",        precision: 17, scale: 4
+    t.decimal  "balance",       precision: 17, scale: 4
+    t.integer  "status",                                 default: 1,     null: false
+    t.date     "maturity_date"
+    t.boolean  "matured"
+    t.datetime "created_at",                                             null: false
+    t.datetime "updated_at",                                             null: false
+    t.boolean  "compounded",                             default: false
+  end
+
+  create_table "money_transactions", force: :cascade do |t|
+    t.integer  "withdrawal_id",                                         null: false
+    t.integer  "donation_id",                                           null: false
+    t.integer  "status",                                    default: 1, null: false
+    t.decimal  "amount",           precision: 17, scale: 4
+    t.text     "proof_of_payment"
+    t.datetime "created_at",                                            null: false
+    t.datetime "updated_at",                                            null: false
+  end
+
+  create_table "payment_accounts", force: :cascade do |t|
+    t.integer  "user_id",             null: false
+    t.text     "bank_name"
+    t.text     "account_number"
+    t.text     "branch_code"
+    t.text     "account_type"
+    t.text     "account_holder_name"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false

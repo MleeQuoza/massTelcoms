@@ -1,0 +1,32 @@
+<h2>My Donations</h2>
+
+<% if @donations.present? %>
+    <table>
+      <thead>
+      <th>Created Date</th>
+      <th>Expiry Date</th>
+      <th>Amount</th>
+      <th>Months Invested</th>
+      <th>Counter</th>
+      <th>Profit</th>
+      <th>Compound</th>
+      <th>Checkout</th>
+      </thead>
+      <tbody>
+      <% @donations.each do |donation| %>
+          <tr>
+            <td><%= donation.created_at.strftime('%d/%m/%Y') %></td>
+            <td><%= (donation.created_at + 6.months).strftime('%d/%m/%Y') %></td>
+            <td>R <%= donation.amount %></td>
+            <td><%= donation.months_invested %></td>
+            <td><%= donation.profit_counter %></td>
+            <td>R <%= donation.profit %></td>
+            <td><%= link_to 'Compound', dashboard_index_path  %></td>
+            <td><%= link_to 'Checkout', dashboard_index_path %></td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+<% end %>
+
+<%= link_to 'Dashboard', dashboard_index_path %>

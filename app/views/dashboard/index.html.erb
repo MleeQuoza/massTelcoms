@@ -1,5 +1,88 @@
 <h1>Signed in User <%= current_user.name%></h1>
 
 <p>Cell Number <%= current_user.cellphone %></p>
-<p><%= link_to 'Logout', destroy_user_session_path, method: :delete %> |
-  <%= link_to 'Edit Profile', edit_user_registration_path(current_user) %></p>
+<p><%= link_to 'My Donations', user_donations_path(user_id: current_user.id) %></p>
+<div>
+  <h2>My Bank Accounts</h2>
+  <% if current_user.payment_accounts.present? %>
+      <% current_user.payment_accounts.each do |p| %>
+          <p>
+            Bank Name: <%= p.bank_name %>
+            Branch Code: <%= p.branch_code %>
+            Account Number: <%= p.account_number %>
+            <%= link_to 'Edit', edit_payment_account_path(p) %>
+            <%= link_to 'Delete', payment_account_path(p), method: :delete  %>
+          </p>
+      <% end %>
+  <% else %>
+      <%= link_to 'New', new_payment_account_path %>
+  <% end %>
+</div>
+
+<% if current_user.current_donation %>
+    <div>
+      <h2>Current Donation</h2>
+      <p>
+        Amount: <%= current_user.current_donation.amount %>
+        Balance: <%= current_user.current_donation.balance %>
+        Status: <%= current_user.current_donation.status %>
+      </p>
+    </div>
+
+    <div>
+      <% if current_user.current_donation.money_transaction.present? %>
+          <h2>Transactions</h2>
+          <% current_user.current_donation.money_transaction.each do |tr| %>
+              <p>
+                Donating To: <%= tr.withdrawal_user_name %>
+                Amount: <%= tr.amount %>
+                Status: <%= tr.status %>
+              </p>
+          <% end %>
+      <% end %>
+    </div>
+<% end %>
+
+<% if current_user.current_withdrawal %>
+    <div>
+      <h2>Current Withdrawal</h2>
+      <p>
+        Amount: <%= current_user.current_withdrawal.amount %>
+        Balance: <%= current_user.current_withdrawal.balance %>
+        Status: <%= current_user.current_withdrawal.status %>
+      </p>
+    </div>
+
+    <div>
+      <% if current_user.current_withdrawal.money_transaction.present? %>
+          <h2>Transactions</h2>
+          <% current_user.current_withdrawal.money_transaction.each do |tr| %>
+              <p>
+                Donated By: <%= tr.donation_user_name %>
+                Amount: <%= tr.amount %>
+                Status: <%= tr.status %>
+                <%= link_to 'Complete', complete_transaction_path(tr), method: :patch %>
+                <%= link_to 'Reject', reject_transaction_path(tr), method: :patch  %>
+              </p>
+          <% end %>
+      <% end %>
+    </div>
+<% end %>
+
+<% if current_user.can_donate_or_withdraw? %>
+    <p>
+      <%= link_to 'Offer Donation', new_donation_path %> |
+      <%= link_to 'Request Withdrawal', new_withdrawal_path %>
+    </p>
+<% end %>
+
+<h2>My Wallet</h2>
+<div>
+  Amount: R <%= current_user.wallet.amount %>
+  <%= link_to 'Compound', dashboard_index_path %> | <%= link_to 'Withdraw', dashboard_index_path %>
+</div>
+
+<p>
+  <%= link_to 'Logout', destroy_user_session_path, method: :delete %> |
+  <%= link_to 'Edit Profile', edit_user_registration_path(current_user) %>
+</p>
