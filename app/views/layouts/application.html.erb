@@ -1,14 +1,59 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>CommunityWealth</title>
-    <%= csrf_meta_tags %>
+<head>
+  <title>CommunityWealth</title>
+  <%= csrf_meta_tags %>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+</head>
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </head>
+<body id="recent-works-normal">
 
-  <body>
-    <%= yield %>
-  </body>
+<div class="content">
+  <div class="simple-marquee-container">
+    <div class="marquee">
+      <ul class="marquee-content-items">
+        <li>Community Wealth SA PRE-LAUNCH. 30% GROWTH PER MONTH. GLOBAL POOL BENEFITS!
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<% if user_signed_in? %>
+    <aside id="fh5co-aside" role="complementary" class="border js-fullheight"><br/>
+
+      <h1 id="fh5co-logo"><%= link_to image_tag('Coat_of_arms_of_South_Africa.png', :alt => 'Community Wealth SA 2017') %></h1>
+      <nav id="fh5co-main-menu" role="navigation">
+        <ul>
+          <li class="fh5co-active"><%= link_to 'Dashboard', dashboard_index_path %></li>
+          <li><a href="profile.html">Profile</a></li>
+          <li><%= link_to 'Donations', user_donations_path(user_id: current_user.id) %></li>
+          <li><a href="tools.html">Tools</a></li>
+          <li><a href="wallet.html">Wallet</a></li>
+          <li><a href="advertise.html">Advertise Here</a></li>
+        </ul>
+      </nav>
+
+      <div class="fh5co-footer">
+        <ul>
+          <p>
+            <small>&copy; 2017 Community Wealth SA</small>
+          </p>
+          <li><a href="#"><i class="icon-facebook"></i></a></li>
+          <li><a href="#"><i class="icon-twitter"></i></a></li>
+          <li><a href="#"><i class="icon-instagram"></i></a></li>
+        </ul>
+      </div>
+
+    </aside>
+<% end %>
+<%= yield %>
+
+<script>
+  $(function () {
+    $('.simple-marquee-container').SimpleMarquee();
+  });
+</script>
+</body>
 </html>

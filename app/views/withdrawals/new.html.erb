@@ -1,5 +1,6 @@
 <h1>New Withdrawal Request</h1>
 <%= form_for (@withdrawal) do |f| %>
+    <h2>Wallet Amount: R <%= current_user.wallet.amount %></h2>
   <div class="field">
     <%= f.hidden_field :user_id, :value => current_user.id %>
     <p><%= f.label :amount %>: <%= f.number_field(:amount) %></p>

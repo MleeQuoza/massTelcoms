@@ -29,13 +29,17 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
 
   has_one :wallet
+  has_one :referral_wallet
   has_many :withdrawals
   has_many :donations
   has_many :payment_accounts
 
   after_commit on: [:create] do
-    wallet = Wallet.new(user_id: self.id, amount: 0)
+    wallet = Wallet.new(user_id: self.id, amount: 0, balance: 0)
     wallet.save!
+
+    rwallet = ReferralWallet.new(user_id: self.id, amount: 0, balance: 0)
+    rwallet.save!
   end
 
   def name

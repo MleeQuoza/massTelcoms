@@ -9,8 +9,17 @@
 //
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
-//
-//= require jquery
+//= require libs/jquery.min.js
 //= require jquery_ujs
 //= require turbolinks
+//= require libs/modernizr-2.6.2.min.js
+//= require libs/jquery.easing.1.3.js
+//= require libs/bootstrap.min.js
+//= require libs/owl.carousel.min.js
+//= require libs/jquery.stellar.min.js
+//= require libs/jquery.waypoints.min.js
+//= require libs/jquery.countTo.js
+//= require libs/main.js
+//= require libs/marquee.js
+//= require libs/respond.min-.js
 //= require_tree .

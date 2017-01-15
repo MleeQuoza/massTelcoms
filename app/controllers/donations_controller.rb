@@ -20,7 +20,6 @@ class DonationsController < ApplicationController
   end
 
   def donate_profit
-
   end
 
 

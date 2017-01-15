@@ -16,7 +16,7 @@
 #
 
 class MoneyRequest < ActiveRecord::Base
-  enum status: { pending: 1, completed: 2, rejected: 3, blocked: 4 }
+  enum status: { pending: 1, completed: 2, rejected: 3, expired: 4, blocked: 5 }
 
   after_commit on:[:create] do
     make_money_transactions
@@ -27,6 +27,6 @@ class MoneyRequest < ActiveRecord::Base
   end
 
   def requires_transaction
-    self.type != 'Wallet' && !self.compounded
+    !%w('ReferralWallet', 'Wallet').include? self.type && !self.compounded
   end
 end

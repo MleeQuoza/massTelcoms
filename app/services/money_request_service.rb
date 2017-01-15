@@ -17,6 +17,7 @@ class MoneyRequestService
   def adjust_balances(donation, withdrawal, transaction_amount)
     adjust_withdrawal_balance(withdrawal, transaction_amount)
     adjust_donation_balance(donation, transaction_amount)
+    adjust_wallet_balance(wallet, )
   end
 
   private
