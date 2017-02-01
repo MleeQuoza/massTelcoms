@@ -7,6 +7,9 @@ apt-get update
 apt-get -y autoremove
 apt-get -y upgrade
 apt-get -y install memcached redis-server openjdk-7-jre-headless
+\curl -sSL https://get.rvm.io | bash -s stable
+echo "source $HOME/.rvm/scripts/rvm" >> ~/.bash_profile
+sudo mkdir "CommunityWealth"
 
 sed -i 's/bind\ 127.0.0.1//' /etc/redis/redis.conf
 /etc/init.d/redis-server restart

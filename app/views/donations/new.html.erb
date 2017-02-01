@@ -1,10 +1,28 @@
-<h1>New Donation</h1>
-<%= form_for (@donation) do |f| %>
-    <div class="field">
-      <%= f.hidden_field :user_id, :value => current_user.id %>
-      <p><%= f.label :amount %>: <%= f.number_field(:amount) %></p>
+<div class="modal fade" id="#Deposit" role="dialog">
+  <div id="fh5co-pricing-section" >
+    <div class="container" >
+      <div class="row">
+        <div class="col-md-12 col-md-offset-3 text-center animate-box">
+          <div class="pricing">
+            <div class="col-md-8 animate-box">
+              <div class="price-box">
+                <h2 class="pricing-plan"><%= image_tag('deposit.png', :alt => 'Community Wealth SA 2017') %></h2>
+                <%= form_for(@donation, remote: true, format: :json) do |f| %>
+                  <h2> HOW MUCH IS YOUR DEPOSIT? <sup class="currency"></sup></h2><br/>
+                    <%= f.hidden_field :user_id, :value => current_user.id %>
+                  <div class="price">
+                    <%= f.number_field(:amount, class: 'btn btn-primary btn-outline') %><sup class="currency"></sup>
+                  </div>
+                  <br/><br/>
+
+                  <button type="submit" name="submit" class="btn btn-primary btn-outline" style="" required="required" data-toggle="modal" data-target="#Deposit" >Cancel</button>
+                  <%= f.submit('Approve', class: 'btn btn-primary btn-outline', required: 'required') %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="field">
-      <p><%= f.submit %></p>
-    </div>
-<% end %>
+  </div>
+</div>

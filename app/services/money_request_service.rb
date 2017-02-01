@@ -11,6 +11,7 @@ class MoneyRequestService
   end
 
   def call
+    pp request_params
     MoneyRequest.create(request_params)
   end
 

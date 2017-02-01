@@ -2,49 +2,50 @@
   <div class="container" >
     <div class="row">
       <div class="col-md-10 col-md-offset-2 text-center fh5co-heading animate-box">
-        <h2 style = "font-size: 50px; color: #FFFFFF" > Active Investments </h2>
+        <h2 style = "font-size: 50px; color: #FFFFFF" >Banking Information </h2>
       </div>
     </div>
     <div class="row">
       <div class="col-md-12 col-md-offset-1 text-center animate-box">
         <div class="pricing">
-          <div class="col-md-12 animate-box">
-            <div class="price-box" style="overflow-x:auto;">
-              <h2 class="pricing-plan"> Active Donation </h2>
-              <% if @donations.present? %>
-                  <table>
-                    <thead>
-                    <th>Created Date</th>
-                    <th>Expiry Date</th>
-                    <th>Amount</th>
-                    <th>Months Invested</th>
-                    <th>Counter</th>
-                    <th>Profit</th>
-                    <th>Compound</th>
-                    <th>Checkout</th>
-                    </thead>
-                    <tbody>
-                    <% @donations.each do |donation| %>
-                        <tr>
-                          <td><%= donation.created_at.strftime('%d/%m/%Y') %></td>
-                          <td><%= (donation.created_at + 6.months).strftime('%d/%m/%Y') %></td>
-                          <td>R <%= donation.amount %></td>
-                          <td><%= donation.months_invested %></td>
-                          <td><%= number_with_precision(donation.profit_counter, significant: true) %></td>
-                          <td><%= number_to_currency(donation.profit, unit: "R ", precision: 2) %></td>
-                          <td><%= link_to 'Compound', dashboard_index_path  %></td>
-                          <td><%= link_to 'Checkout', dashboard_index_path %></td>
-                        </tr>
-                    <% end %>
-                    </tbody>
-                  </table>
-              <% else %>
-                <h3>You have no active donations</h3>
-                  <p><%= link_to 'Donate', new_donation_path %> </p>
-              <% end %>
+          <div class="col-md-6 animate-box">
+            <div class="price-box">
+              <h2 class="pricing-plan">Banking Details</h2>
+            <%= form_for(@payment_account) do |account| %>
+                  <%= account.hidden_field :user_id, :value => current_user.id %>
+              <table>
+                <tr>
+                  <th class="pricing-plan">Bank Name</th>
+                  <th><%= account.text_field :bank_name, class: 'form-control', required: 'required'   %></th>
+                </tr>
 
+                <tr>
+                  <th class="pricing-plan">Account Number</th>
+                  <td><%= account.text_field :account_number, class: 'form-control', required: 'required'   %></td>
+                </tr>
+
+                <tr>
+                  <th class="pricing-plan">Account Type</th>
+                  <td>
+                    <%= account.select :account_type, %w(Cheque Transmission Savings), class: 'form-control', required: 'required' %>
+                  </td>
+                </tr>
+                <tr>
+                  <th class="pricing-plan">Branch Code</th>
+                  <td><%= account.text_field :branch_code, class: 'form-control', required: 'required'   %></td>
+                </tr>
+
+                <tr>
+                  <th>
+                  </th>
+                  <th><%= account.submit 'Save Account', class: 'btn btn-primary btn-outline' %></th>
+                </tr>
+
+              </table>
+            <% end %>
             </div>
           </div>
+
         </div>
       </div>
     </div>
@@ -52,7 +53,7 @@
 </div>
 
 <div id="fh5co-main">
-  <div class="fh5co-counters" style="background-image: image-url('2.jpg');" 			data-stellar-background-ratio="0.5" id="counter-animate">
+  <div class="fh5co-counters" style='background-image:<%=image_tag('2.jpg') %>;' data-stellar-background-ratio="0.5" id="counter-animate">
     <div class="fh5co-narrow-content animate-box">
       <div class="row" >
         <div class="col-md-4 text-center">
