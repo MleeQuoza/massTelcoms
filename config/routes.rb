@@ -9,4 +9,5 @@ Rails.application.routes.draw do
   match '/money_transactions/reject_transaction/:id' => 'money_transactions#reject_transaction', as: 'reject_transaction', via: :patch
   match '/money_transactions/complete_transaction/:id' => 'money_transactions#complete_transaction', as: 'complete_transaction', via: :patch
   match '/donations/:user_id' => 'donations#user_donations', as: 'user_donations', via: :get
+  match '/dashboard/profile/:user_id' => 'dashboard#profile', as: 'profile', via: :get
 end

@@ -42,6 +42,10 @@ class User < ApplicationRecord
     rwallet.save!
   end
 
+  before_validation on: [:create] do
+    self.guid = SecureRandom.hex(12) if guid.blank?
+  end
+
   def name
     "#{self.first_name} #{self.last_name}"
   end

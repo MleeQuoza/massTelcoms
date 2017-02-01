@@ -3,16 +3,26 @@ class DonationsController < ApplicationController
 
   def new
     @donation = Donation.new
+
+    respond_to do |format|
+      format.html{ @donation }
+      format.js { @donation }
+    end
   end
 
   def create
     @donation = MoneyRequestService.new(donation_params, { type: Donation.name }).call
 
-    if @donation.save!
-      redirect_to dashboard_index_path, flash[:notice] => 'Donation Successful'
-    else
-      render 'new'
+    respond_to do |format|
+      if @donation.save!
+        format.html { redirect_to dashboard_index_path, notice: 'Donation Successful' }
+        format.json { redirect_to dashboard_index_path, notice: 'Donation Successful' }
+      else
+        format.html { render 'new'}
+        format.json { render json: @donation.errors.full_messages, status: :unprocessable_entity }
+      end
     end
+
   end
 
   def user_donations
@@ -26,6 +36,6 @@ class DonationsController < ApplicationController
   private
 
   def donation_params
-    params.require(:donation).permit(:user_id, :amount)
+    params.permit(:user_id, :amount)
   end
 end

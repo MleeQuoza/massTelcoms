@@ -11,10 +11,14 @@
           <div class="col-md-3 animate-box">
             <div class="price-box">
               <h2 class="pricing-plan">Last Donation</h2>
-              <div class="price"><sup class="currency">R <%= current_user.current_donation.present? ? current_user.current_donation.amount : 0 %></sup><small>Exp <%= (6 - current_user.current_donation.months_invested) if current_user.current_donation.present? %> months</small></div>
-
-
-              <button type="submit" name="submit" class="btn btn-primary btn-outline" style=" " required="required" data-toggle="modal" data-target="#Deposit">Donate</button>
+              <div class="price"><sup class="currency">
+                <%= current_user.current_donation.present? ? number_to_currency(current_user.current_donation.amount, unit: 'R ', precision: 2) : 0 %>
+              </sup>
+              <small>
+                Exp <%= (number_with_precision((6 - current_user.current_donation.months_invested), precision: 0)) if current_user.current_donation.present? %> months
+              </small>
+              </div>
+              <button type="submit" name="submit" class="btn btn-primary btn-outline" style="" required="required" data-toggle="modal" data-target="#Deposit">Donate</button>
             </div>
           </div>
 
@@ -30,7 +34,10 @@
           <div class="col-md-3 animate-box">
             <div class="price-box popular">
               <h2 class="pricing-plan pricing-plan-offer">Investment<span>Count Down</span></h2>
-              <div class="price"><%= current_user.current_donation.present? ? current_user.current_donation.profit_counter : 0 %><sup class="currency">days</sup><small>Weekly Payments</small></div>
+              <div class="price">
+                <%= current_user.current_donation.present? ? number_with_precision(current_user.current_donation.profit_counter, precision: 0) : 0 %>
+                <sup class="currency">days</sup><small>Weekly Payments</small>
+              </div>
 
               <a href="#" class="btn btn-primary btn-outline">Select Plan</a>
             </div>
@@ -101,13 +108,17 @@
             <div class="col-md-8 animate-box">
               <div class="price-box">
                 <h2 class="pricing-plan"><%= image_tag('deposit.png', :alt => 'Community Wealth SA 2017') %></h2>
+                <%= form_tag('donations', remote: true, format: :json) do %>
+                    <h2> HOW MUCH IS YOUR DEPOSIT? <sup class="currency"></sup></h2><br/>
+                    <%= hidden_field_tag(:user_id, current_user.id) %>
+                    <div class="price">
+                      <%= number_field_tag(:amount, nil, class: 'btn btn-primary btn-outline') %><sup class="currency"></sup>
+                    </div>
+                    <br/><br/>
 
-                <h2> HOW MUCH IS YOUR DEPOSIT? <sup class="currency"></sup></h2><br/>
-
-                <div class="price"><input type="number" name="howMuch" class="btn btn-primary btn-outline" required="required" autofocus><sup class="currency"></sup></div><br/><br/>
-
-                <button type="submit" name="submit" class="btn btn-primary btn-outline" style="" required="required" data-toggle="modal" data-target="#Deposit" >Cancel</button>
-                <button type="submit" name="submit" class="btn btn-primary btn-outline" style="" required="required" data-toggle="modal" data-target="#Deposit">Approve</button>
+                    <button type="submit" name="submit" class="btn btn-primary btn-outline" style="" required="required" data-toggle="modal" data-target="#Deposit" >Cancel</button>
+                    <%= submit_tag 'Approve', class: 'btn btn-primary btn-outline', required: 'required', data: { toggle: 'modal', target: '#Deposit' }%>
+                <% end %>
               </div>
             </div>
           </div>

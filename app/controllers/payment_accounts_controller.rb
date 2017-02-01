@@ -8,7 +8,7 @@ class PaymentAccountsController < ApplicationController
   def create
     account = PaymentAccount.create(account_params)
     if account.save!
-      redirect_to dashboard_index_path, flash[:notice] => 'Payment Account saved'
+      redirect_to profile_path(user_id: current_user.id), notice: 'Payment Account saved'
     end
   end
 
@@ -19,19 +19,19 @@ class PaymentAccountsController < ApplicationController
   def update
     account = PaymentAccount.find(params[:id])
     if account.update!(account_params)
-      redirect_to dashboard_index_path, flash[:notice] => 'Updated successfully'
+      redirect_to profile_path(user_id: current_user.id), notice: 'Updated successfully'
     end
   end
 
   def destroy
     account = PaymentAccount.find(params[:id])
     if account.destroy!
-      redirect_to dashboard_index_path, flash[:notice] => 'Successfully Deleted'
+      redirect_to dashboard_index_path, notice: 'Successfully Deleted'
     end
   end
 
   private
   def account_params
-    params.require(:payment_account).permit(:user_id, :account_holder_name, :bank_name, :branch_code, :account_number)
+    params.require(:payment_account).permit(:user_id, :account_holder_name, :bank_name, :branch_code, :account_number, :account_type)
   end
 end

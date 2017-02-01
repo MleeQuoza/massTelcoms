@@ -27,6 +27,6 @@ class MoneyRequest < ActiveRecord::Base
   end
 
   def requires_transaction
-    !%w('ReferralWallet', 'Wallet').include? self.type && !self.compounded
+    !%w('ReferralWallet', 'Wallet').include?self.type && !self.compounded
   end
 end

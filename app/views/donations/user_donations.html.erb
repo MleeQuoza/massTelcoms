@@ -30,8 +30,8 @@
                           <td><%= (donation.created_at + 6.months).strftime('%d/%m/%Y') %></td>
                           <td>R <%= donation.amount %></td>
                           <td><%= donation.months_invested %></td>
-                          <td><%= donation.profit_counter %></td>
-                          <td>R <%= donation.profit %></td>
+                          <td><%= number_with_precision(donation.profit_counter, significant: true) %></td>
+                          <td><%= number_to_currency(donation.profit, unit: "R ", precision: 2) %></td>
                           <td><%= link_to 'Compound', dashboard_index_path  %></td>
                           <td><%= link_to 'Checkout', dashboard_index_path %></td>
                         </tr>

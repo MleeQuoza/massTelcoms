@@ -27,7 +27,8 @@
       <nav id="fh5co-main-menu" role="navigation">
         <ul>
           <li class="fh5co-active"><%= link_to 'Dashboard', dashboard_index_path %></li>
-          <li><a href="profile.html">Profile</a></li>
+          <li><%= link_to 'Bank Account', profile_path(user_id: current_user.id) %></a></li>
+          <li><%= link_to 'User Profile', edit_user_registration_path %></a></li>
           <li><%= link_to 'Donations', user_donations_path(user_id: current_user.id) %></li>
           <li><a href="tools.html">Tools</a></li>
           <li><a href="wallet.html">Wallet</a></li>
