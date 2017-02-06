@@ -11,19 +11,17 @@ class MoneyRequestService
   end
 
   def call
-    pp request_params
     MoneyRequest.create(request_params)
   end
 
   def adjust_balances(donation, withdrawal, transaction_amount)
-    adjust_withdrawal_balance(withdrawal, transaction_amount)
-    adjust_donation_balance(donation, transaction_amount)
-    adjust_wallet_balance(wallet, )
+    donation.adjust_balance(donation.balance - transaction_amount)
+    withdrawal.adjust_balance(withdrawal.balance - transaction_amount)
   end
 
   private
 
-  attr_reader :user_id, :amount, :balance, :status, :type
+  attr_reader :user_id, :amount, :balance, :status, :type, :compounded
 
   def status
     MoneyRequest.statuses[:pending]
@@ -34,15 +32,16 @@ class MoneyRequestService
   end
 
   def request_params
-    { user_id: user_id, amount: amount, balance: balance, status: status, type: type }
+    { user_id: user_id, amount: amount, balance: balance, status: status, type: type, compounded: compounded }
   end
 
   def adjust_withdrawal_balance(withdrawal, transaction_amount)
-    withdrawal.update!(balance: (withdrawal.balance - transaction_amount))
+    withdrawal.update(balance: (withdrawal.balance - transaction_amount))
   end
 
   def adjust_donation_balance(donation, transaction_amount)
-    donation.update!(balance: (donation.balance - transaction_amount))
+    donation.update(balance: (donation.balance - transaction_amount))
   end
+  
 
 end

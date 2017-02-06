@@ -27,12 +27,17 @@
       <nav id="fh5co-main-menu" role="navigation">
         <ul>
           <li class="fh5co-active"><%= link_to 'Dashboard', dashboard_index_path %></li>
-          <li><%= link_to 'Bank Account', profile_path(user_id: current_user.id) %></a></li>
+          <% if current_user.payment_account.present? %>
+            <li><%= link_to 'Bank Account', payment_account_path(current_user.payment_account) %></a></li>
+          <% else %>
+            <li><%= link_to 'Bank Account', new_payment_account_path%></a></li>
+          <% end %>
           <li><%= link_to 'User Profile', edit_user_registration_path %></a></li>
           <li><%= link_to 'Donations', user_donations_path(user_id: current_user.id) %></li>
-          <li><a href="tools.html">Tools</a></li>
-          <li><a href="wallet.html">Wallet</a></li>
-          <li><a href="advertise.html">Advertise Here</a></li>
+          <li><%= link_to 'Withdrawals', user_withdrawals_path(user_id: current_user.id) %></li>
+          <li><%= link_to 'Transactions', money_transactions_path %></li>
+          <li><%= link_to 'Tools', tools_path  %></li>
+          <li><%= link_to 'Wallet', wallet_path(id: current_user.id) %></li>
           <li><%= link_to 'Logout', destroy_user_session_path, method: :delete %></li>
         </ul>
       </nav>

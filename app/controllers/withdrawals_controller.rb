@@ -15,6 +15,10 @@ class WithdrawalsController < ApplicationController
     end
   end
 
+  def user_withdrawals
+    @withdrawals = Withdrawal.order(:created_at).where(user_id: params[:user_id])
+  end
+
 
   private
 

@@ -1,15 +1,14 @@
 class MoneyTransactionsController < ApplicationController
   before_action :authenticate_user!
-
-  def complete_transaction
-    mt = MoneyTransaction.find(params[:id])
-    mt.update!(status: MoneyTransaction.statuses[:completed])
-    redirect_to dashboard_index_path, flash[:notice] => 'Transaction Marked Complete'
+  
+  def index
+    @donations = current_user.donations
+    @withdrawals = current_user.withdrawals
   end
-
-  def reject_transaction
-    mt = MoneyTransaction.find(params[:id])
-    mt.update!(status: MoneyTransaction.statuses[:rejected])
-    redirect_to dashboard_index_path, flash[:notice] => 'Transaction Marked Rejected'
+  
+  def update_transaction_status
+    mt = MoneyTransaction.find(transaction_params[:id])
+    mt.update!(status: MoneyTransaction.statuses[transaction_params[:status]])
+    redirect_to dashboard_index_path, flash[:notice] => 'Transaction Updated'
   end
 end

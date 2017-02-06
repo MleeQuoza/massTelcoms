@@ -20,5 +20,5 @@ class Withdrawal < MoneyRequest
   validates :amount, presence: true
 
   belongs_to :user
-  has_many :money_transaction
+  has_many :money_transactions
 end

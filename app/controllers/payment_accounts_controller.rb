@@ -13,7 +13,7 @@ class PaymentAccountsController < ApplicationController
   end
 
   def edit
-    @account = PaymentAccount.find(params[:id])
+    @account = current_user.payment_account #PaymentAccount.find(params[:id])
   end
 
   def update

@@ -9,6 +9,10 @@
   font-style: normal;
 }
 
+.bg-image {
+  background-image: image-url('2.jpg');
+}
+
 #recent-works-normal {
   background: image-url('51.jpg') repeat-x;
   background-size: 100%;

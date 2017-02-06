@@ -10,22 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170201134346) do
+ActiveRecord::Schema.define(version: 20170206140034) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "money_requests", force: :cascade do |t|
-    t.integer  "user_id",                                                null: false
+    t.integer  "user_id",                                                   null: false
     t.text     "type"
-    t.decimal  "amount",        precision: 17, scale: 4
-    t.decimal  "balance",       precision: 17, scale: 4
-    t.integer  "status",                                 default: 1,     null: false
+    t.decimal  "amount",           precision: 17, scale: 4
+    t.decimal  "balance",          precision: 17, scale: 4
+    t.integer  "status",                                    default: 1,     null: false
     t.date     "maturity_date"
     t.boolean  "matured"
-    t.datetime "created_at",                                             null: false
-    t.datetime "updated_at",                                             null: false
-    t.boolean  "compounded",                             default: false
+    t.datetime "created_at",                                                null: false
+    t.datetime "updated_at",                                                null: false
+    t.boolean  "compounded",                                default: false
+    t.datetime "profit_from_date"
   end
 
   create_table "money_transactions", force: :cascade do |t|

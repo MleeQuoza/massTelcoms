@@ -48,8 +48,7 @@
               <h2 class="pricing-plan pricing-plan-offer">Wallet<span>Withdraw Cash</span></h2>
               <div class="price"><sup class="currency">R <%= current_user.wallet.amount %></sup><small>Available</small></div>
 
-              <a href="#" class="btn btn-primary btn-outline">Withdraw Cash</a>
-
+              <%= link_to 'Withdraw Cash', withdraw_from_wallet_path, class: 'btn btn-primary btn-outline', method: :post %>
             </div>
           </div>
 
@@ -203,6 +202,5 @@
 
       </div>
     </div>
-
   </div>
 </div>

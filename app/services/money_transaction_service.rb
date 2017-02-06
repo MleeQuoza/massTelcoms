@@ -41,7 +41,7 @@ class MoneyTransactionService
 
   def match_with_withdrawal
     withdrawal = Withdrawal.where("balance >= #{amount} AND status = #{MoneyRequest.statuses[:pending]}").first
-    withdrawal.id unless withdrawal.blank? 
+    withdrawal.id unless withdrawal.blank?
   end
 
   def transaction_params

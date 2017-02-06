@@ -1,0 +1,85 @@
+<div id="fh5co-pricing-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-10 col-md-offset-2 text-center fh5co-heading animate-box">
+        <h2 style="font-size: 50px; color: #FFFFFF"> Active Investments </h2>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 col-md-offset-1 text-center animate-box">
+        <div class="pricing">
+          <div class="col-md-12 animate-box">
+            <div class="price-box" style="overflow-x:auto;">
+              <h2 class="pricing-plan"> Transactions on Donation </h2>
+              <% if @donations.present? %>
+                <% @donations.each_with_index do |donation, index| %>
+                  <h4>Donation <%= index + 1 %>: Amount:
+                    <%= number_to_currency(donation.amount, unit: 'R ', precision: 2) %>
+                    Balance: <%= number_to_currency(donation.balance, unit: 'R ', precision: 2) %>
+                  </h4>
+                      <% if donation.money_transactions.present? %>
+                          <table>
+                            <thead>
+                              <th></th>
+                              <th>Recipient Name</th>
+                              <th>Recipient Bank Account Name</th>
+                              <th>Recipient Bank Account Number</th>
+                              <th>Recipient Bank Branch Code</th>
+                              <th>Recipient Bank Account Type</th>
+                            </thead>
+                            <tbody>
+                        <%= donation.money_transactions.each_with_index do |tr, index| %>
+                              <tr>
+                                <td><%= index + 1 %></td>
+                                <td><%= tr.withdrawal_user_name %></td>
+                                <td><%= tr.recipient_bank_name %></td>
+                                <td><%= tr.recipient_account_type %></td>
+                                <td><%= tr.recipient_branch_code %></td>
+                              </tr>
+                        <% end %>
+                            </tbody>
+                          </table>
+                      <% end %>
+                 <% end %>
+              <% else %>
+                  <h3>You have no active donations</h3>
+              <% end %>
+            </div>
+
+            <div class="price-box" style="overflow-x:auto;">
+              <h2 class="pricing-plan"> Transactions on Withdrawal </h2>
+              <% if @withdrawals.present? %>
+                  <% @withdrawals.each_with_index do |withdrawal, index| %>
+                      <h4>Withdrawal <%= index + 1 %>:
+                        Amount: <%= number_to_currency(withdrawal.amount, unit: 'R ', precision: 2) %>
+                        Balance: <%= number_to_currency(withdrawal.balance, unit: 'R ', precision: 2) %>
+                      </h4>
+                      <% if withdrawal.money_transactions.present? %>
+                          <table>
+                            <thead>
+                            <th></th>
+                            <th>Donor Name</th>
+                            <th>Amount</th>
+                            </thead>
+                            <tbody>
+                            <% withdrawal.money_transactions.each_with_index do |tr, index| %>
+                                <tr>
+                                  <td><%= index + 1 %></td>
+                                  <td><%= tr.donation_user_name %></td>
+                                  <td><%= tr.amount %></td>
+                                </tr>
+                            <% end %>
+                            </tbody>
+                          </table>
+                      <% end %>
+                  <% end %>
+              <% else %>
+                  <h3>You have no active Withdrawals</h3>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

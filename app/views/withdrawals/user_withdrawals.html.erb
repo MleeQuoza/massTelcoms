@@ -1,0 +1,95 @@
+<div id="fh5co-pricing-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-10 col-md-offset-2 text-center fh5co-heading animate-box">
+        <h2 style="font-size: 50px; color: #FFFFFF"> Active Withdrawals </h2>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 col-md-offset-1 text-center animate-box">
+        <div class="pricing">
+          <div class="col-md-12 animate-box">
+            <div class="price-box" style="overflow-x:auto;">
+              <h2 class="pricing-plan"> Active withdrawal </h2>
+              <% if @withdrawals.present? %>
+                  <table>
+                    <thead>
+                    <th>Created Date</th>
+                    <th>Amount</th>
+                    </thead>
+                    <tbody>
+                    <% @withdrawals.each do |withdrawal| %>
+                        <tr>
+                          <td><%= withdrawal.created_at.strftime('%d/%m/%Y') %></td>
+                          <td>R <%= withdrawal.amount %></td>
+                        </tr>
+                    <% end %>
+                    </tbody>
+                  </table>
+              <% else %>
+                  <h3>You have no active withdrawals</h3>
+                  <h4>Wallet Balance: <%= number_to_currency(current_user.wallet.amount, unit: 'R ', precision: 2) %></h4>
+                  <%= link_to 'Withdraw', withdraw_from_wallet_path, class: 'btn btn-primary btn-outline', via: :post %>
+              <% end %>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="fh5co-main">
+  <div class="bg-image fh5co-counters" data-stellar-background-ratio="0.5" id="counter-animate">
+    <div class="fh5co-narrow-content animate-box">
+      <div class="row">
+        <div class="col-md-4 text-center">
+          <span class="fh5co-counter js-counter" data-from="0" data-to="16"
+                data-speed="5000" data-refresh-interval="50"></span>
+          <span class="fh5co-counter-label">Share holders </span>
+        </div>
+        <div class="col-md-4 text-center">
+          <span class="fh5co-counter js-counter" data-from="0" data-to="130" data-speed="5000"
+                data-refresh-interval="50"></span>
+          <span class="fh5co-counter-label">Completed Projects</span>
+        </div>
+        <div class="col-md-4 text-center">
+          <span class="fh5co-counter js-counter" data-from="0" data-to="1234" data-speed="5000"
+                data-refresh-interval="50"></span>
+          <span class="fh5co-counter-label">Active Users</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="fh5co-narrow-content">
+    <div class="row">
+      <div class="col-md-12 animate-box" data-animate-effect="fadeInLeft">
+        <h1 class="fh5co-heading-colored">Participation Terms &amp; Conditions</h1>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4 animate-box" data-animate-effect="fadeInLeft">
+        <p class="fh5co-lead">Separated they live in Bookmarksgrove right at the coast of the Semantics,
+          a large language ocean.</p>
+        <p><a href="#" class="btn btn-primary btn-outline">Learn More</a></p>
+      </div>
+      <div class="col-md-7 col-md-push-1">
+        <div class="row">
+          <div class="col-md-6 animate-box" data-animate-effect="fadeInLeft">
+            <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic
+              life One day however a small line of blind text by the name of Lorem Ipsum decided to leave for the far
+              World of Grammar.</p>
+          </div>
+          <div class="col-md-6 animate-box" data-animate-effect="fadeInLeft">
+            <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life
+              One day however a small line of blind text by the name of Lorem Ipsum decided to leave
+              for the far World of Grammar.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

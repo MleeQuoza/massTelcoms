@@ -29,4 +29,8 @@ class MoneyRequest < ActiveRecord::Base
   def requires_transaction
     !%w('ReferralWallet', 'Wallet').include?self.type && !self.compounded
   end
+  
+  def adjust_balance(next_balance)
+    self.update(balance: next_balance)
+  end
 end

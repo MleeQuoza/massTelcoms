@@ -14,6 +14,7 @@ class Ability
   def user
     can :manage, MoneyRequest
     can :manage, MoneyTransaction
+    can :manage, PaymentAccount
   end
 
   def business

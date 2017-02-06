@@ -16,19 +16,26 @@
 #
 
 class Donation < MoneyRequest
-  has_many :money_transaction
+  has_many :money_transactions
   belongs_to :user
+  
+  validates :amount, presence: :true
+  
+  before_commit on: [:create] do
+    self.maturity_date = Time.zone.today + 6.months
+    self.profit_from_date = Time.zone.today
+  end
 
   def profit
     self.amount * (self.profit_counter / 100)
   end
 
   def expired?
-    TimeDifference.between(self.created_at, Time.zone.today).in_months > 6
+    TimeDifference.between(self.created_at, self.maturity_date).in_months > 6
   end
 
   def profit_counter
-    days_invested = TimeDifference.between(self.created_at, Time.zone.today).in_days
+    days_invested = TimeDifference.between(self.profit_from_date, Time.zone.today).in_days
 
     if days_invested > 30
       days_invested = days_invested % 30

@@ -28,11 +28,15 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  validates :last_name, presence: :true
+  validates :first_name, presence: :true
+  
   has_one :wallet
   has_one :referral_wallet
+  has_one :payment_account
   has_many :withdrawals
   has_many :donations
-  has_many :payment_accounts
+  
 
   after_commit on: [:create] do
     wallet = Wallet.new(user_id: self.id, amount: 0, balance: 0)
