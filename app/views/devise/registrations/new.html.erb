@@ -1,50 +1,47 @@
-<div id="fh5co-pricing-section" >
-  <div class="container" >
+<div id="fh5co-pricing-section">
+  <div class="container">
     <div class="row">
-      <div class="col-md-10 col-md-offset-1 text-center fh5co-heading animate-box">
-        <h2 style = "font-size: 50px; color: #FFFFFF" > Sign Up </h2>
+      <div class="col-md-6 col-md-offset-3 text-center fh5co-heading animate-box">
+        <h2 style="font-size: 50px; color: #FFFFFF"> Sign Up </h2>
       </div>
     </div>
     <div class="row">
-      <div class="col-md-12 col-md-offset-0 text-center animate-box">
+      <div class="col-md-6 col-md-offset-3 text-center animate-box">
         <div class="pricing">
           <div class="col-md-12 animate-box">
             <div class="price-box" style="overflow-x:auto;">
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-    <%= devise_error_messages! %>
+              <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+                  <%= devise_error_messages! %>
+                  <br>
+                  <div class="row ">
+                    <%= f.text_field :first_name, autofocus: true, placeholder: 'First Name' %>
+                    <%= f.text_field :last_name, placeholder: 'Last Name' %>
+                  </div>
+                  <br>
+                  <div class="row ">
+                    <%= f.text_field :cellphone, placeholder: 'Cellphone' %>
+                    <%= f.email_field :email, placeholder: 'Email' %>
+                  </div>
+                  <br>
+                  <div class='row'>
+                    <% if @minimum_password_length %>
+                        <em>(<%= @minimum_password_length %> characters minimum)</em>
+                    <% end %><br/>
+                    <%= f.password_field :password, placeholder: 'Password', autocomplete: 'off' %>
+                    <%= f.password_field :password_confirmation, placeholder: 'Confirm Password', autocomplete: 'off' %>
+                  </div>
+                  <br>
+                  <div class='actions'>
+                    <%= f.submit 'Sign up', class: 'btn btn-primary btn-outline' %>
+                  </div>
+              <% end %>
 
-    <div class="row">
-      <%= f.label :first_name %><br />
-      <%= f.text_field :first_name, autofocus: true %>
-
-      <%= f.label :last_name %><br />
-      <%= f.text_field :last_name%>
+              <%= render 'devise/shared/links' %>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-
-    <div class="row">
-      <%= f.label :cellphone %><br />
-      <%= f.text_field :cellphone %>
-
-      <%= f.label :email %><br />
-      <%= f.email_field :email %>
-    </div>
-
-    <div class='row'>
-      <%= f.label :password %>
-      <% if @minimum_password_length %>
-          <em>(<%= @minimum_password_length %> characters minimum)</em>
-      <% end %><br />
-      <%= f.password_field :password, autocomplete: 'off' %>
-
-      <%= f.label :password_confirmation %><br />
-      <%= f.password_field :password_confirmation, autocomplete: 'off' %>
-    </div>
-
-    <div class='actions'>
-      <%= f.submit 'Sign up' %>
-    </div>
-<% end %>
-
-<%= render 'devise/shared/links' %>
-            </div></div></div></div></div></div></div>
+  </div>
+</div>
