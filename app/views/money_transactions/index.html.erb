@@ -12,35 +12,39 @@
             <div class="price-box" style="overflow-x:auto;">
               <h2 class="pricing-plan"> Transactions on Donation </h2>
               <% if @donations.present? %>
-                <% @donations.each_with_index do |donation, index| %>
-                  <h4>Donation <%= index + 1 %>: Amount:
-                    <%= number_to_currency(donation.amount, unit: 'R ', precision: 2) %>
-                    Balance: <%= number_to_currency(donation.balance, unit: 'R ', precision: 2) %>
-                  </h4>
+                  <% @donations.each_with_index do |donation, index| %>
+                      <br>
+                      <h4>Donation <%= index + 1 %>: Amount:
+                        <%= number_to_currency(donation.amount, unit: 'R ', precision: 2) %>
+                        Balance: <%= number_to_currency(donation.balance, unit: 'R ', precision: 2) %>
+                        <br>
+                        <hr>
+                      </h4>
                       <% if donation.money_transactions.present? %>
                           <table>
                             <thead>
-                              <th></th>
-                              <th>Recipient Name</th>
-                              <th>Recipient Bank Account Name</th>
-                              <th>Recipient Bank Account Number</th>
-                              <th>Recipient Bank Branch Code</th>
-                              <th>Recipient Bank Account Type</th>
+                            <th></th>
+                            <th>Recipient Name</th>
+                            <th>Bank Name</th>
+                            <th>Account Number</th>
+                            <th>Branch Code</th>
+                            <th>Account Type</th>
                             </thead>
                             <tbody>
-                        <%= donation.money_transactions.each_with_index do |tr, index| %>
-                              <tr>
-                                <td><%= index + 1 %></td>
-                                <td><%= tr.withdrawal_user_name %></td>
-                                <td><%= tr.recipient_bank_name %></td>
-                                <td><%= tr.recipient_account_type %></td>
-                                <td><%= tr.recipient_branch_code %></td>
-                              </tr>
-                        <% end %>
+                            <% donation.money_transactions.each_with_index do |tr, index| %>
+                                <tr>
+                                  <td><%= index + 1 %></td>
+                                  <td><%= tr.withdrawal_user_name %></td>
+                                  <td><%= tr.recipient_bank_name %></td>
+                                  <td><%= tr.recipient_account_number %></td>
+                                  <td><%= tr.recipient_branch_code %></td>
+                                  <td><%= tr.recipient_account_type %></td>
+                                </tr>
+                            <% end %>
                             </tbody>
                           </table>
                       <% end %>
-                 <% end %>
+                  <% end %>
               <% else %>
                   <h3>You have no active donations</h3>
               <% end %>
@@ -50,10 +54,13 @@
               <h2 class="pricing-plan"> Transactions on Withdrawal </h2>
               <% if @withdrawals.present? %>
                   <% @withdrawals.each_with_index do |withdrawal, index| %>
+                      <br>
                       <h4>Withdrawal <%= index + 1 %>:
                         Amount: <%= number_to_currency(withdrawal.amount, unit: 'R ', precision: 2) %>
                         Balance: <%= number_to_currency(withdrawal.balance, unit: 'R ', precision: 2) %>
                       </h4>
+                      <hr>
+                      <br>
                       <% if withdrawal.money_transactions.present? %>
                           <table>
                             <thead>
@@ -66,7 +73,7 @@
                                 <tr>
                                   <td><%= index + 1 %></td>
                                   <td><%= tr.donation_user_name %></td>
-                                  <td><%= tr.amount %></td>
+                                  <td><%= number_to_currency(tr.amount, unit: 'R ', precision: 2) %></td>
                                 </tr>
                             <% end %>
                             </tbody>

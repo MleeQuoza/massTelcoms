@@ -16,7 +16,7 @@ class WalletsController < ApplicationController
   end
   
   def withdraw_from_wallet
-    Wallet.transaction do
+    Withdrawal.transaction do
       withdrawal = Withdrawal.new
       wallet = current_user.wallet
       withdrawal.user_id = current_user.id

@@ -65,6 +65,10 @@ class User < ApplicationRecord
   def can_donate_or_withdraw?
      not (self.current_donation.present? || self.current_withdrawal.present?)
   end
+  
+  def bank_account
+    self.payment_account || PaymentAccount.new
+  end
 
   ROLES = %w[admin business user]
 

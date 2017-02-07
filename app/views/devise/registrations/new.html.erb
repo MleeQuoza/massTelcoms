@@ -1,12 +1,12 @@
 <div id="fh5co-pricing-section" >
   <div class="container" >
     <div class="row">
-      <div class="col-md-10 col-md-offset-2 text-center fh5co-heading animate-box">
+      <div class="col-md-10 col-md-offset-1 text-center fh5co-heading animate-box">
         <h2 style = "font-size: 50px; color: #FFFFFF" > Sign Up </h2>
       </div>
     </div>
     <div class="row">
-      <div class="col-md-12 col-md-offset-1 text-center animate-box">
+      <div class="col-md-12 col-md-offset-0 text-center animate-box">
         <div class="pricing">
           <div class="col-md-12 animate-box">
             <div class="price-box" style="overflow-x:auto;">
@@ -14,35 +14,29 @@
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
     <%= devise_error_messages! %>
 
-    <div class="field">
+    <div class="row">
       <%= f.label :first_name %><br />
       <%= f.text_field :first_name, autofocus: true %>
-    </div>
 
-    <div class="field">
       <%= f.label :last_name %><br />
       <%= f.text_field :last_name%>
     </div>
 
-    <div class="field">
+    <div class="row">
       <%= f.label :cellphone %><br />
       <%= f.text_field :cellphone %>
-    </div>
 
-    <div class="field">
       <%= f.label :email %><br />
       <%= f.email_field :email %>
     </div>
 
-    <div class='field'>
+    <div class='row'>
       <%= f.label :password %>
       <% if @minimum_password_length %>
           <em>(<%= @minimum_password_length %> characters minimum)</em>
       <% end %><br />
       <%= f.password_field :password, autocomplete: 'off' %>
-    </div>
 
-    <div class='field'>
       <%= f.label :password_confirmation %><br />
       <%= f.password_field :password_confirmation, autocomplete: 'off' %>
     </div>

@@ -12,7 +12,12 @@
             <div class="price-box" style="overflow-x:auto;">
               <h2 class="pricing-plan"> Viewing Wallet </h2>
                 <h4>Wallet Balance: <%= number_to_currency(current_user.wallet.amount, unit: 'R ', precision: 2) %></h4>
-                <%= link_to 'Withdraw', withdraw_from_wallet_path, class: 'btn btn-primary btn-outline', method: :post %>
+                <%= button_to 'Withdraw',
+                            withdraw_from_wallet_path,
+                            class: 'btn btn-primary btn-outline',
+                            method: :post,
+                            disabled: current_user.wallet.amount < 300
+                %>
             </div>
           </div>
         </div>
