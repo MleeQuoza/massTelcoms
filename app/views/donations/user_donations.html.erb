@@ -28,7 +28,7 @@
                       <tr>
                         <td><%= donation.created_at.strftime('%d/%m/%Y') %></td>
                         <td><%= (donation.maturity_date).strftime('%d/%m/%Y') %></td>
-                        <td>R <%= donation.amount %></td>
+                        <td><%= number_to_currency(donation.amount, unit: 'R ', precision: 2) %></td>
                         <td><%= donation.months_invested %></td>
                         <td><%= number_with_precision(donation.profit_counter, significant: true) %></td>
                         <td><%= number_to_currency(donation.profit, unit: 'R ', precision: 2) %></td>

@@ -31,19 +31,19 @@ class MoneyTransaction < ActiveRecord::Base
   end
   
   def recipient_bank_name
-    self.withdrawal.user.payment_account.bank_name
+    self.withdrawal.user.payment_account&.bank_name
   end
 
   def recipient_account_type
-    self.withdrawal.user.payment_account.account_type
+    self.withdrawal.user.payment_account&.account_type
   end
 
   def recipient_account_number
-    self.withdrawal.user.payment_account.account_number
+    self.withdrawal.user.payment_account&.account_number
   end
 
   def recipient_branch_code
-    self.withdrawal.user.payment_account.branch_code
+    self.withdrawal.user.payment_account&.branch_code
   end
 
   private
