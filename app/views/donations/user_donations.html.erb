@@ -17,7 +17,7 @@
                     <th>Created Date</th>
                     <th>Expiry Date</th>
                     <th>Amount</th>
-                    <th>Months Invested</th>
+                    <th>Months<br>Invested</th>
                     <th>Counter</th>
                     <th>Profit</th>
                     <th>Compound</th>
@@ -30,7 +30,7 @@
                         <td><%= (donation.maturity_date).strftime('%d/%m/%Y') %></td>
                         <td><%= number_to_currency(donation.amount, unit: 'R ', precision: 2) %></td>
                         <td><%= donation.months_invested %></td>
-                        <td><%= number_with_precision(donation.profit_counter, significant: true) %></td>
+                        <td><%= number_with_precision(donation.profit_counter, precision: 0) %></td>
                         <td><%= number_to_currency(donation.profit, unit: 'R ', precision: 2) %></td>
                         <td>
                           <%= form_tag(donations_path) do %>

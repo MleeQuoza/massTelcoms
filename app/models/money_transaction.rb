@@ -45,6 +45,10 @@ class MoneyTransaction < ActiveRecord::Base
   def recipient_branch_code
     self.withdrawal.user.payment_account&.branch_code
   end
+  
+  def pending?
+    self.status == MoneyTransaction.statuses[:pending]
+  end
 
   private
   def adjust_balances

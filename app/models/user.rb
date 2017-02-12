@@ -95,7 +95,7 @@ class User < ApplicationRecord
   end
   
   def total_referrals
-    User.where(referer_guid: self.guid)
+    User.where(referer_guid: self.guid).count
   end
   
   def new_referrals
