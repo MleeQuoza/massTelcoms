@@ -2,7 +2,7 @@ class MoneyTransactionsController < ApplicationController
   before_action :authenticate_user!
   
   def index
-    @donations = current_user.donations
+    @donations = current_user.non_compounded_donations
     @withdrawals = current_user.withdrawals
   end
   

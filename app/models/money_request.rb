@@ -23,11 +23,12 @@ class MoneyRequest < ActiveRecord::Base
   end
 
   def make_money_transactions
-    MoneyTransactionService.new(self).call if self.requires_transaction
+    return unless self.requires_transaction
+    MoneyTransactionService.new(self).call
   end
 
   def requires_transaction
-    !%w('ReferralWallet', 'Wallet').include?self.type && !self.compounded
+    !self.compounded && self.type != 'Wallet' && self.type != 'ReferralWallet'
   end
   
   def adjust_balance(next_balance)

@@ -57,10 +57,10 @@
       <div class="col-md-12 col-md-offset-1 text-center animate-box">
           <div class="col-md-3 animate-box">
             <div class="price-box">
-              <h2 class="pricing-plan">Total Referrals</h2>
-              <div class="price">30<sup class="currency"></sup><small>Referrals</small></div>
+              <h2 class="pricing-plan">New Referrals</h2>
+              <div class="price"><%= current_user.total_referrals %><sup class="currency"></sup><small>Referrals</small></div>
 
-              <a href="#" class="btn btn-primary btn-outline">Join Business</a>
+              <a href="#" class="btn btn-primary btn-outline">View All</a>
             </div>
           </div>
 
@@ -75,11 +75,11 @@
           </div>
 
           <div class="col-md-3 animate-box">
-            <div class="price-box popular">
-              <h2 class="pricing-plan pricing-plan-offer">Investment<span>Count Down</span></h2>
-              <div class="price">30<sup class="currency">days</sup><small>Weekly Payments</small></div>
+            <div class="price-box">
+              <h2 class="pricing-plan">Total Referrals</h2>
+              <div class="price"><%= current_user.total_referrals %><sup class="currency"></sup><small>Referrals</small></div>
 
-              <a href="#" class="btn btn-primary btn-outline">Select Plan</a>
+              <a href="#" class="btn btn-primary btn-outline">View All</a>
             </div>
           </div>
 
@@ -110,6 +110,7 @@
                 <%= form_tag('donations', remote: true, format: :json) do %>
                     <h2> HOW MUCH IS YOUR DEPOSIT? <sup class="currency"></sup></h2><br/>
                     <%= hidden_field_tag(:user_id, current_user.id) %>
+                    <%= hidden_field_tag(:compounded, false) %>
                     <div class="price">
                       <%= number_field_tag(:amount, nil, class: 'btn btn-primary btn-outline') %><sup class="currency"></sup>
                     </div>

@@ -12,6 +12,7 @@
                     <%= f.hidden_field :user_id, :value => current_user.id %>
                   <div class="price">
                     <%= f.number_field(:amount, class: 'btn btn-primary btn-outline') %><sup class="currency"></sup>
+                    <%= f.hidden_field(:compounded, value: false) %>
                   </div>
                   <br/><br/>
 

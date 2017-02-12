@@ -2,7 +2,7 @@ FactoryGirl.define do
   factory :user do
     first_name 'First'
     last_name 'Last'
-    email 'first.last@rmail.com'
+    sequence(:email){ |e| "first.last#{e}@email.com" }
     roles_mask 3
     password 'P@ssword'
   end

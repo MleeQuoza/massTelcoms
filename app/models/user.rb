@@ -93,4 +93,16 @@ class User < ApplicationRecord
   def referral_link
     "http://#{ENV['DOMAIN_NAME']}/users/sign_up?ref=#{self.guid}"
   end
+  
+  def total_referrals
+    User.where(referer_guid: self.guid)
+  end
+  
+  def new_referrals
+    
+  end
+  
+  def non_compounded_donations
+    self.donations.where(compounded: false)
+  end
 end
