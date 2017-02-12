@@ -40,7 +40,9 @@
                             <%= hidden_field_tag(:donation_id, donation.id) %>
                             <%= submit_tag 'Compound',
                                            class:    'btn btn-primary btn-outline',
-                                             disabled: donation.profit < 300 %>
+                                           disabled: donation.profit < 1000 || donation.profit_counter < 7,
+                                           data: { confirm: 'Are you sure?' }
+                            %>
                           <% end %>
                         </td>
                         <td>
@@ -50,7 +52,8 @@
                             <%= hidden_field_tag(:donation_id, donation.id) %>
                             <%= submit_tag 'Checkout',
                                            class:    'btn btn-primary btn-outline',
-                                           disabled: donation.profit < 300 %>
+                                           disabled: donation.profit_counter < 7,
+                                           data: { confirm: 'Are you sure?' }%>
                           <% end %>
                         </td>
                       </tr>

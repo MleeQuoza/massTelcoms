@@ -99,7 +99,6 @@ class User < ApplicationRecord
   end
   
   def new_referrals
-    
   end
   
   def non_compounded_donations

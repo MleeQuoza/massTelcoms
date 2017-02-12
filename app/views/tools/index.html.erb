@@ -7,12 +7,6 @@
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
 
-<meta property="og:url"           content="http://community-wealth.herokuapp.com/dashboard" />
-<meta property="og:type"          content="website" />
-<meta property="og:title"         content="Community Wealth SA" />
-<meta property="og:description"   content="Tell your friends about CommunityWealth" />
-<meta property="og:image"         content="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Nizza-C%C3%B4te_d%27Azur.jpg/540px-Nizza-C%C3%B4te_d%27Azur.jpg" />
-
 <div id="fh5co-pricing-section" >
   <div class="container" >
     <div class="row">
@@ -24,10 +18,11 @@
                data-href=<%= "#{current_user.referral_link}"  %>
                data-layout="button_count">
           </div>
+
         </div>
         <div>
           <p style = "font-size: 50px; color: #FFFFFF">My Link</p>
-          <p><%= current_user.referral_link  %></p>
+          <h3><%= current_user.referral_link  %></h3>
         </div>
         <p><%= link_to 'Post Advert' %></p>
         <p><%= link_to 'Post Promo Video' %></p>
