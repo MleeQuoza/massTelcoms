@@ -19,13 +19,13 @@ class DonationsController < ApplicationController
         
         donation.save!
       end
-      
-      redirect_to user_donations_path(user_id: current_user.id), notice: 'Donation Successful'
+
+      render inline: 'location.reload();'
     else
       donation = MoneyRequestService.new(donation_params, { type: Donation.name }).call
       donation.save!
-      
-      redirect_to user_donations_path(user_id: current_user.id), notice: 'Donation Successful'
+
+      render inline: 'location.reload();'
     end
   end
 

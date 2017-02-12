@@ -1,3 +1,18 @@
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8&appId=1640441819592537";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<meta property="og:url"           content="http://community-wealth.herokuapp.com/dashboard" />
+<meta property="og:type"          content="website" />
+<meta property="og:title"         content="Community Wealth SA" />
+<meta property="og:description"   content="Tell your friends about CommunityWealth" />
+<meta property="og:image"         content="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Nizza-C%C3%B4te_d%27Azur.jpg/540px-Nizza-C%C3%B4te_d%27Azur.jpg" />
+
 <div id="fh5co-pricing-section" >
   <div class="container" >
     <div class="row">
@@ -5,7 +20,14 @@
         <h2 style = "font-size: 50px; color: #FFFFFF" > My Tools </h2>
         <div>
           <p>Invite To Join</p>
-          <div id="shareBtn" class="btn btn-success clearfix">Share to FB</div>
+          <div class="fb-share-button"
+               data-href="http://localhost:3000/users/"
+               data-layout="button_count">
+          </div>
+        </div>
+        <div>
+          <p style = "font-size: 50px; color: #FFFFFF">My Link</p>
+          <p><%= current_user.referral_link  %></p>
         </div>
         <p><%= link_to 'Post Advert' %></p>
         <p><%= link_to 'Post Promo Video' %></p>
@@ -14,15 +36,4 @@
   </div>
 </div>
 
-<script>
-  document.getElementById('shareBtn').onclick = function() {
-    $.ajaxSetup({ cache: true });
-    $.getScript('//connect.facebook.net/en_US/sdk.js', function () {
-      FB.ui({
-        method: 'share',
-        display: 'popup',
-        href: 'https://developers.facebook.com/docs/',
-      }, function(response){});
-    });
-  }
-</script>
+<div id="fb-root"></div>

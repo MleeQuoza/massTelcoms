@@ -90,4 +90,7 @@ class User < ApplicationRecord
     roles.include?(role.to_s)
   end
 
+  def referral_link
+    "http://#{ENV['DOMAIN_NAME']}/users/sign_up?ref=#{self.guid}"
+  end
 end

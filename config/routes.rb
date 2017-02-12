@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   resources :money_transactions, only: [:index]
   resources :tools
   resources :wallets, only: [:show]
-  devise_for :users
+  devise_for :users, controllers: { registrations: 'registrations' }
 
   match '/wallets/add/' => 'wallets#add_to_wallet', via: :post, as: 'add_to_wallet'
   match '/wallets/withdraw/' => 'wallets#withdraw_from_wallet', via: :post, as: 'withdraw_from_wallet'

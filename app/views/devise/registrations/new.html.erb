@@ -33,6 +33,7 @@
                   </div>
                   <br>
                   <div class='actions'>
+                    <%= f.hidden_field :referer_guid, :value => params[:refid] %>
                     <%= f.submit 'Sign up', class: 'btn btn-primary btn-outline' %>
                   </div>
               <% end %>
