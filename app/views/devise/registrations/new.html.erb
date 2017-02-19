@@ -24,6 +24,10 @@
                     <%= f.email_field :email, placeholder: 'Email' %>
                   </div>
                   <br>
+                  <div class="row ">
+                    <%= f.email_field :referrer_email, placeholder: 'Referrer Email' %>
+                  </div>
+                  <br>
                   <div class='row'>
                     <% if @minimum_password_length %>
                         <em>(<%= @minimum_password_length %> characters minimum)</em>

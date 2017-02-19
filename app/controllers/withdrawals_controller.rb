@@ -6,12 +6,16 @@ class WithdrawalsController < ApplicationController
   end
 
   def create
-    withdrawal = MoneyRequestService.new(withdrawals_params, {type: Withdrawal.name }).call
-
-    if withdrawal.save!
-      redirect_to dashboard_index_path, flash[:notice] => 'withdrawal Request Successful'
-    else
-      render 'new'
+    respond_to do |format|
+      withdrawal = MoneyRequestService.new(withdrawals_params, {type: Withdrawal.name }).call
+  
+      if withdrawal.save!
+        format.js { render inline: 'location.reload();' }
+        format.html { redirect_to dashboard_index_path, flash[:notice] => 'withdrawal Request Successful' }
+      else
+        format.js { render inline: 'location.reload();' }
+        format.html { render 'new' }
+      end
     end
   end
 
@@ -23,6 +27,6 @@ class WithdrawalsController < ApplicationController
   private
 
   def withdrawals_params
-    params.require(:withdrawal).permit(:user_id, :amount)
+    params.permit(:user_id, :amount)
   end
 end

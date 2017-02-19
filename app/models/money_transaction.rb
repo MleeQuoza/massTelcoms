@@ -5,7 +5,7 @@
 #  id               :integer          not null, primary key
 #  withdrawal_id    :integer          not null
 #  donation_id      :integer          not null
-#  status           :integer          default("1"), not null
+#  status           :integer          default("pending"), not null
 #  amount           :decimal(17, 4)
 #  proof_of_payment :text
 #  created_at       :datetime         not null
@@ -20,6 +20,10 @@ class MoneyTransaction < ActiveRecord::Base
 
   after_commit on: [:create] do
     adjust_balances
+  end
+  
+  after_commit on: [:update] do
+    adjust_statuses
   end
 
   def withdrawal_user_name
@@ -47,12 +51,20 @@ class MoneyTransaction < ActiveRecord::Base
   end
   
   def pending?
-    self.status == MoneyTransaction.statuses[:pending]
+    self.status == 1
   end
 
   private
   def adjust_balances
     MoneyRequestService.new.adjust_balances(self.donation, self.withdrawal, self.amount)
+  end
+
+  def adjust_statuses
+    donation = self.donation
+    donation.update(status: 2) if donation.request_complete?
+    
+    withdrawal = self.withdrawal
+    withdrawal.update(status: 2) if withdrawal.request_complete?
   end
 
 end

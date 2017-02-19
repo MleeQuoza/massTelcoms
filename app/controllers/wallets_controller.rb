@@ -14,6 +14,19 @@ class WalletsController < ApplicationController
     end
     redirect_to user_donations_path(user_id: current_user.id), notice: 'Checkout Complete'
   end
+
+  def add_bonus_to_wallet
+    Wallet.transaction do
+      user = User.find(wallet_params[:user_id])
+      paying_referrals = user.paying_referrals
+      paying_referrals.each{ |pr| pr.update(bonus_paid_out: true)}
+      
+      wallet = user.wallet
+      wallet.update!(amount: wallet.amount + wallet_params[:amount].to_d)
+      wallet.save!
+    end
+    redirect_to dashboard_index_path(user_id: current_user.id), notice: 'Checkout Complete'
+  end
   
   def withdraw_from_wallet
     Withdrawal.transaction do

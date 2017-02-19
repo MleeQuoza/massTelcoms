@@ -6,25 +6,28 @@ class DonationsController < ApplicationController
   end
 
   def create
+    d_params = donation_params
     respond_to do |format|
-      if donation_params[:compounded] && donation_params[:compounded].to_bool
+      if d_params[:compounded] && d_params[:compounded].to_bool
         
         Donation.transaction do
-          donation = Donation.find(donation_params[:donation_id])
-          donation.profit_from_date = Time.zone.now
-          
-          compounded_donation = MoneyRequestService.new(donation_params, { type: Donation.name }).call
+          compounded_donation = MoneyRequestService.new(d_params, { type: Donation.name }).call
           compounded_donation.maturity_date = Time.zone.now + 6.months
           compounded_donation.profit_from_date = Time.zone.now
           compounded_donation.compounded = true
           compounded_donation.save!
+
+          donation = Donation.find(d_params[:donation_id]) if d_params[:donation_id].present?
           
-          donation.save!
+          if donation.present?
+            donation.profit_from_date = Time.zone.now
+            donation.save!
+          end
         end
         format.js { render inline: 'location.reload();' }
         format.html { redirect_to user_donations_path(user_id: current_user.id) }
       else
-        donation = MoneyRequestService.new(donation_params, { type: Donation.name }).call
+        donation = MoneyRequestService.new(d_params, { type: Donation.name }).call
         donation.save!
 
         format.js { render inline: 'location.reload();' }

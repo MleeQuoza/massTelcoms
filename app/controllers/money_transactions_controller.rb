@@ -3,7 +3,7 @@ class MoneyTransactionsController < ApplicationController
   
   def index
     @donations = current_user.non_compounded_donations
-    @withdrawals = current_user.withdrawals
+    @withdrawals = current_user.pending_withdrawals
   end
   
   def toggle_transaction_status

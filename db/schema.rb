@@ -10,10 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170212144736) do
+ActiveRecord::Schema.define(version: 20170219175557) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "adverts", force: :cascade do |t|
+    t.text     "title"
+    t.text     "image_url"
+    t.text     "advert_body"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
 
   create_table "money_requests", force: :cascade do |t|
     t.integer  "user_id",                                                   null: false
@@ -50,6 +58,15 @@ ActiveRecord::Schema.define(version: 20170212144736) do
     t.datetime "updated_at",          null: false
   end
 
+  create_table "referrals", force: :cascade do |t|
+    t.integer  "referrer_id",                                             null: false
+    t.integer  "referee_id",                                              null: false
+    t.boolean  "bonus_paid_out",                          default: false, null: false
+    t.decimal  "bonus_amount",   precision: 17, scale: 4
+    t.datetime "created_at",                                              null: false
+    t.datetime "updated_at",                                              null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
@@ -69,6 +86,7 @@ ActiveRecord::Schema.define(version: 20170212144736) do
     t.datetime "updated_at",                          null: false
     t.text     "guid",                                null: false
     t.text     "referer_guid"
+    t.text     "referrer_email"
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
