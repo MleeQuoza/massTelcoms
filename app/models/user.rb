@@ -127,6 +127,10 @@ class User < ApplicationRecord
     self.new_referees.where('bonus_amount > 0 AND bonus_paid_out = false')
   end
   
+  def total_referees
+    Referral.where(referrer_id: self.id)
+  end
+  
   def referral_bonus
     paying_referrals = self.paying_referrals
     
@@ -137,6 +141,6 @@ class User < ApplicationRecord
   end
   
   def pending_withdrawals
-    self.withdrawals.where('status: 1')
+    self.withdrawals.where('status = 1')
   end
 end
