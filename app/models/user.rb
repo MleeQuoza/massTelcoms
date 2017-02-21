@@ -32,6 +32,7 @@ class User < ApplicationRecord
 
   validates :last_name, presence: :true
   validates :first_name, presence: :true
+  validate :referral_email_is_not_own_email
   
   has_one :wallet
   has_one :referral_wallet
@@ -142,5 +143,11 @@ class User < ApplicationRecord
   
   def pending_withdrawals
     self.withdrawals.where('status = 1')
+  end
+  
+  def referral_email_is_not_own_email
+    if referrer_email.present? && referrer_email == email
+      errors.add(:referrer_email, 'cannot be the same as your email')
+    end
   end
 end
