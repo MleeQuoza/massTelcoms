@@ -18,7 +18,7 @@
     </div>
   </div>
 </div>
-
+<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle"><i></i></a>
 <aside id="fh5co-aside" role="complementary" class="border js-fullheight">
   <br/>
   <h1 id="fh5co-logo"><%= link_to image_tag('Coat_of_arms_of_South_Africa.png', :alt => 'Community Wealth SA 2017'), root_path %></h1>
@@ -45,7 +45,7 @@
           <li class=<%= "fh5co-active" if params[:controller] == 'devise/sessions' %>><%= link_to 'LOGIN', user_session_path %></li>
           <li class=<%= "fh5co-active" if params[:controller] == 'devise/registrations' %>><%= link_to 'SIGN UP', new_user_registration_path %></li>
       <% end %>
-      <li  class=<%= "fh5co-active" if params[:controller] == 'welcome'&& params[:action] == 'terms' %>><%= link_to 'Terms & Conditions', terms_path %> </li>
+      <li  class=<%= "fh5co-active" if params[:controller] == 'welcome' && params[:action] == 'terms' %>><%= link_to 'Terms & Conditions', terms_path %> </li>
       <br/>
     </ul>
   </nav>
