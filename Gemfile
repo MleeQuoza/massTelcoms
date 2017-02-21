@@ -13,9 +13,6 @@ gem 'selenium-webdriver'
 gem 'time_difference', '~> 0.5.0'
 gem 'aws-sdk-rails'
 
-# Use Unicorn as the app server
-gem 'unicorn'
-
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.2'
@@ -30,6 +27,10 @@ gem 'sidekiq-cron'
 # gem 'capistrano-rails', group: :development
 group :production do
   gem 'unicorn'
+end
+
+group :heroku do
+  gem 'puma'
 end
 
 group :development, :test do
