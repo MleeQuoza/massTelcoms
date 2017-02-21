@@ -12,34 +12,45 @@
             <div class="price-box" style="overflow-x:auto;">
 
               <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-                  <%= devise_error_messages! %>
-                  <br>
-                  <div class="row ">
-                    <%= f.text_field :first_name, autofocus: true, placeholder: 'First Name' %>
-                    <%= f.text_field :last_name, placeholder: 'Last Name' %>
-                  </div>
-                  <br>
-                  <div class="row ">
-                    <%= f.text_field :cellphone, placeholder: 'Cellphone' %>
-                    <%= f.email_field :email, placeholder: 'Email' %>
-                  </div>
-                  <br>
-                  <div class="row ">
-                    <%= f.email_field :referrer_email, placeholder: 'Referrer Email' %>
-                  </div>
-                  <br>
-                  <div class='row'>
-                    <% if @minimum_password_length %>
-                        <em>(<%= @minimum_password_length %> characters minimum)</em>
-                    <% end %><br/>
-                    <%= f.password_field :password, placeholder: 'Password', autocomplete: 'off' %>
-                    <%= f.password_field :password_confirmation, placeholder: 'Confirm Password', autocomplete: 'off' %>
-                  </div>
-                  <br>
-                  <div class='actions'>
-                    <%= f.hidden_field :referer_guid, :value => params[:ref] %>
-                    <%= f.submit 'Sign up', class: 'btn btn-primary btn-outline' %>
-                  </div>
+                <%= devise_error_messages! %>
+                <br>
+                <div class="row ">
+                  <%= f.text_field :first_name, autofocus: true, placeholder: 'First Name' %>
+                  <%= f.text_field :last_name, placeholder: 'Last Name' %>
+                </div>
+                <br>
+                <div class="row ">
+                  <%= f.text_field :cellphone, placeholder: 'Cellphone' %>
+                  <%= f.email_field :email, placeholder: 'Email' %>
+                </div>
+                <br>
+                <div class="row ">
+                  <%= f.email_field :referrer_email, placeholder: 'Referrer Email' %>
+                </div>
+                <br>
+                  <% if current_user.present? && current_user.is?('admin') %>
+                    <div class="form-group">
+                      <% for role in User::ROLES %>
+                        <div class="checkbox-inline">
+                          <%= radio_button_tag "user[roles][#{role}]", role, @user.roles.include?(role), { name: 'user[roles][]' }%>
+                          <%= label_tag "user_roles_#{role}", role.humanize %>
+                        </div>
+                      <% end %>
+                      <%= hidden_field_tag 'user[roles][]', '' %>
+                    </div>
+                  <% end %>
+                <div class='row'>
+                  <% if @minimum_password_length %>
+                      <em>(<%= @minimum_password_length %> characters minimum)</em>
+                  <% end %><br/>
+                  <%= f.password_field :password, placeholder: 'Password', autocomplete: 'off' %>
+                  <%= f.password_field :password_confirmation, placeholder: 'Confirm Password', autocomplete: 'off' %>
+                </div>
+                <br>
+                <div class='actions'>
+                  <%= f.hidden_field :referer_guid, :value => params[:ref] %>
+                  <%= f.submit 'Sign up', class: 'btn btn-primary btn-outline' %>
+                </div>
               <% end %>
 
               <%= render 'devise/shared/links' %>

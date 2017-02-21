@@ -30,6 +30,20 @@
                     </tr>
 
                     <tr>
+                      <% if current_user.present? && current_user.is?('admin') %>
+                        <div class="form-group">
+                          <% for role in User::ROLES %>
+                              <div class="checkbox-inline">
+                                <%= radio_button_tag "user[roles][#{role}]", role, @user.roles.include?(role), { name: 'user[roles][]' }%>
+                                <%= label_tag "user_roles_#{role}", role.humanize %>
+                              </div>
+                          <% end %>
+                          <%= hidden_field_tag 'user[roles][]', '' %>
+                        </div>
+                      <% end %>
+                    </tr>
+
+                    <tr>
                       <th class="pricing-plan">E-mail</th>
                       <td><%= f.email_field :email, class: 'form-control', required: 'required' %></td>
                     </tr>
