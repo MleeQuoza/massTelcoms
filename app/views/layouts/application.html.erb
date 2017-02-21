@@ -25,18 +25,26 @@
   <nav id="fh5co-main-menu" role="navigation">
     <ul>
       <% if user_signed_in? %>
-          <li class=<%= "fh5co-active" if params[:controller] == 'dashboard' %>><%= link_to 'Dashboard', dashboard_index_path %></li>
-          <% if current_user.payment_account.present? %>
-              <li class=<%= "fh5co-active" if params[:controller] == 'payment_accounts' %>><%= link_to 'Bank Account', edit_payment_account_path(current_user.payment_account) %></a></li>
-          <% else %>
-              <li class=<%= "fh5co-active" if params[:controller] == 'payment_accounts' %>><%= link_to 'Bank Account', new_payment_account_path %></a></li>
+          <% if current_user.is?('admin') %>
+              <li class=<%= "fh5co-active" if params[:controller] == 'dashboard' %>><%= link_to 'Dashboard', dashboard_admin_path %></li>
+              <li class=<%= "fh5co-active" if params[:controller] == 'dashboard' %>><%= link_to 'Transactions', money_transactions_path %></li>
+              <li class=<%= "fh5co-active" if params[:controller] == 'dashboard' %>><%= link_to 'Announcements', dashboard_admin_path %></li>
+              <li class=<%= "fh5co-active" if params[:controller] == 'dashboard' %>><%= link_to 'Adverts', adverts_path %></li>
+            <% else %>
+              <li class=<%= "fh5co-active" if params[:controller] == 'dashboard' %>><%= link_to 'Dashboard', dashboard_index_path %></li>
+              <% if current_user.payment_account.present? %>
+                  <li class=<%= "fh5co-active" if params[:controller] == 'payment_accounts' %>><%= link_to 'Bank Account', edit_payment_account_path(current_user.payment_account) %></a></li>
+              <% else %>
+                  <li class=<%= "fh5co-active" if params[:controller] == 'payment_accounts' %>><%= link_to 'Bank Account', new_payment_account_path %></a></li>
+              <% end %>
+              <li class=<%= "fh5co-active" if params[:controller] == 'devise/registrations' %>><%= link_to 'User Profile', edit_user_registration_path %></li>
+              <li class=<%= "fh5co-active" if params[:controller] == 'donations' %>><%= link_to 'Donations', user_donations_path(user_id: current_user.id) %></li>
+              <li class=<%= "fh5co-active" if params[:controller] == 'withdrawals' %>><%= link_to 'Withdrawals', user_withdrawals_path(user_id: current_user.id) %></li>
+              <li class=<%= "fh5co-active" if params[:controller] == 'money_transactions' %>><%= link_to 'Transactions', money_transactions_path %></li>
+              <li class=<%= "fh5co-active" if params[:controller] == 'tools' %>><%= link_to 'Tools', tools_path %></li>
+              <li class=<%= "fh5co-active" if params[:controller] == 'wallets' %>><%= link_to 'Wallet', wallet_path(id: current_user.id) %></li>
           <% end %>
-          <li class=<%= "fh5co-active" if params[:controller] == 'devise/registrations' %>><%= link_to 'User Profile', edit_user_registration_path %></li>
-          <li class=<%= "fh5co-active" if params[:controller] == 'donations' %>><%= link_to 'Donations', user_donations_path(user_id: current_user.id) %></li>
-          <li class=<%= "fh5co-active" if params[:controller] == 'withdrawals' %>><%= link_to 'Withdrawals', user_withdrawals_path(user_id: current_user.id) %></li>
-          <li class=<%= "fh5co-active" if params[:controller] == 'money_transactions' %>><%= link_to 'Transactions', money_transactions_path %></li>
-          <li class=<%= "fh5co-active" if params[:controller] == 'tools' %>><%= link_to 'Tools', tools_path %></li>
-          <li class=<%= "fh5co-active" if params[:controller] == 'wallets' %>><%= link_to 'Wallet', wallet_path(id: current_user.id) %></li>
+
           <li><%= link_to 'Logout', destroy_user_session_path, method: :delete %></li>
       <% else %>
           <li class=<%= "fh5co-active" if params[:controller] == 'welcome'  && params[:action] == 'home'%>><%= link_to 'HOME', root_path %></li>
@@ -45,7 +53,7 @@
           <li class=<%= "fh5co-active" if params[:controller] == 'devise/sessions' %>><%= link_to 'LOGIN', user_session_path %></li>
           <li class=<%= "fh5co-active" if params[:controller] == 'devise/registrations' %>><%= link_to 'SIGN UP', new_user_registration_path %></li>
       <% end %>
-      <li  class=<%= "fh5co-active" if params[:controller] == 'welcome' && params[:action] == 'terms' %>><%= link_to 'Terms & Conditions', terms_path %> </li>
+      <li  class=<%= "fh5co-active" if params[:controller] == 'welcome' && params[:action] == 'terms' %>><%= link_to "T's and C's", terms_path %> </li>
       <br/>
     </ul>
   </nav>
