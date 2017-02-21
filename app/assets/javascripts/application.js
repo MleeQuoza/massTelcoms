@@ -22,3 +22,12 @@
 //= require libs/marquee.js
 //= require libs/respond.min-.js
 //= require_tree .
+
+function myFunction() {
+  var x = document.getElementById('myDIV');
+  if (x.style.display === 'none') {
+    x.style.display = 'block';
+  } else {
+    x.style.display = 'none';
+  }
+}
