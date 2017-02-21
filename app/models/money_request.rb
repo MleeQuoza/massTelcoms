@@ -2,17 +2,18 @@
 #
 # Table name: money_requests
 #
-#  id            :integer          not null, primary key
-#  user_id       :integer          not null
-#  type          :text
-#  amount        :decimal(17, 4)
-#  balance       :decimal(17, 4)
-#  status        :integer          default("1"), not null
-#  maturity_date :date
-#  matured       :boolean
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
-#  compounded    :boolean          default("false")
+#  id               :integer          not null, primary key
+#  user_id          :integer          not null
+#  type             :text
+#  amount           :decimal(17, 4)
+#  balance          :decimal(17, 4)
+#  status           :integer          default("pending"), not null
+#  maturity_date    :date
+#  matured          :boolean
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  compounded       :boolean          default(FALSE)
+#  profit_from_date :datetime
 #
 
 class MoneyRequest < ActiveRecord::Base
@@ -23,11 +24,12 @@ class MoneyRequest < ActiveRecord::Base
   end
 
   def make_money_transactions
-    MoneyTransactionService.new(self).call if self.requires_transaction
+    return unless self.requires_transaction
+    MoneyTransactionService.new(self).call
   end
 
   def requires_transaction
-    !%w('ReferralWallet', 'Wallet').include?self.type && !self.compounded
+    !self.compounded && self.type != 'Wallet' && self.type != 'ReferralWallet'
   end
   
   def adjust_balance(next_balance)

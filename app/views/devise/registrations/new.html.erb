@@ -24,6 +24,10 @@
                     <%= f.email_field :email, placeholder: 'Email' %>
                   </div>
                   <br>
+                  <div class="row ">
+                    <%= f.email_field :referrer_email, placeholder: 'Referrer Email' %>
+                  </div>
+                  <br>
                   <div class='row'>
                     <% if @minimum_password_length %>
                         <em>(<%= @minimum_password_length %> characters minimum)</em>
@@ -33,6 +37,7 @@
                   </div>
                   <br>
                   <div class='actions'>
+                    <%= f.hidden_field :referer_guid, :value => params[:ref] %>
                     <%= f.submit 'Sign up', class: 'btn btn-primary btn-outline' %>
                   </div>
               <% end %>

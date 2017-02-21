@@ -12,12 +12,22 @@
             <div class="price-box" style="overflow-x:auto;">
               <h2 class="pricing-plan"> Viewing Wallet </h2>
                 <h4>Wallet Balance: <%= number_to_currency(current_user.wallet.amount, unit: 'R ', precision: 2) %></h4>
-                <%= button_to 'Withdraw',
-                            withdraw_from_wallet_path,
-                            class: 'btn btn-primary btn-outline',
-                            method: :post,
-                            disabled: current_user.wallet.amount < 300
-                %>
+              <button type="submit"
+                      name="submit"
+                      class="btn btn-primary btn-outline"
+                      required="required"
+                      data-toggle="modal"
+                      data-target="#withdraw"
+                      disabled="<%= current_user.wallet.amount < 300 %>"
+              >Withdraw</button>
+              <button type="submit"
+                      name="submit"
+                      class="btn btn-primary btn-outline"
+                      required="required"
+                      data-toggle="modal"
+                      data-target="#compound"
+                      disabled="<%= current_user.wallet.amount < 1000 %>"
+              >Compound</button>
             </div>
           </div>
         </div>
@@ -27,4 +37,64 @@
 </div>
 </div>
 </div>
+</div>
+
+<div class="modal fade" id="withdraw" role="dialog">
+  <div id="fh5co-pricing-section" >
+    <div class="container" >
+      <div class="row">
+        <div class="col-md-12 col-md-offset-3 text-center animate-box">
+          <div class="pricing">
+            <div class="col-md-8 animate-box">
+              <div class="price-box">
+                <h2 class="pricing-plan"><%= image_tag('deposit.png', :alt => 'Community Wealth SA 2017') %></h2>
+                <%= form_tag('/withdrawals', remote: true, format: :json) do %>
+                    <h2> HOW MUCH DO YOU WANT TO WITHDRAW?</h2><br/>
+                    <%= hidden_field_tag(:user_id, current_user.id) %>
+                    <div class="price">
+                      <%= number_field_tag(:amount, nil, class: 'btn btn-primary btn-outline') %><sup class="currency"></sup>
+                    </div>
+                    <br/><br/>
+
+                    <button type="button" class="btn btn-primary btn-outline" style="" required="required" data-dismiss="modal" >Cancel</button>
+                    <%= submit_tag 'Approve', class: 'btn btn-primary btn-outline', required: 'required', data: { toggle: 'modal', target: '#Deposit' }%>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="compound" role="dialog">
+  <div id="fh5co-pricing-section" >
+    <div class="container" >
+      <div class="row">
+        <div class="col-md-12 col-md-offset-3 text-center animate-box">
+          <div class="pricing">
+            <div class="col-md-8 animate-box">
+              <div class="price-box">
+                <h2 class="pricing-plan"><%= image_tag('deposit.png', :alt => 'Community Wealth SA 2017') %></h2>
+                <%= form_tag('/donations', remote: true, format: :json) do %>
+                    <h2> HOW MUCH DO YOU WANT TO COMPOUND?</h2><br/>
+                    <%= hidden_field_tag(:user_id, current_user.id) %>
+                    <%= hidden_field_tag(:compounded, true) %>
+                    <div class="price">
+                      <%= number_field_tag(:amount, nil, class: 'btn btn-primary btn-outline') %><sup class="currency"></sup>
+                    </div>
+                    <br/><br/>
+
+                    <button type="button" class="btn btn-primary btn-outline" required="required" data-dismiss="modal" >Cancel</button>
+                    <%= submit_tag 'Approve', class: 'btn btn-primary btn-outline', required: 'required', data: { toggle: 'modal', target: '#Deposit' }%>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

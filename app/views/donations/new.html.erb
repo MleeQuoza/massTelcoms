@@ -12,10 +12,11 @@
                     <%= f.hidden_field :user_id, :value => current_user.id %>
                   <div class="price">
                     <%= f.number_field(:amount, class: 'btn btn-primary btn-outline') %><sup class="currency"></sup>
+                    <%= f.hidden_field(:compounded, value: false) %>
                   </div>
                   <br/><br/>
 
-                  <button type="submit" name="submit" class="btn btn-primary btn-outline" style="" required="required" data-toggle="modal" data-target="#Deposit" >Cancel</button>
+                  <button type="button" class="btn btn-primary btn-outline" style="" required="required" data-dismiss="modal" >Cancel</button>
                   <%= f.submit('Approve', class: 'btn btn-primary btn-outline', required: 'required') %>
                 <% end %>
               </div>

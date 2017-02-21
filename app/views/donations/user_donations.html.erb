@@ -17,7 +17,7 @@
                     <th>Created Date</th>
                     <th>Expiry Date</th>
                     <th>Amount</th>
-                    <th>Months Invested</th>
+                    <th>Months<br>Invested</th>
                     <th>Counter</th>
                     <th>Profit</th>
                     <th>Compound</th>
@@ -30,7 +30,7 @@
                         <td><%= (donation.maturity_date).strftime('%d/%m/%Y') %></td>
                         <td><%= number_to_currency(donation.amount, unit: 'R ', precision: 2) %></td>
                         <td><%= donation.months_invested %></td>
-                        <td><%= number_with_precision(donation.profit_counter, significant: true) %></td>
+                        <td><%= number_with_precision(donation.profit_counter, precision: 0) %></td>
                         <td><%= number_to_currency(donation.profit, unit: 'R ', precision: 2) %></td>
                         <td>
                           <%= form_tag(donations_path) do %>
@@ -40,7 +40,9 @@
                             <%= hidden_field_tag(:donation_id, donation.id) %>
                             <%= submit_tag 'Compound',
                                            class:    'btn btn-primary btn-outline',
-                                             disabled: donation.profit < 300 %>
+                                           disabled: donation.profit < 1000 || donation.profit_counter < 7,
+                                           data: { confirm: 'Are you sure?' }
+                            %>
                           <% end %>
                         </td>
                         <td>
@@ -50,7 +52,8 @@
                             <%= hidden_field_tag(:donation_id, donation.id) %>
                             <%= submit_tag 'Checkout',
                                            class:    'btn btn-primary btn-outline',
-                                           disabled: donation.profit < 300 %>
+                                           disabled: donation.profit_counter < 7,
+                                           data: { confirm: 'Are you sure?' }%>
                           <% end %>
                         </td>
                       </tr>
@@ -134,7 +137,7 @@
             <div class="col-md-8 animate-box">
               <div class="price-box">
                 <h2 class="pricing-plan"><%= image_tag('deposit.png', :alt => 'Community Wealth SA 2017') %></h2>
-                <%= form_tag('donations', remote: true, format: :json) do %>
+                <%= form_tag('/donations', remote: true, format: :json) do %>
                     <h2> HOW MUCH IS YOUR DEPOSIT? <sup class="currency"></sup></h2><br/>
                     <%= hidden_field_tag(:user_id, current_user.id) %>
                     <div class="price">

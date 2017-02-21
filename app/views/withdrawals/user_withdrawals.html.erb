@@ -16,12 +16,14 @@
                     <thead>
                     <th>Created Date</th>
                     <th>Amount</th>
+                    <th>Status</th>
                     </thead>
                     <tbody>
                     <% @withdrawals.each do |withdrawal| %>
                         <tr>
                           <td><%= withdrawal.created_at.strftime('%d/%m/%Y') %></td>
-                          <td>R <%= withdrawal.amount %></td>
+                          <td><%= number_to_currency(withdrawal.amount, unit: 'R', precision: 2) %></td>
+                          <td><%= withdrawal.status %></td>
                         </tr>
                     <% end %>
                     </tbody>

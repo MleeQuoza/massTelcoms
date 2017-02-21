@@ -6,26 +6,33 @@ class DonationsController < ApplicationController
   end
 
   def create
-    if donation_params[:compounded]
-      
-      Donation.transaction do
-        donation = Donation.find(donation_params[:donation_id])
-        donation.profit_from_date = Time.zone.now
+    d_params = donation_params
+    respond_to do |format|
+      if d_params[:compounded] && d_params[:compounded].to_bool
         
-        compounded_donation = MoneyRequestService.new(donation_params, { type: Donation.name }).call
-        compounded_donation.maturity_date = Time.zone.now + 6.months
-        compounded_donation.profit_from_date = Time.zone.now
-        compounded_donation.save!
-        
+        Donation.transaction do
+          compounded_donation = MoneyRequestService.new(d_params, { type: Donation.name }).call
+          compounded_donation.maturity_date = Time.zone.now + 6.months
+          compounded_donation.profit_from_date = Time.zone.now
+          compounded_donation.compounded = true
+          compounded_donation.save!
+
+          donation = Donation.find(d_params[:donation_id]) if d_params[:donation_id].present?
+          
+          if donation.present?
+            donation.profit_from_date = Time.zone.now
+            donation.save!
+          end
+        end
+        format.js { render inline: 'location.reload();' }
+        format.html { redirect_to user_donations_path(user_id: current_user.id) }
+      else
+        donation = MoneyRequestService.new(d_params, { type: Donation.name }).call
         donation.save!
+
+        format.js { render inline: 'location.reload();' }
+        format.html { redirect_to user_donations_path(user_id: current_user.id) }
       end
-      
-      redirect_to user_donations_path(user_id: current_user.id), notice: 'Donation Successful'
-    else
-      donation = MoneyRequestService.new(donation_params, { type: Donation.name }).call
-      donation.save!
-      
-      redirect_to user_donations_path(user_id: current_user.id), notice: 'Donation Successful'
     end
   end
 

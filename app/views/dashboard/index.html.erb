@@ -10,9 +10,9 @@
         <div class="pricing">
           <div class="col-md-3 animate-box">
             <div class="price-box">
-              <h2 class="pricing-plan">Last Donation</h2>
+              <h2 class="pricing-plan">Donation Total</h2>
               <div class="price"><sup class="currency">
-                <%= current_user.current_donation.present? ? number_to_currency(current_user.current_donation.amount, unit: 'R ', precision: 2) : 0 %>
+                <%= number_to_currency(current_user.donation_total, unit: 'R ', precision: 2) %>
               </sup>
               <small>
                 Exp <%= (number_with_precision((6 - current_user.current_donation.months_invested), precision: 0)) if current_user.current_donation.present? %> months
@@ -57,10 +57,10 @@
       <div class="col-md-12 col-md-offset-1 text-center animate-box">
           <div class="col-md-3 animate-box">
             <div class="price-box">
-              <h2 class="pricing-plan">Total Referrals</h2>
-              <div class="price">30<sup class="currency"></sup><small>Referrals</small></div>
+              <h2 class="pricing-plan">New Referrals</h2>
+              <div class="price"><%= current_user.new_referees.count %><sup class="currency"></sup><small>Referrals</small></div>
 
-              <a href="#" class="btn btn-primary btn-outline">Join Business</a>
+              <a href="#" class="btn btn-primary btn-outline">View All</a>
             </div>
           </div>
 
@@ -68,18 +68,25 @@
           <div class="col-md-3 animate-box">
             <div class="price-box">
               <h2 class="pricing-plan">Referral Bonus</h2>
-              <div class="price"><sup class="currency">R10 000.00</sup><small>10% per referral</small></div>
+              <div class="price"><sup class="currency"><%= number_to_currency(current_user.referral_bonus, unit: 'R ', precision: 2) %></sup><small>10% per referral</small></div>
 
-              <a href="#" class="btn btn-primary btn-outline">Check Out</a>
+              <%= form_tag(add_bonus_to_wallet_path) do %>
+                  <%= hidden_field_tag(:user_id, current_user.id) %>
+                  <%= hidden_field_tag(:amount, current_user.referral_bonus) %>
+                  <%= submit_tag 'Checkout',
+                                 class:    'btn btn-primary btn-outline',
+                                 disabled: current_user.referral_bonus < 1000,
+                                 data: { confirm: 'Are you sure?' }%>
+              <% end %>
             </div>
           </div>
 
           <div class="col-md-3 animate-box">
-            <div class="price-box popular">
-              <h2 class="pricing-plan pricing-plan-offer">Investment<span>Count Down</span></h2>
-              <div class="price">30<sup class="currency">days</sup><small>Weekly Payments</small></div>
+            <div class="price-box">
+              <h2 class="pricing-plan">Total Referrals</h2>
+              <div class="price"><%= current_user.total_referees.count %><sup class="currency"></sup><small>Referrals</small></div>
 
-              <a href="#" class="btn btn-primary btn-outline">Select Plan</a>
+              <a href="#" class="btn btn-primary btn-outline">View All</a>
             </div>
           </div>
 
@@ -110,12 +117,13 @@
                 <%= form_tag('donations', remote: true, format: :json) do %>
                     <h2> HOW MUCH IS YOUR DEPOSIT? <sup class="currency"></sup></h2><br/>
                     <%= hidden_field_tag(:user_id, current_user.id) %>
+                    <%= hidden_field_tag(:compounded, false) %>
                     <div class="price">
                       <%= number_field_tag(:amount, nil, class: 'btn btn-primary btn-outline') %><sup class="currency"></sup>
                     </div>
                     <br/><br/>
 
-                    <button type="submit" name="submit" class="btn btn-primary btn-outline" style="" required="required" data-toggle="modal" data-target="#Deposit" >Cancel</button>
+                    <button type="button" class="btn btn-primary btn-outline" style="" required="required" data-dismiss="modal" >Cancel</button>
                     <%= submit_tag 'Approve', class: 'btn btn-primary btn-outline', required: 'required', data: { toggle: 'modal', target: '#Deposit' }%>
                 <% end %>
               </div>
