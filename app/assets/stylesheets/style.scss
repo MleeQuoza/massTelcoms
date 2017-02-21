@@ -1267,7 +1267,7 @@ body.offcanvas #fh5co-main, body.offcanvas .fh5co-nav-toggle {
   font: bold 14px/.4 Helvetica;
   text-transform: uppercase;
   text-indent: -55px;
-  background: #000;
+  background: #fff;
   transition: all .2s ease-out;
 }
 
@@ -1275,7 +1275,7 @@ body.offcanvas #fh5co-main, body.offcanvas .fh5co-nav-toggle {
   content: '';
   width: 30px;
   height: 2px;
-  background: #000;
+  background: #fff;
   position: absolute;
   left: 0;
   -webkit-transition: 0.2s;
@@ -1286,7 +1286,7 @@ body.offcanvas #fh5co-main, body.offcanvas .fh5co-nav-toggle {
 .fh5co-nav-toggle.dark i {
   position: relative;
   color: #000;
-  background: #000;
+  background: #fff;
   transition: all .2s ease-out;
 }
 

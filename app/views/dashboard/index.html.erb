@@ -92,10 +92,10 @@
 
           <div class="col-md-3 animate-box">
             <div class="price-box popular">
-              <h2 class="pricing-plan pricing-plan-offer">Business<span>Advertise Here</span></h2>
-              <div class="price"><sup class="currency">3 ADVERTS</sup><small>Available</small></div>
+              <h2 class="pricing-plan pricing-plan-offer">Advertise Here<span></span></h2>
+              <div <sup class="currency"> 0 Posted <br/> 0 Approved <br/> 0 Pending <br/></sup><small>Free adverts</small></div>
 
-              <a href="#" class="btn btn-primary btn-outline">Advertise</a>
+              <a href="#" class="btn btn-primary btn-outline" required="required" data-toggle="modal" data-target="#advert" >Advertise</a>
             </div>
           </div>
 
@@ -147,6 +147,47 @@
                 <h2 class="pricing-plan"><%= image_tag('deposit.png', :alt => 'Community Wealth SA 2017') %></h2>
                 <button type="submit" name="submit" class="btn btn-primary btn-outline" style=" " required="required" data-toggle="modal" data-target="#InterestRate" >Cancel</button>
                 <button type="submit" name="submit" class="btn btn-primary btn-outline" style=" " required="required" data-toggle="modal" data-target="#InterestRate">Approve</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="advert" role="dialog">
+  <div id="fh5co-pricing-section" >
+    <div class="container" >
+      <div class="row">
+        <div class="col-md-12 col-md-offset-3 text-center animate-box">
+          <div class="pricing">
+            <div class="col-md-8 animate-box">
+              <div class="price-box">
+                <h2 class="pricing-plan"></h2>
+                <%= form_tag('donations', remote: true, format: :json) do %>
+                    <h2> PLEASE ENTER YOUR AD DETAILS HERE <sup class="currency"></sup></h2><br/>
+                    <%= hidden_field_tag(:user_id, current_user.id) %>
+                    <%= hidden_field_tag(:compounded, false) %>
+                    <div class="price">
+                      <%= text_field_tag(:amount, nil, class: 'btn btn-primary btn-outline') %><sup class="currency"></sup>
+                    </div>
+                    <div class="price">
+                     <center>
+                      <%= file_field_tag(:amount, {class: 'btn btn-primary btn-outline resize'}) %><sup class="currency"></sup>
+                      </center>
+                    </div>
+                     <div class="price">
+                      <%= text_area_tag(:amount, nil, {class: 'btn btn-primary btn-outline', rows: 5, cols: 20 }) %><sup class="currency"></sup>
+                    </div>
+                     <div class="price">
+                      <%= number_field_tag(:amount, nil, class: 'btn btn-primary btn-outline') %><sup class="currency"></sup>
+                    </div>
+                    <br/><br/>
+
+                    <button type="button" class="btn btn-primary btn-outline" style="" required="required" data-dismiss="modal" >Cancel</button>
+                    <%= submit_tag 'Approve', class: 'btn btn-primary btn-outline', required: 'required', data: { toggle: 'modal', target: '#advert' }%>
+                <% end %>
               </div>
             </div>
           </div>
