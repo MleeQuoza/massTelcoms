@@ -11,6 +11,9 @@
           <div class="col-md-12 animate-box">
             <div class="price-box" style="overflow-x:auto;">
               <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+                  <% flash.each do |key, value| %>
+                      <p class="flash <%= key %>"><%= value %></p>
+                  <% end %>
                   <div class="field">
                     <%= f.label :email %><br/>
                     <%= f.email_field :email, autofocus: true %>
@@ -29,7 +32,7 @@
                   <% end -%>
 
                   <div class="actions">
-                    <%= f.submit "Log in" %>
+                    <%= f.submit 'Log in', class: 'btn btn-primary btn-outline' %>
                   </div>
               <% end %>
 

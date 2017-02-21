@@ -119,7 +119,7 @@
                     <%= hidden_field_tag(:user_id, current_user.id) %>
                     <%= hidden_field_tag(:compounded, false) %>
                     <div class="price">
-                      <%= number_field_tag(:amount, nil, class: 'btn btn-primary btn-outline') %><sup class="currency"></sup>
+                      <%= number_field_tag(:amount, nil, class: 'btn btn-primary btn-outline', required: true) %><sup class="currency"></sup>
                     </div>
                     <br/><br/>
 
