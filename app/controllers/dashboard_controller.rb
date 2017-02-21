@@ -8,6 +8,7 @@ class DashboardController < ApplicationController
       render 'dashboard/index'
     end
   end
+  
   def profile
     @payment_account = current_user.bank_account
   end
