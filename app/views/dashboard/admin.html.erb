@@ -11,7 +11,7 @@
           <div class="col-md-10 animate-box">
             <div class="price-box" style="overflow-x:auto;">
               <h2 class="pricing-plan"> UNPAID DONATIONS </h2>
-              <h2 class="price"> R 10 000 </h2>
+              <h2 class="price"> <%= unpaid_transactions_total(@money_transactions) %> </h2>
               <table style="overflow-x:auto;">
                 <tr>
                   <th>Date</th>
@@ -22,17 +22,20 @@
                   <th>Buy Time</th>
                   <th>New Donor</th>
                 </tr>
-                <tr>
-                  <td class="pricing-plan"> 01/01/2017 </td>
-                  <td class="pricing-plan"> Mlindisi </td>
-                  <td class="pricing-plan"> Sandile </td>
-                  <td class="pricing-plan">R 10 000 </td>
-                  <td class="pricing-plan"><input type="number" name="hours" style ="width: 50%; padding: 9px 10px;	margin: 8px 0;
-                      box-sizing: border-box;	border: 2px solid red;	border-radius: 4px;"></td>
-                  <td><a href="#" class="btn btn-primary btn-outline">Increase Time</a></td>
-                  <td><a href="#" class="btn btn-primary btn-outline">Reject Donor</a></td>
-                </tr>
-
+                <% if @money_transactions.present? %>
+                  <% @money_transactions.each do |mt| %>
+                    <tr>
+                      <td class="pricing-plan"> <%= mt.updated_at.strftime('%F') %> </td>
+                      <td class="pricing-plan"> <%= mt.withdrawal.user.first_name %> </td>
+                      <td class="pricing-plan"> <%= mt.donation.user.first_name %> </td>
+                      <td class="pricing-plan"><%= mt.amount %> </td>
+                      <td class="pricing-plan"><input type="number" name="hours" style ="width: 50%; padding: 9px 10px;	margin: 8px 0;
+                          box-sizing: border-box;	border: 2px solid red;	border-radius: 4px;"></td>
+                      <td><a href="#" class="btn btn-primary btn-outline">Increase Time</a></td>
+                      <td><a href="#" class="btn btn-primary btn-outline">Reject Donor</a></td>
+                    </tr>
+                  <% end %>
+                <% end %>
               </table>
             </div>
           </div>

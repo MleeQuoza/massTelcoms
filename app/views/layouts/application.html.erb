@@ -26,10 +26,10 @@
     <ul>
       <% if user_signed_in? %>
           <% if current_user.is?('admin') %>
-              <li class=<%= "fh5co-active" if params[:controller] == 'dashboard' %>><%= link_to 'Dashboard', dashboard_admin_path %></li>
-              <li class=<%= "fh5co-active" if params[:controller] == 'dashboard' %>><%= link_to 'Transactions', money_transactions_path %></li>
-              <li class=<%= "fh5co-active" if params[:controller] == 'dashboard' %>><%= link_to 'Announcements', dashboard_admin_path %></li>
-              <li class=<%= "fh5co-active" if params[:controller] == 'dashboard' %>><%= link_to 'Adverts', adverts_path %></li>
+              <li class=<%= "fh5co-active" if params[:controller] == 'dashboard' && params[:action] == 'index' %>><%= link_to 'Dashboard', dashboard_admin_path %></li>
+              <li class=<%= "fh5co-active" if params[:controller] == 'dashboard' && params[:action] == 'money_transactions' %>><%= link_to 'Transactions', all_transactions_path %></li>
+              <li class=<%= "fh5co-active" if params[:controller] == 'dashboard1' %>><%= link_to 'Announcements', dashboard_admin_path %></li>
+              <li class=<%= "fh5co-active" if params[:controller] == 'dashboard1' %>><%= link_to 'Adverts', adverts_path %></li>
             <% else %>
               <li class=<%= "fh5co-active" if params[:controller] == 'dashboard' %>><%= link_to 'Dashboard', dashboard_index_path %></li>
               <% if current_user.payment_account.present? %>

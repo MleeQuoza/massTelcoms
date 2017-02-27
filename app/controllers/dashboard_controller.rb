@@ -3,10 +3,15 @@ class DashboardController < ApplicationController
   
   def index
     if current_user.is?('admin')
+      @money_transactions = MoneyTransaction.where(status: 3)
       render 'dashboard/admin'
     else
       render 'dashboard/index'
     end
+  end
+  
+  def money_transactions
+    
   end
   
   def profile
