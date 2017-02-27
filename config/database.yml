@@ -20,6 +20,7 @@ production:
   timeout: 5000
   username: <%= ENV["DB_USER"] %>
   password: <%= ENV["DB_PASSWORD"] %>
+  database: <%= ENV["DATABASE_NAME"] || 'community_wealth_prod' %>
   url:  <%= ENV["DATABASE_URL"] %>
   pool: <%= ENV["DB_POOL"] || ENV['MAX_THREADS'] || 5 %>
 
