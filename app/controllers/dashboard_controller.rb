@@ -11,7 +11,6 @@ class DashboardController < ApplicationController
   end
   
   def money_transactions
-    
   end
   
   def profile
@@ -19,5 +18,10 @@ class DashboardController < ApplicationController
   end
   
   def admin
+  end
+  
+  def testing
+    @donations = current_user.donations
+    @withdrawals = current_user.withdrawals
   end
 end

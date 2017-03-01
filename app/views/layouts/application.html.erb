@@ -44,7 +44,7 @@
               <li class=<%= "fh5co-active" if params[:controller] == 'tools' %>><%= link_to 'Tools', tools_path %></li>
               <li class=<%= "fh5co-active" if params[:controller] == 'wallets' %>><%= link_to 'Wallet', wallet_path(id: current_user.id) %></li>
           <% end %>
-
+          <li class=<%= "fh5co-active" if params[:controller] == 'dashboard' && params[:action] == 'testing' %>><%= link_to 'Testing', testing_path %></li>
           <li><%= link_to 'Logout', destroy_user_session_path, method: :delete %></li>
       <% else %>
           <li class=<%= "fh5co-active" if params[:controller] == 'welcome'  && params[:action] == 'home'%>><%= link_to 'HOME', root_path %></li>

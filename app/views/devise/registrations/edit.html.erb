@@ -14,11 +14,10 @@
               <table>
                 <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
                     <%= devise_error_messages! %>
-
-                    <th class="pricing-plan">First Name</th>
-                    <th><%= f.text_field :first_name, autofocus: true, class: 'form-control', required: 'required' %></th>
+                    <tr>
+                      <th class="pricing-plan">First Name</th>
+                      <td><%= f.text_field :first_name, autofocus: true, class: 'form-control', required: 'required' %></td>
                     </tr>
-
                     <tr>
                       <th class="pricing-plan">Last Name</th>
                       <td><%= f.text_field :last_name, class: 'form-control', required: 'required' %></td>

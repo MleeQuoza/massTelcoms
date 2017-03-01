@@ -15,6 +15,7 @@
 class MoneyTransaction < ActiveRecord::Base
   belongs_to :withdrawal
   belongs_to :donation
+  validates_numericality_of :amount, greater_than: 0
 
   enum status: { pending: 1, completed: 2, rejected: 3, blocked: 4 }
 

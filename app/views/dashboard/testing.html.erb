@@ -1,0 +1,55 @@
+<div id="fh5co-pricing-section" >
+  <div class="container" >
+    <div class="row">
+      <div class="col-md-10 col-md-offset-2 text-center fh5co-heading animate-box">
+        <h2 style = "font-size: 50px; color: #FFFFFF" >Testing</h2>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 col-md-offset-2 text-center animate-box">
+        <div class="pricing">
+          <div class="col-md-10 animate-box">
+            <div class="price-box" style="overflow-x:auto;">
+              <h2 class="pricing-plan"> MY DONATIONS </h2>
+              <h2 class="price"> <%= @donations.count %> </h2>
+              <% if @donations.present? %>
+                  <table>
+                    <thead>
+                    <th>Created Date</th>
+                    <th>Expiry Date</th>
+                    <th>Profit from date</th>
+                    <th>Amount</th>
+                    <th>Months<br>Invested</th>
+                    <th>Profit</th>
+                    <th></th>
+                    </thead>
+                    <tbody>
+                    <% @donations.each do |donation| %>
+                        <tr>
+                          <td><%= donation.created_at.strftime('%d %b %Y') %></td>
+                          <td><%= (donation.maturity_date).strftime('%d %b %Y') %></td>
+                          <td><%= (donation.profit_from_date).strftime('%d %b %Y') %></td>
+                          <td><%= number_to_currency(donation.amount, unit: 'R ', precision: 2) %></td>
+                          <td><%= donation.months_invested %></td>
+                          <td><%= number_to_currency(donation.profit, unit: 'R ', precision: 2) %></td>
+                          <td>
+                            <%= link_to 'Edit', edit_donation_path(donation.id) %>
+                          </td>
+                        </tr>
+                    <% end %>
+                    </tbody>
+                  </table>
+              <% else %>
+                  <h3>You have no active donations</h3>
+                  <button type="submit" name="submit" class="btn btn-primary btn-outline"
+                          style="" required="required" data-toggle="modal" data-target="#Deposit">Donate
+                  </button>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

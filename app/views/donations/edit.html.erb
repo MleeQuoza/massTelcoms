@@ -1,0 +1,33 @@
+<div id="fh5co-pricing-section" >
+    <div class="container" >
+      <div class="row">
+        <div class="col-md-12 col-md-offset-3 text-center animate-box">
+          <div class="pricing">
+            <div class="col-md-8 animate-box">
+              <div class="price-box">
+                <h2 class="pricing-plan"><%= image_tag('deposit.png', :alt => 'Community Wealth SA 2017') %></h2>
+                <h1>Edit Profit From Date</h1>
+                <table>
+                  <%= form_for(@donation) do |d| %>
+                      <tr>
+                        <th class="pricing-plan">Amount</th>
+                        <td><%= d.text_field :amount, autofocus: true, class: 'form-control' %></td>
+                      </tr>
+
+                      <tr>
+                        <th class="pricing-plan">Profit From Date</th>
+                        <td><%= d.date_select :profit_from_date, autofocus: true, class: 'form-control' %></td>
+                      </tr>
+
+                      <tr>
+                        <td colspan="2" align="center"><%= d.submit 'Update', class: 'btn btn-primary btn-outline' %></td>
+                      </tr>
+                  <% end %>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -5,6 +5,19 @@ class DonationsController < ApplicationController
     @donation = Donation.new
   end
 
+  def edit
+    @donation = Donation.find(params[:id])
+  end
+  
+  def update
+    donation = Donation.find(params[:id])
+    if donation.update(donation_update_params)
+      redirect_to user_donations_path(user_id: current_user.id)
+    else
+      render 'edit'
+    end
+  end
+  
   def create
     d_params = donation_params
     respond_to do |format|
@@ -44,5 +57,9 @@ class DonationsController < ApplicationController
 
   def donation_params
     params.permit(:user_id, :amount, :compounded, :donation_id)
+  end
+  
+  def donation_update_params
+    params.require(:donation).permit(:user_id, :profit_from_date)
   end
 end

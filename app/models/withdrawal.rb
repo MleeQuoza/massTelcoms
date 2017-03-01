@@ -19,6 +19,7 @@
 class Withdrawal < MoneyRequest
   validates :user_id, presence: true
   validates :amount, presence: true
+  validate :payment_details_provided
 
   belongs_to :user
   has_many :money_transactions
@@ -29,5 +30,11 @@ class Withdrawal < MoneyRequest
 
   def withdrawal_completed?
     self.money_transactions.where('status = 1').count == 0
+  end
+  
+  def payment_details_provided
+    if user.payment_account.blank? || user.payment_account.account_number.blank?
+      errors.add(:payment_account, 'required for withdrawal')
+    end
   end
 end
