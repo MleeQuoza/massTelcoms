@@ -167,30 +167,26 @@
           <div class="pricing">
             <div class="col-md-8 animate-box">
               <div class="price-box">
-                <h2 class="pricing-plan"></h2>
-                <%= form_tag('donations', remote: true, format: :json) do %>
-                    <h2> PLEASE ENTER YOUR AD DETAILS HERE <sup class="currency"></sup></h2><br/>
-                    <%= hidden_field_tag(:user_id, current_user.id) %>
-                    <%= hidden_field_tag(:compounded, false) %>
-                    <div class="price">
-                      <%= text_field_tag(:amount, nil, class: 'btn btn-primary btn-outline') %><sup class="currency"></sup>
-                    </div>
-                    <div class="price">
-                     <center>
-                      <%= file_field_tag(:amount, {class: 'btn btn-primary btn-outline resize'}) %><sup class="currency"></sup>
-                      </center>
-                    </div>
-                     <div class="price">
-                      <%= text_area_tag(:amount, nil, {class: 'btn btn-primary btn-outline', rows: 5, cols: 20 }) %><sup class="currency"></sup>
-                    </div>
-                     <div class="price">
-                      <%= number_field_tag(:amount, nil, class: 'btn btn-primary btn-outline') %><sup class="currency"></sup>
-                    </div>
-                    <br/><br/>
-
-                    <button type="button" class="btn btn-primary btn-outline" style="" required="required" data-dismiss="modal" >Cancel</button>
-                    <%= submit_tag 'Approve', class: 'btn btn-primary btn-outline', required: 'required', data: { toggle: 'modal', target: '#advert' }%>
-                <% end %>
+                <h2 class="pricing-plan">PLEASE ENTER YOUR AD DETAILS HERE</h2>
+                <table>
+                  <%= form_tag('adverts', remote: true, format: :json) do %>
+                      <%= hidden_field_tag(:user_id, current_user.id) %>
+                      <tr>
+                        <th class="pricing-plan">Advert Title</th>
+                        <td><%= text_field_tag(:title, nil, class: 'btn btn-primary btn-outline') %></td>
+                      </tr>
+                      <tr>
+                        <th class="pricing-plan">Advert Text</th>
+                        <td><%= text_area_tag(:body, nil, {rows: 5, cols: 20 }) %></td>
+                      </tr>
+                      <tr>
+                        <td colspan="2" align="center">
+                          <button type="button" class="btn btn-primary btn-outline" style="" required="required" data-dismiss="modal" >Cancel</button>
+                          <%= submit_tag 'Approve', class: 'btn btn-primary btn-outline', required: 'required', data: { toggle: 'modal', target: '#advert' }%>
+                        </td>
+                      </tr>
+                  <% end %>
+                </table>
               </div>
             </div>
           </div>
