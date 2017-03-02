@@ -18,16 +18,8 @@
                       required="required"
                       data-toggle="modal"
                       data-target="#withdraw"
-                      disabled=<%= current_user.wallet.amount < 300 %>
+                      <%= current_user.wallet.amount < 300 ? "disabled='disabled'" : '' %>
               >Withdraw</button>
-              <button type="submit"
-                      name="submit"
-                      class="btn btn-primary btn-outline"
-                      required="required"
-                      data-toggle="modal"
-                      data-target="#compound"
-                      disabled=<%= current_user.wallet.amount < 1000 %>
-              >Compound</button>
             </div>
           </div>
         </div>

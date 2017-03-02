@@ -25,22 +25,22 @@ class MoneyTransactionService
   def withdrawal_id
     return @money_request.id if @money_request.instance_of?Withdrawal
 
-    match_with_withdrawal
+    match_with_withdrawal(@money_request.user_id)
   end
 
-  def match_with_donation
-    donation = Donation.where("balance >= #{amount} AND status = #{MoneyRequest.statuses[:pending]}").first
+  def match_with_donation(user_id)
+    donation = Donation.where("user_id != #{user_id} AND balance >= #{amount} AND status = #{MoneyRequest.statuses[:pending]}").first
     donation.id unless donation.blank?
   end
 
   def donation_id
     return @money_request.id if @money_request.instance_of?Donation
 
-    match_with_donation
+    match_with_donation(@money_request.user_id)
   end
 
-  def match_with_withdrawal
-    withdrawal = Withdrawal.where("balance >= #{amount} AND status = #{MoneyRequest.statuses[:pending]}").first
+  def match_with_withdrawal(user_id)
+    withdrawal = Withdrawal.where("user_id != #{user_id} AND balance >= #{amount} AND status = #{MoneyRequest.statuses[:pending]}").first
     withdrawal.id unless withdrawal.blank?
   end
 

@@ -38,7 +38,7 @@ class WalletsController < ApplicationController
       
       withdrawal.save!
       
-      wallet.update(amount: 0)
+      wallet.update(amount: 0, balance: 0)
       wallet.save!
     end
     

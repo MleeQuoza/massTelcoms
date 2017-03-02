@@ -8,14 +8,16 @@ class WithdrawalsController < ApplicationController
   def create
     respond_to do |format|
       withdrawal = MoneyRequestService.new(withdrawals_params, {type: Withdrawal.name }).call
-  
+      
       if withdrawal.save!
+        current_user.wallet.update!(amount: (current_user.wallet.amount - withdrawal.amount))
         format.js { render inline: 'location.reload();' }
         format.html { redirect_to dashboard_index_path, flash[:notice] => 'withdrawal Request Successful' }
       else
         format.js { render inline: 'location.reload();' }
         format.html { render 'new' }
       end
+    
     end
   end
 
