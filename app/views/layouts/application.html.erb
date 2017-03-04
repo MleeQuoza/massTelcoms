@@ -48,12 +48,13 @@
           <li><%= link_to 'Logout', destroy_user_session_path, method: :delete %></li>
       <% else %>
           <li class=<%= "fh5co-active" if params[:controller] == 'welcome'  && params[:action] == 'home'%>><%= link_to 'HOME', root_path %></li>
-          <li class=<%= "fh5co-active" if params[:controller] == 'welcome'  && params[:action] == 'how_to'%>><%= link_to 'HOW WE DONATE', how_to_donate_path %></li>
+          <li class=<%= "fh5co-active" if params[:controller] == 'welcome'  && params[:action] == 'how_to'%>><%= link_to 'Instructions', how_to_donate_path %></li>
           <li class=<%= "fh5co-active" if params[:controller] == 'adverts' %>><%= link_to 'ADVERTS', adverts_path %></li>
           <li class=<%= "fh5co-active" if params[:controller] == 'devise/sessions' %>><%= link_to 'LOGIN', user_session_path %></li>
           <li class=<%= "fh5co-active" if params[:controller] == 'devise/registrations' %>><%= link_to 'SIGN UP', new_user_registration_path %></li>
+          <li class=<%= "fh5co-active" if params[:controller] == 'welcome'  && params[:action] == 'faq'%>><%= link_to 'FAQ', how_to_donate_path %></li>
       <% end %>
-      <li  class=<%= "fh5co-active" if params[:controller] == 'welcome' && params[:action] == 'terms' %>><%= link_to "T's and C's", terms_path %> </li>
+      <li  class=<%= "fh5co-active" if params[:controller] == 'welcome' && params[:action] == 'terms' %>><%= link_to "T & C", terms_path %> </li>
       <br/>
     </ul>
   </nav>
