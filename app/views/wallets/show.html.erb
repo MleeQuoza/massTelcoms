@@ -15,7 +15,6 @@
               <button type="submit"
                       name="submit"
                       class="btn btn-primary btn-outline"
-                      required="required"
                       data-toggle="modal"
                       data-target="#withdraw"
                       <%= current_user.wallet.amount < 300 ? "disabled='disabled'" : '' %>
@@ -48,8 +47,12 @@
                     </div>
                     <br/><br/>
 
-                    <button type="button" class="btn btn-primary btn-outline" style="" required="required" data-dismiss="modal" >Cancel</button>
-                    <%= submit_tag 'Approve', class: 'btn btn-primary btn-outline', required: 'required', data: { toggle: 'modal', target: '#Deposit' }%>
+                    <button type="button"
+                            class="btn btn-primary btn-outline"
+                            data-dismiss="modal">Cancel</button>
+                    <%= submit_tag 'Approve',
+                                   class: 'btn btn-primary btn-outline',
+                                   data: { toggle: 'modal', target: '#Deposit' }%>
                 <% end %>
               </div>
             </div>

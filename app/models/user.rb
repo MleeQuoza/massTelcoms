@@ -40,7 +40,8 @@ class User < ApplicationRecord
   has_one :payment_account
   has_many :withdrawals
   has_many :donations
-  
+
+  devise :timeoutable, :timeout_in => 10.minutes
 
   after_commit on: [:create] do
     wallet = Wallet.new(user_id: self.id, amount: 0, balance: 0)
@@ -68,6 +69,14 @@ class User < ApplicationRecord
     self.donations.where(status: MoneyRequest.statuses[:pending]).first
   end
 
+  def pending_withdrawals
+    self.withdrawals.where(status: MoneyRequest.statuses[:pending])
+  end
+
+  def pending_donations
+    self.donations.where(status: MoneyRequest.statuses[:pending])
+  end
+
   def donation_total
     sum = 0
     self.donations.all.each{ |d| sum += d.amount }
@@ -76,6 +85,14 @@ class User < ApplicationRecord
 
   def can_donate_or_withdraw?
      not (self.current_donation.present? || self.current_withdrawal.present?)
+  end
+  
+  def completed_donations
+    self.donations.where(status: MoneyRequest.statuses[:completed])
+  end
+
+  def completed_withdrawals
+    self.withdrawals.where(status: MoneyRequest.statuses[:completed])
   end
   
   def bank_account
@@ -127,10 +144,16 @@ class User < ApplicationRecord
   
   def paying_referrals
     self.new_referees.where('bonus_amount > 0 AND bonus_paid_out = false')
+    
   end
   
   def total_referees
     Referral.where(referrer_id: self.id)
+  end
+  
+  def active_referrals
+    Referral.where(referrer_id: self.id).map(&:referee_id).to_a
+    
   end
   
   def referral_bonus
@@ -140,10 +163,6 @@ class User < ApplicationRecord
     sum = 0
     paying_referrals.each{ |r| sum += r.bonus_amount }
     sum
-  end
-  
-  def pending_withdrawals
-    self.withdrawals.where('status = 1')
   end
   
   def referral_email_is_not_own_email

@@ -32,6 +32,7 @@ class Donation < MoneyRequest
   end
   
   def profit
+    return 0 unless self.status == MoneyRequest.statuses[:completed]
     self.amount * (self.profit_counter / 100)
   end
 
@@ -40,13 +41,7 @@ class Donation < MoneyRequest
   end
 
   def profit_counter
-    days_invested = TimeDifference.between(self.profit_from_date, Time.zone.today).in_days
-
-    if days_invested > 30
-      days_invested = days_invested % 30
-    end
-
-    days_invested < 1 ? 0 : days_invested
+    TimeDifference.between(self.profit_from_date, Time.zone.today).in_days
   end
 
   def months_invested
@@ -64,6 +59,6 @@ class Donation < MoneyRequest
   end
 
   def donation_completed?
-    self.money_transactions.where('status = 1').count == 0
+    self.money_transactions.where("status = #{MoneyTransaction.statuses[:pending]} OR status = #{MoneyTransaction.statuses[:rejected]}").count == 0
   end
 end

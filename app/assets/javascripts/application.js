@@ -20,7 +20,7 @@
 //= require jquery.countTo.js
 //= require main.js
 //= require marquee.js
-//= require respond.min-.js
+//= require respond.min.js
 //= require_tree .
 
 function myFunction() {

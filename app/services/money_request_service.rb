@@ -11,6 +11,10 @@ class MoneyRequestService
   end
 
   def call
+    if @donation_id.present?
+      adjust_donation_profit_from_date
+    end
+    
     MoneyRequest.create(request_params)
   end
 
@@ -21,7 +25,7 @@ class MoneyRequestService
 
   private
 
-  attr_reader :user_id, :amount, :balance, :status, :type, :compounded
+  attr_reader :user_id, :amount, :balance, :status, :type, :compounded, :donation_id
 
   def status
     MoneyRequest.statuses[:pending]
@@ -43,5 +47,9 @@ class MoneyRequestService
     donation.update(balance: (donation.balance - transaction_amount))
   end
   
+  def adjust_donation_profit_from_date
+    donation = Donation.find(@donation_id)
+    donation.update!(profit_from_date: Time.zone.now)
+  end
 
 end
