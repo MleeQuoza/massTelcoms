@@ -15,8 +15,8 @@
                   <% @donations.each_with_index do |donation, index| %>
                       <br>
                       <h4>Donation <%= index + 1 %>: Amount:
-                        <%= number_to_currency(donation.amount, unit: 'R ', precision: 2) %>
-                        Balance: <%= number_to_currency(donation.balance, unit: 'R ', precision: 2) %>
+                        <%= display_as_money(donation.amount) %>
+                        Balance: <%= display_as_money(donation.balance) %>
                         <br>
                         <hr>
                       </h4>
@@ -60,8 +60,8 @@
                   <% @withdrawals.each_with_index do |withdrawal, index| %>
                       <br>
                       <h4>Withdrawal <%= index + 1 %>:
-                        Amount: <%= number_to_currency(withdrawal.amount, unit: 'R ', precision: 2) %>
-                        Balance: <%= number_to_currency(withdrawal.balance, unit: 'R ', precision: 2) %>
+                        Amount: <%= display_as_money(withdrawal.amount) %>
+                        Balance: <%= display_as_money(withdrawal.balance) %>
                       </h4>
                       <hr>
                       <br>
@@ -80,7 +80,7 @@
                                 <tr>
                                   <td><%= index + 1 %></td>
                                   <td><%= tr.donation_user_name %></td>
-                                  <td><%= number_to_currency(tr.amount, unit: 'R ', precision: 2) %></td>
+                                  <td><%= display_as_money(tr.amount) %></td>
                                   <td><%= tr.status %></td>
                                   <td><%= tr.status %></td>
                                   <td>
@@ -89,7 +89,7 @@
                                         <%= hidden_field_tag(:status, MoneyTransaction.statuses[:completed]) %>
                                         <%= submit_tag 'Complete',
                                                        class: 'btn btn-primary btn-outline',
-                                                       disabled: !tr.pending?,
+                                                       disabled: tr.pending?,
                                                        data: { confirm: 'Are you sure?' }%>
                                     <% end %>
                                   </td>
@@ -99,7 +99,7 @@
                                         <%= hidden_field_tag(:status, MoneyTransaction.statuses[:rejected]) %>
                                         <%= submit_tag 'Reject',
                                                        class: 'btn btn-primary btn-outline',
-                                                       disabled: !tr.pending?,
+                                                       disabled: tr.pending?,
                                                        data: { confirm: 'Are you sure?' }%>
                                     <% end %>
                                   </td>

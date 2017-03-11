@@ -13,4 +13,8 @@
 
 class Referral< ActiveRecord::Base
   belongs_to :user
+  
+  def referee
+    User.find(self.referee_id)
+  end
 end

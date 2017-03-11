@@ -12,7 +12,7 @@
             <div class="price-box">
               <h2 class="pricing-plan">Donation Total</h2>
               <div class="price"><sup class="currency">
-                <%= number_to_currency(current_user.donation_total, unit: 'R ', precision: 2) %>
+                <%= display_as_money(current_user.donation_total) %>
               </sup>
               <small>
                 Exp <%= (number_with_precision((6 - current_user.current_donation.months_invested), precision: 0)) if current_user.current_donation.present? %> months
@@ -54,9 +54,14 @@
           <div class="col-md-3 animate-box">
             <div class="price-box popular">
               <h2 class="pricing-plan pricing-plan-offer">Wallet<span>Withdraw Cash</span></h2>
-              <div class="price"><sup class="currency">R <%= current_user.wallet.amount %></sup><small>Available</small></div>
-              <% if current_user.wallet.amount > 0  %>
-                <%= link_to 'Withdraw Cash', withdraw_from_wallet_path, { class: 'btn btn-primary btn-outline', method: :post, disabled: current_user.wallet.amount <= 0 } %>
+              <div class="price"><sup class="currency">R <%= current_user.wallet.balance %></sup><small>Available</small></div>
+              <% if current_user.wallet.balance > 0  %>
+                <%= link_to 'Withdraw Cash',
+                            withdraw_from_wallet_path,
+                            { class: 'btn btn-primary btn-outline',
+                              method: :post,
+                              disabled: current_user.wallet.balance <= 0
+                            } %>
               <% else %>
                 <small>Nothing to withdraw</small>
               <% end %>
@@ -71,7 +76,12 @@
               <h2 class="pricing-plan">New Referrals</h2>
               <div class="price"><%= current_user.new_referees.count %><sup class="currency"></sup><small>Referrals</small></div>
 
-              <a href="#" class="btn btn-primary btn-outline">View All</a>
+              <button type="submit"
+                      name="submit"
+                      class="btn btn-primary btn-outline"
+                      data-toggle="modal"
+                      <%= current_user.new_referees.count > 0 ? '' : "disabled='true'" %>
+                      data-target="#NewReferrals">View All</button>
             </div>
           </div>
 
@@ -79,15 +89,15 @@
           <div class="col-md-3 animate-box">
             <div class="price-box">
               <h2 class="pricing-plan">Referral Bonus</h2>
-              <div class="price"><sup class="currency"><%= number_to_currency(current_user.referral_bonus, unit: 'R ', precision: 2) %></sup><small>10% per referral</small></div>
+              <div class="price"><sup class="currency"><%= display_as_money(current_user.referral_bonus) %></sup><small>10% per referral</small></div>
 
               <%= form_tag(add_bonus_to_wallet_path) do %>
-                  <%= hidden_field_tag(:user_id, current_user.id) %>
-                  <%= hidden_field_tag(:amount, current_user.referral_bonus) %>
-                  <%= submit_tag 'Checkout',
-                                 class:    'btn btn-primary btn-outline',
-                                 disabled: current_user.referral_bonus < 1000,
-                                 data: { confirm: 'Are you sure?' }%>
+                <%= hidden_field_tag(:user_id, current_user.id) %>
+                <%= hidden_field_tag(:amount, current_user.referral_bonus) %>
+                <%= submit_tag 'Checkout',
+                               class:    'btn btn-primary btn-outline',
+                               disabled: current_user.referral_bonus < 1000,
+                               data: { confirm: 'Are you sure?' }%>
               <% end %>
             </div>
           </div>
@@ -97,7 +107,12 @@
               <h2 class="pricing-plan">Active Referrals</h2>
               <div class="price"><%= current_user.active_referrals.count %><sup class="currency"></sup><small>Referrals</small></div>
 
-              <a href="#" class="btn btn-primary btn-outline">View All</a>
+              <button type="submit"
+                      name="submit"
+                      class="btn btn-primary btn-outline"
+                      data-toggle="modal"
+                      <%= current_user.active_referrals.count > 0 ? '' : "disabled='true'" %>
+                      data-target="#ActiveReferrals">View All</button>
             </div>
           </div>
 
@@ -106,7 +121,7 @@
               <h2 class="pricing-plan pricing-plan-offer">Advertise Here<span></span></h2>
               <div> <sup class="currency"> 0 Posted <br/> 0 Approved <br/> 0 Pending <br/></sup><small>Free adverts</small></div>
 
-              <a href="#" class="btn btn-primary btn-outline" required="required" data-toggle="modal" data-target="#advert" >Advertise</a>
+              <a href="#" class="btn btn-primary btn-outline" data-toggle="modal" data-target="#advert" >Advertise</a>
             </div>
           </div>
 
@@ -180,24 +195,24 @@
                 <h2 class="pricing-plan">PLEASE ENTER YOUR AD DETAILS HERE</h2>
                 <table>
                   <%= form_tag('adverts', remote: true, format: :json) do %>
-                      <%= hidden_field_tag(:user_id, current_user.id) %>
-                      <tr>
-                        <th class="pricing-plan">Advert Title</th>
-                        <td><%= text_field_tag(:title, nil, class: 'btn btn-primary btn-outline') %></td>
-                      </tr>
-                      <tr>
-                        <th class="pricing-plan">Advert Text</th>
-                        <td><%= text_area_tag(:body, nil, {rows: 5, cols: 20 }) %></td>
-                      </tr>
-                      <tr>
-                        <td colspan="2" align="center">
-                          <button type="button" class="btn btn-primary btn-outline" style="" required="required" data-dismiss="modal" >Cancel</button>
-                          <%= submit_tag 'Approve',
-                                         class: 'btn btn-primary btn-outline',
-                                         required: 'required',
-                                         data: { toggle: 'modal', target: '#advert' }%>
-                        </td>
-                      </tr>
+                    <%= hidden_field_tag(:user_id, current_user.id) %>
+                    <tr>
+                      <th class="pricing-plan">Advert Title</th>
+                      <td><%= text_field_tag(:title, nil, class: 'btn btn-primary btn-outline') %></td>
+                    </tr>
+                    <tr>
+                      <th class="pricing-plan">Advert Text</th>
+                      <td><%= text_area_tag(:body, nil, {rows: 5, cols: 20 }) %></td>
+                    </tr>
+                    <tr>
+                      <td colspan="2" align="center">
+                        <button type="button" class="btn btn-primary btn-outline" data-dismiss="modal" >Cancel</button>
+                        <%= submit_tag 'Approve',
+                                       class: 'btn btn-primary btn-outline',
+                                       required: 'required',
+                                       data: { toggle: 'modal', target: '#advert' }%>
+                      </td>
+                    </tr>
                   <% end %>
                 </table>
               </div>
@@ -208,6 +223,84 @@
     </div>
   </div>
 </div>
+
+<div class="modal fade" id="NewReferrals" role="dialog">
+  <div id="fh5co-pricing-section" >
+    <div class="container" >
+      <div class="row">
+        <div class="col-md-12 col-md-offset-3 text-center animate-box">
+          <div class="pricing">
+            <div class="col-md-8 animate-box">
+              <div class="price-box">
+                <h2 class="pricing-plan">THESE ARE MEMBERS YOU REFERRED</h2>
+                <table>
+                  <thead>
+                    <th>Name</th>
+                    <th>Surname</th>
+                  </thead>
+                  <tbody>
+                  <% current_user.referee_list.each do |r| %>
+                  <tr>
+                    <td><%= r.first_name %></td>
+                    <td><%= r.last_name %></td>
+                  </tr>
+                  <% end %>
+                  <tr>
+                    <td colspan="2">
+                      <button type="button" class="btn btn-primary btn-outline" data-dismiss="modal">OK</button>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="ActiveReferrals" role="dialog">
+  <div id="fh5co-pricing-section" >
+    <div class="container" >
+      <div class="row">
+        <div class="col-md-12 col-md-offset-3 text-center animate-box">
+          <div class="pricing">
+            <div class="col-md-8 animate-box">
+              <div class="price-box">
+                <h2 class="pricing-plan">YOU ARE RECEIVING A BONUS FROM THESE MEMBERS</h2>
+                <table>
+                  <thead>
+                  <th>Name</th>
+                  <th>Surname</th>
+                  <th>Bonus</th>
+                  </thead>
+                  <tbody>
+                  <% current_user.paying_referrals_list.each do |r| %>
+                      <tr>
+                        <td><%= r['first_name'] %></td>
+                        <td><%= r['last_name'] %></td>
+                        <td><%= display_as_money(r['bonus_amount']) %></td>
+                      </tr>
+                  <% end %>
+                  <tr>
+                    <td colspan="3">
+                      <button type="button" class="btn btn-primary btn-outline" data-dismiss="modal">OK</button>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <%= render 'common/placeholder' %>
 
 

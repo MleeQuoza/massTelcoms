@@ -31,3 +31,10 @@ User.create(
     { first_name: 'Lona', last_name: 'Linamandla', password: 'P@ssword', cellphone: '0712345678', email: 'userv@mail.com' }
   ]
 )
+
+User.create([
+  {first_name: 'Miles', last_name: 'Davis', password: 'P@ssword', cellphone: '0712345678', email: 'userw@mail.com', referrer_email: 'usera@mail.com'},
+  {first_name: 'Bruno', last_name: 'Mars', password: 'P@ssword', cellphone: '0712345678', email: 'userx@mail.com', referrer_email: 'usera@mail.com'},
+  {first_name: 'Steve', last_name: 'Carrel', password: 'P@ssword', cellphone: '0712345678', email: 'usery@mail.com', referrer_email: 'usera@mail.com'},
+  {first_name: 'Dave', last_name: 'Jones', password: 'P@ssword', cellphone: '0712345678', email: 'userz@mail.com', referrer_email: 'usera@mail.com'}
+])

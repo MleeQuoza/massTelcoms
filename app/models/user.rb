@@ -40,6 +40,8 @@ class User < ApplicationRecord
   has_one :payment_account
   has_many :withdrawals
   has_many :donations
+  
+  has_many :referees, class_name: 'Referral', foreign_key: 'referrer_id'
 
   devise :timeoutable, :timeout_in => 10.minutes
 
@@ -130,30 +132,47 @@ class User < ApplicationRecord
   def update_referrer
     return unless self.referrer_email.present?
     referrer = User.find_by_email(self.referrer_email)
+    
+    return unless referrer.present?
+    
     referral = Referral.create(referrer_id: referrer.id, referee_id: self.id, bonus_paid_out: false)
     referral.save!
   end
   
-  def referees
-    Referral.where(referrer_id: self.id)
+  def referee_list
+    User.find(self.referees.map(&:referee_id).to_a)
   end
   
   def new_referees
-    Referral.where(referrer_id: self.id, bonus_paid_out: false)
+    self.referees.where(bonus_paid_out: false)
   end
   
   def paying_referrals
     self.new_referees.where('bonus_amount > 0 AND bonus_paid_out = false')
-    
   end
-  
-  def total_referees
-    Referral.where(referrer_id: self.id)
+
+  def paying_referrals_list
+    sql = %(select a.id,
+            a.first_name,
+            a.last_name,
+            b.referee_id,
+            b.referrer_id,
+            b.bonus_paid_out,
+            b.bonus_amount from users a inner join referrals b on a.id = b.referee_id
+            where referrer_id = #{self.id}
+            and b.bonus_paid_out = false
+            and b.bonus_amount > 0 order by b.bonus_amount desc
+          )
+    ActiveRecord::Base.connection.exec_query(sql).to_hash
   end
   
   def active_referrals
-    Referral.where(referrer_id: self.id).map(&:referee_id).to_a
-    
+    users = User.find(Referral.where(referrer_id: self.id).map(&:referee_id).to_a)
+    active_users = []
+    users.each do |user|
+        active_users.append(user) if user.completed_donations.present?
+    end
+    active_users
   end
   
   def referral_bonus

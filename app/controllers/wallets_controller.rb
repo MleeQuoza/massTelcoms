@@ -1,4 +1,5 @@
 class WalletsController < ApplicationController
+  before_action :authenticate_user!
   
   def add_to_wallet
     Wallet.transaction do
@@ -7,7 +8,7 @@ class WalletsController < ApplicationController
       
       user = User.find(wallet_params[:user_id])
       wallet = user.wallet
-      wallet.update!(amount: wallet.amount + wallet_params[:amount].to_d)
+      wallet.update!(balance: wallet.balance + wallet_params[:amount].to_d)
       
       donation.save!
       wallet.save!
@@ -22,7 +23,7 @@ class WalletsController < ApplicationController
       paying_referrals.each{ |pr| pr.update(bonus_paid_out: true)}
       
       wallet = user.wallet
-      wallet.update!(amount: wallet.amount + wallet_params[:amount].to_d)
+      wallet.update!(balance: wallet.balance + wallet_params[:amount].to_d)
       wallet.save!
     end
     redirect_to dashboard_index_path(user_id: current_user.id), notice: 'Checkout Complete'
@@ -33,8 +34,8 @@ class WalletsController < ApplicationController
       withdrawal = Withdrawal.new
       wallet = current_user.wallet
       withdrawal.user_id = current_user.id
-      withdrawal.amount = wallet.amount
-      withdrawal.balance = wallet.amount
+      withdrawal.amount = wallet.balance
+      withdrawal.balance = wallet.balance
       
       withdrawal.save!
       
@@ -43,6 +44,12 @@ class WalletsController < ApplicationController
     end
     
     redirect_to user_withdrawals_path(user_id: current_user.id)
+  end
+  
+  def fund_wallet
+    amount = wallet_params[:amount]
+    current_user.wallet.update!(balance: amount, amount: amount)
+    redirect_to dashboard_index_path(user_id: current_user.id), notice: "#{amount} Added to wallet"
   end
   
   private

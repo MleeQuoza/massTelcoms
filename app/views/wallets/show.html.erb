@@ -11,7 +11,7 @@
           <div class="col-md-12 animate-box">
             <div class="price-box" style="overflow-x:auto;">
               <h2 class="pricing-plan"> Viewing Wallet </h2>
-                <h4>Wallet Balance: <%= number_to_currency(current_user.wallet.amount, unit: 'R ', precision: 2) %></h4>
+                <h4>Wallet Balance: <%= display_as_money(current_user.wallet.balance) %></h4>
               <button type="submit"
                       name="submit"
                       class="btn btn-primary btn-outline"

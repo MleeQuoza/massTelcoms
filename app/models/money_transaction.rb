@@ -52,7 +52,7 @@ class MoneyTransaction < ActiveRecord::Base
   end
   
   def pending?
-    self.status == 1
+    self.status == MoneyTransaction.statuses[:pending]
   end
 
   private
@@ -62,10 +62,10 @@ class MoneyTransaction < ActiveRecord::Base
 
   def adjust_statuses
     donation = self.donation
-    donation.update(status: 2) if donation.request_complete?
+    donation.update(status: 2) if donation.request_completed?
     
     withdrawal = self.withdrawal
-    withdrawal.update(status: 2) if withdrawal.request_complete?
+    withdrawal.update(status: 2) if withdrawal.request_completed?
   end
 
 end

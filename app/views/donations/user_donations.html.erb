@@ -28,10 +28,10 @@
                       <tr>
                         <td><%= donation.created_at.strftime('%d/%m/%Y') %></td>
                         <td><%= (donation.maturity_date).strftime('%d/%m/%Y') %></td>
-                        <td><%= number_to_currency(donation.amount, unit: 'R ', precision: 2) %></td>
+                        <td><%= display_as_money(donation.amount) %></td>
                         <td><%= donation.months_invested %></td>
                         <td><%= number_with_precision(donation.profit_counter, precision: 0) %></td>
-                        <td><%= number_to_currency(donation.profit, unit: 'R ', precision: 2) %></td>
+                        <td><%= display_as_money(donation.profit) %></td>
                         <td>
                           <%= form_tag(donations_path) do %>
                             <%= hidden_field_tag(:user_id, current_user.id) %>

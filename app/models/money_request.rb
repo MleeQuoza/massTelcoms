@@ -35,4 +35,9 @@ class MoneyRequest < ActiveRecord::Base
   def adjust_balance(next_balance)
     self.update(balance: next_balance)
   end
+
+  def request_completed?
+    self.money_transactions.present? &&
+      self.money_transactions.where("status = #{MoneyTransaction.statuses[:pending]} OR status = #{MoneyTransaction.statuses[:rejected]}").count == 0
+  end
 end

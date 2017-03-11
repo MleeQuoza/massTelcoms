@@ -27,8 +27,10 @@ class Donation < MoneyRequest
     self.profit_from_date = Time.zone.today
   end
   
-  after_commit on: [:create] do
-    update_referral
+  after_commit on: [:update] do
+    if self.request_completed?
+      update_referral
+    end
   end
   
   def profit
@@ -56,9 +58,5 @@ class Donation < MoneyRequest
     
     referral = Referral.where(referee_id: user.id, referrer_id: referrer.id).first
     referral.update(bonus_amount: (self.amount * 0.1))
-  end
-
-  def donation_completed?
-    self.money_transactions.where("status = #{MoneyTransaction.statuses[:pending]} OR status = #{MoneyTransaction.statuses[:rejected]}").count == 0
   end
 end

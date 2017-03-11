@@ -25,11 +25,7 @@ class Withdrawal < MoneyRequest
   has_many :money_transactions
   
   def pending_money_transactions
-    self.money_transactions.where(status: 1)
-  end
-
-  def withdrawal_completed?
-    self.money_transactions.where('status = 1').count == 0
+    self.money_transactions.where(status: MoneyTransaction.statuses[:pending])
   end
   
   def payment_details_provided

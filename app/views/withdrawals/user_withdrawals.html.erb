@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row">
       <div class="col-md-10 col-md-offset-2 text-center fh5co-heading animate-box">
-        <h2 style="font-size: 50px; color: #FFFFFF"> Active Withdrawals </h2>
+        <h2 style="font-size: 50px; color: #FFFFFF"> Withdrawal History </h2>
       </div>
     </div>
     <div class="row">
@@ -22,7 +22,7 @@
                     <% @withdrawals.each do |withdrawal| %>
                         <tr>
                           <td><%= withdrawal.created_at.strftime('%d/%m/%Y') %></td>
-                          <td><%= number_to_currency(withdrawal.amount, unit: 'R', precision: 2) %></td>
+                          <td><%= display_as_money(withdrawal.amount) %></td>
                           <td><%= withdrawal.status %></td>
                         </tr>
                     <% end %>
@@ -30,7 +30,7 @@
                   </table>
               <% else %>
                   <h3>You have no active withdrawals</h3>
-                  <h4>Wallet Balance: <%= number_to_currency(current_user.wallet.amount, unit: 'R ', precision: 2) %></h4>
+                  <h4>Wallet Balance: <%= display_as_money(current_user.wallet.amount) %></h4>
                   <%= link_to 'Withdraw', withdraw_from_wallet_path, class: 'btn btn-primary btn-outline', via: :post %>
               <% end %>
             </div>
