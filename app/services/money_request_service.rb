@@ -13,6 +13,7 @@ class MoneyRequestService
   def call
     if @donation_id.present?
       adjust_donation_profit_from_date
+      adjust_wallet_and_compound_balance
     end
     
     MoneyRequest.create(request_params)
@@ -26,7 +27,8 @@ class MoneyRequestService
   private
 
   attr_reader :user_id, :amount, :balance, :status, :type, :compounded, :donation_id
-
+  attr_writer :amount, :balance
+  
   def status
     MoneyRequest.statuses[:pending]
   end
@@ -50,6 +52,16 @@ class MoneyRequestService
   def adjust_donation_profit_from_date
     donation = Donation.find(@donation_id)
     donation.update!(profit_from_date: Time.zone.now)
+  end
+  
+  def adjust_wallet_and_compound_balance
+    user = User.find(user_id)
+    wallet = user.wallet
+    current_wallet_balance = wallet.balance
+    new_wallet_balance = BigDecimal.new(@amount) % 1000
+    wallet.update!(balance: current_wallet_balance + new_wallet_balance, amount: current_wallet_balance + new_wallet_balance)
+    
+    @amount = BigDecimal.new(@amount) - BigDecimal.new(new_wallet_balance)
   end
 
 end

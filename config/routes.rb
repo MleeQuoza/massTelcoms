@@ -23,6 +23,13 @@ Rails.application.routes.draw do
   match '/dashboard/admin' => 'dashboard#admin', as: 'dashboard_admin', via: :get
   match '/dashboard/testing' => 'dashboard#testing', as: 'testing', via: :get
   match '/dashboard/money_transactions' => 'dashboard#money_transactions', as: 'all_transactions', via: :get
+
+  namespace :api do
+    namespace :v1 do
+      resources :donations, only: [:index, :create, :destroy, :update]
+      resources :withdrawals, only: [:index, :create, :destroy, :update]
+    end
+  end
   
 
 end

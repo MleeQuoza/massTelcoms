@@ -22,6 +22,8 @@ gem 'redis'
 gem 'sidekiq'
 gem 'memcachier'
 gem 'sidekiq-cron'
+gem 'responders'
+gem 'react-rails'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

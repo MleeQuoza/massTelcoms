@@ -21,6 +21,9 @@
 //= require main.js
 //= require marquee.js
 //= require respond.min.js
+//= require react
+//= require react_ujs
+//= require components
 //= require_tree .
 
 function myFunction() {

@@ -34,7 +34,7 @@ class Donation < MoneyRequest
   end
   
   def profit
-    return 0 unless self.status == MoneyRequest.statuses[:completed]
+    return 0 unless MoneyRequest.statuses[self.status] == MoneyRequest.statuses[:completed]
     self.amount * (self.profit_counter / 100)
   end
 
