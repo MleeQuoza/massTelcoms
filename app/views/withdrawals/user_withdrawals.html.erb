@@ -16,6 +16,7 @@
                     <thead>
                     <th>Created Date</th>
                     <th>Amount</th>
+                    <th>Balance</th>
                     <th>Status</th>
                     </thead>
                     <tbody>
@@ -23,6 +24,7 @@
                         <tr>
                           <td><%= withdrawal.created_at.strftime('%d/%m/%Y') %></td>
                           <td><%= display_as_money(withdrawal.amount) %></td>
+                          <td><%= display_as_money(withdrawal.balance) %></td>
                           <td><%= withdrawal.status %></td>
                         </tr>
                     <% end %>
