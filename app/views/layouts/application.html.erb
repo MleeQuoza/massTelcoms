@@ -5,6 +5,7 @@
   <%= csrf_meta_tags %>
   <%= stylesheet_link_tag 'application', media: 'all' %>
   <%= javascript_include_tag 'application' %>
+  <%= favicon_link_tag 'favicon.ico' %>
 </head>
 
 <body id="recent-works-normal">
@@ -21,7 +22,7 @@
 <a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle"><i></i></a>
 <aside id="fh5co-aside" role="complementary" class="border js-fullheight">
   <br/>
-  <h1 id="fh5co-logo"><%= link_to image_tag('Coat_of_arms_of_South_Africa.png', :alt => 'Community Wealth SA 2017'), root_path %></h1>
+  <h1 id="fh5co-logo"><%= link_to image_tag('logo.png', :alt => 'Community Wealth SA 2017'), root_path %></h1>
   <nav id="fh5co-main-menu" role="navigation">
     <ul>
       <% if user_signed_in? %>
@@ -69,8 +70,9 @@
     </ul>
   </div>
 </aside>
+<div id="fh5co-main">
 <%= yield %>
-
+</div>
 <script>
   $(function () {
     $('.simple-marquee-container').SimpleMarquee();

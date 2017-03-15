@@ -8,7 +8,7 @@ class PaymentAccountsController < ApplicationController
   def create
     account = PaymentAccount.create(account_params)
     if account.save!
-      redirect_to edit_payment_account_path(account.id), notice: 'Payment Account saved'
+      redirect_to dashboard_index_path
     end
   end
 

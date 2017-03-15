@@ -1,0 +1,5 @@
+I"P(function() {
+  $('#modals').append($('#Deposit').html());
+
+}).call(this);
+:ET

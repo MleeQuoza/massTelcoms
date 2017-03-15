@@ -22,8 +22,11 @@
                       name="submit"
                       class="btn btn-primary btn-outline"
                       data-toggle="modal"
-                      <%= current_user.pending_donations.present? ? "disabled='true'" : ''  %>
+
                       data-target="#Deposit">Donate</button>
+              <div class="tooltip">
+                <span class="tooltiptext"> Donation in progress must complete </span>
+              </div>
             </div>
           </div>
 
@@ -303,8 +306,6 @@
 
 <%= render 'common/placeholder' %>
 
-
-<div id="fh5co-main">
   <div class="fh5co-counters" style='background-image:<%=image_tag('2.jpg') %>;' data-stellar-background-ratio="0.5" id="counter-animate">
     <div class="fh5co-narrow-content animate-box">
       <div class="row" >
@@ -322,5 +323,4 @@
         </div>
       </div>
     </div>
-  </div>
 </div>

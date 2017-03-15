@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Ruby Critic - Home</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- StyleSheets -->
+    <link href="../assets/stylesheets/bootstrap.min.css" media="screen, projection, print" rel="stylesheet" type="text/css">
+    <link href="../assets/stylesheets/font-awesome.min.css" media="screen, projection, print" rel="stylesheet" type="text/css">
+    <link href="../assets/stylesheets/prettify.custom_theme.css" media="screen, projection, print" rel="stylesheet" type="text/css">
+    <link href="../assets/stylesheets/application.css" media="screen, projection, print" rel="stylesheet" type="text/css">
+  </head>
+
+  <body>
+    <header class="navbar navbar-default navbar-fixed-top">
+      <a href="#menu-toggle" class="btn btn-default hidden-lg visible-sm-* hidden-md visible-xs-* pull-left" id="menu-toggle"><i class="fa fa-bars" aria-hidden="true"></i></a>
+      <a href="../overview.html"><img src="../assets/images/logo.png" title="Ruby Critic Logo" width="55"><span class="logo">RUBYCRITIC</span></a>
+    </header>
+    <div id="wrapper">
+      <!-- Sidebar -->
+      <aside id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+          <li class="sidebar-item">
+            <a href="../overview.html" class="project-nav-item overview-nav"><i class="fa fa-dashboard"></i>Overview</a>
+          </li>
+          <li class="sidebar-item">
+            <a href="../code_index.html" class="project-nav-item code-index-nav"><i class="fa fa-code"></i>Code</a>
+          </li>
+          <li class="sidebar-item">
+            <a href="../smells_index.html" class="project-nav-item smells-index-nav"><i class="fa fa-warning"></i>Smells</a>
+          </li>
+        </ul>
+      </aside>
+      <!-- /#sidebar-wrapper -->
+      <div id="page-content-wrapper">
+        <div class="container-fluid">
+          <div class="row">
+  <!--Page Title -->
+  <div class="Page_Title">
+    <div class="file-time">
+      <span class="committed-at">
+        
+          Updated <time class='js-timeago' datetime='2017-02-12 18:23:47 +0200'>2017-02-12 18:23:47 +0200</time>
+        
+      </span>
+    </div>
+    <div>
+      <h3><small>db /</small> schema.rb</h3>
+    </div>
+  </div>
+  <!--End Page Title -->
+  <div class="Content_Wrapper">
+    <!-- code detail -->
+    <div class="code-top-detail clearfix row">
+      <div class="col-md-8">
+        <div class="row">
+          <div class="col-md-1">
+            <div class="rating a big">
+              A
+            </div>
+          </div>
+          <div class="code-statistics col-md-11">
+            <div class="col-md-3">
+              <div><span class="metric">76</span><small> lines of codes</small></div>
+              <div><span class="metric">0</span><small> methods</small></div>
+            </div>
+            <div class="col-md-3">
+              <div><span class="metric">N/A</span><small> complexity/method</small></div>
+              <div><span class="metric">5</span><small> loc/method</small></div>
+            </div>
+            <div class="col-md-3">
+              <div><span class="metric">68</span><small> complexity</small></div>
+              <div><span class="metric">0</span><small> duplications</small></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="code-tabs">
+          <ul class="nav nav-pills right-to-left">
+            <li><a href="#" id="toggle-code" class="toggle-button button">code</a></li>
+            <li class="active">
+              <a href="#" id="toggle-smells" class="toggle-button button">
+                1
+                smell
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <code class="prettyprint linenums lang-ruby file-code js-file-code"># This file is auto-generated from the current state of the database. Instead
+# of editing this file, please use the migrations feature of Active Record to
+# incrementally modify your database, and then regenerate this schema definition.
+#
+# Note that this schema.rb definition is the authoritative source for your
+# database schema. If you need to create the application database on another
+# system, you should be using db:schema:load, not running all the migrations
+# from scratch. The latter is a flawed and unsustainable approach (the more migrations
+# you&#39;ll amass, the slower it&#39;ll run and the greater likelihood for issues).
+#
+# It&#39;s strongly recommended that you check this file into your version control system.
+
+ActiveRecord::Schema.define(version: 20170212144736) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension &quot;plpgsql&quot;
+
+  create_table &quot;money_requests&quot;, force: :cascade do |t|
+    t.integer  &quot;user_id&quot;,                                                   null: false
+    t.text     &quot;type&quot;
+    t.decimal  &quot;amount&quot;,           precision: 17, scale: 4
+    t.decimal  &quot;balance&quot;,          precision: 17, scale: 4
+    t.integer  &quot;status&quot;,                                    default: 1,     null: false
+    t.date     &quot;maturity_date&quot;
+    t.boolean  &quot;matured&quot;
+    t.datetime &quot;created_at&quot;,                                                null: false
+    t.datetime &quot;updated_at&quot;,                                                null: false
+    t.boolean  &quot;compounded&quot;,                                default: false
+    t.datetime &quot;profit_from_date&quot;
+  end
+
+  create_table &quot;money_transactions&quot;, force: :cascade do |t|
+    t.integer  &quot;withdrawal_id&quot;,                                         null: false
+    t.integer  &quot;donation_id&quot;,                                           null: false
+    t.integer  &quot;status&quot;,                                    default: 1, null: false
+    t.decimal  &quot;amount&quot;,           precision: 17, scale: 4
+    t.text     &quot;proof_of_payment&quot;
+    t.datetime &quot;created_at&quot;,                                            null: false
+    t.datetime &quot;updated_at&quot;,                                            null: false
+  end
+
+  create_table &quot;payment_accounts&quot;, force: :cascade do |t|
+    t.integer  &quot;user_id&quot;,             null: false
+    t.text     &quot;bank_name&quot;
+    t.text     &quot;account_number&quot;
+    t.text     &quot;branch_code&quot;
+    t.text     &quot;account_type&quot;
+    t.text     &quot;account_holder_name&quot;
+    t.datetime &quot;created_at&quot;,          null: false
+    t.datetime &quot;updated_at&quot;,          null: false
+  end
+
+  create_table &quot;users&quot;, force: :cascade do |t|<div class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden"true"=""></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>create_table#users has a flog score of 27</span>          </div>  </li></div>
+    t.string   &quot;email&quot;,                  default: &quot;&quot;, null: false
+    t.string   &quot;encrypted_password&quot;,     default: &quot;&quot;, null: false
+    t.string   &quot;first_name&quot;,             default: &quot;&quot;, null: false
+    t.string   &quot;last_name&quot;,              default: &quot;&quot;, null: false
+    t.string   &quot;cellphone&quot;
+    t.integer  &quot;roles_mask&quot;
+    t.string   &quot;reset_password_token&quot;
+    t.datetime &quot;reset_password_sent_at&quot;
+    t.datetime &quot;remember_created_at&quot;
+    t.integer  &quot;sign_in_count&quot;,          default: 0,  null: false
+    t.datetime &quot;current_sign_in_at&quot;
+    t.datetime &quot;last_sign_in_at&quot;
+    t.inet     &quot;current_sign_in_ip&quot;
+    t.inet     &quot;last_sign_in_ip&quot;
+    t.datetime &quot;created_at&quot;,                          null: false
+    t.datetime &quot;updated_at&quot;,                          null: false
+    t.text     &quot;guid&quot;,                                null: false
+    t.text     &quot;referer_guid&quot;
+    t.index [&quot;email&quot;], name: &quot;index_users_on_email&quot;, unique: true, using: :btree
+    t.index [&quot;reset_password_token&quot;], name: &quot;index_users_on_reset_password_token&quot;, unique: true, using: :btree
+  end
+
+end
+</code>
+  </div>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Javascripts -->
+    <script src='../assets/javascripts/jquery.min.js'></script>
+    <script src='../assets/javascripts/jquery.tablesorter.min.js'></script>
+    <script src='../assets/javascripts/jquery.scrollTo.min.js'></script>
+    <script src='../assets/javascripts/jquery.timeago.js'></script>
+    <script src='../assets/javascripts/highcharts.src-4.0.1.js'></script>
+    <script src='../assets/javascripts/prettify.js'></script>
+    <script src='../assets/javascripts/bootstrap.min.js'></script>
+    <script src='../assets/javascripts/application.js'></script>
+    <script src='../assets/javascripts/jquery.filtertable.min.js'></script>
+  </body>
+</html>
