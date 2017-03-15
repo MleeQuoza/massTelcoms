@@ -3,53 +3,52 @@ class MoneyTransactionService
   def initialize(money_request)
     @money_request = money_request
   end
-
-  def call
-    MoneyTransaction.create(transaction_params) unless transaction_params.has_value?nil
+  
+  def match_with_donations
+    donation = Donation.where("user_id != #{@money_request.user_id} AND balance >= #{@money_request.amount} AND status = #{MoneyRequest.statuses[:pending]}").first
+    if donation
+      make_transaction_for_withdrawal(donation)
+    else
+      collect_donations
+    end
+  end
+  
+  def make_transaction_for_withdrawal(donation)
+    MoneyTransaction.create(withdrawal_id: @money_request.id,
+                            donation_id: donation.id,
+                            amount: @money_request.amount,
+                            status: MoneyRequest.statuses[:pending])
+  end
+  
+  def collect_donations
+    donations = Donation.where("user_id != #{@money_request.user_id} AND balance > 0 AND status = #{MoneyRequest.statuses[:pending]}")
+    donation_basket = []
+    sum = 0
+    donations.each_with_index do |donation, index|
+      return if sum >= @money_request.amount
+    end
+    
+  end
+  
+  def match_with_withdrawals
+    withdrawal = Withdrawal.where("user_id != #{@money_request.user_id} AND balance >= #{@money_request.amount} AND status = #{MoneyRequest.statuses[:pending]}").first
+    if withdrawal.present?
+      make_transaction_for_donation(withdrawal)
+    else
+      make_transactions_for_donation
+    end
   end
 
-  private
-
-  attr_reader :withdrawal_id, :donation_id, :amount, :status
-
-  def status
-    MoneyRequest.statuses[:pending]
+  def make_transaction_for_donation(withdrawal)
+    MoneyTransaction.create(withdrawal_id: withdrawal.id,
+                            donation_id: @money_request.id,
+                            amount: @money_request.amount,
+                            status: MoneyRequest.statuses[:pending],
+                            compounded: false
+    )
   end
-
-  def amount
-    return @money_request.amount unless @money_request.balance < @money_request.amount
-
-    @money_request.balance
-  end
-
-  def withdrawal_id
-    return @money_request.id if @money_request.instance_of?Withdrawal
-
-    match_with_withdrawal(@money_request.user_id)
-  end
-
-  def match_with_donation(user_id)
-    donation = Donation.where("user_id != #{user_id} AND balance >= #{amount} AND status = #{MoneyRequest.statuses[:pending]}").first
-    donation.id unless donation.blank?
-  end
-
-  def donation_id
-    return @money_request.id if @money_request.instance_of?Donation
-
-    match_with_donation(@money_request.user_id)
-  end
-
-  def match_with_withdrawal(user_id)
-    withdrawal = Withdrawal.where("user_id != #{user_id} AND balance >= #{amount} AND status = #{MoneyRequest.statuses[:pending]}").first
-    withdrawal.id unless withdrawal.blank?
-  end
-
-  def transaction_params
-    {
-      amount: amount,
-      withdrawal_id: withdrawal_id,
-      donation_id: donation_id,
-      status: status
-    }
+  
+  def collect_withdrawals
+    
   end
 end

@@ -26,11 +26,20 @@ class Donation < MoneyRequest
     self.maturity_date = Time.zone.today + 6.months
     self.profit_from_date = Time.zone.today
   end
+
+  after_commit on: [:create] do
+    make_money_transactions
+  end
   
   after_commit on: [:update] do
     if self.request_completed?
       update_referral
     end
+  end
+
+  def make_money_transactions
+    return unless self.requires_transaction
+    MoneyTransactionService.new(self).match_with_withdrawals
   end
   
   def profit

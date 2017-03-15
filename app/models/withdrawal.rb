@@ -23,6 +23,15 @@ class Withdrawal < MoneyRequest
 
   belongs_to :user
   has_many :money_transactions
+
+  after_commit on: [:create] do
+    make_money_transactions
+  end
+
+  def make_money_transactions
+    return unless self.requires_transaction
+    MoneyTransactionService.new(self).match_with_donations
+  end
   
   def pending_money_transactions
     self.money_transactions.where(status: MoneyTransaction.statuses[:pending])

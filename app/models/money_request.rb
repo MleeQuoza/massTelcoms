@@ -19,15 +19,6 @@
 class MoneyRequest < ActiveRecord::Base
   enum status: { pending: 1, completed: 2, rejected: 3, expired: 4, blocked: 5 }
 
-  after_commit on:[:create] do
-    make_money_transactions
-  end
-
-  def make_money_transactions
-    return unless self.requires_transaction
-    MoneyTransactionService.new(self).call
-  end
-
   def requires_transaction
     !self.compounded && self.type != 'Wallet' && self.type != 'ReferralWallet'
   end
