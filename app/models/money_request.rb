@@ -33,4 +33,8 @@ class MoneyRequest < ActiveRecord::Base
     self.money_transactions.present? &&
       self.money_transactions.where("status = #{MoneyTransaction.statuses[:pending]} OR status = #{MoneyTransaction.statuses[:rejected]}").count == 0
   end
+  
+  def pending?
+    self.status == MoneyTransaction.statuses[:pending]
+  end
 end

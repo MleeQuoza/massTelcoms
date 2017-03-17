@@ -37,10 +37,11 @@ class WalletsController < ApplicationController
       withdrawal.amount = wallet.balance
       withdrawal.balance = wallet.balance
       
-      withdrawal.save!
       
-      wallet.update(amount: 0, balance: 0)
-      wallet.save!
+      if withdrawal.save!
+        wallet.update(amount: 0, balance: 0)
+        wallet.save!
+      end
     end
     
     redirect_to user_withdrawals_path(user_id: current_user.id)

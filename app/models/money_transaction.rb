@@ -62,7 +62,7 @@ class MoneyTransaction < ActiveRecord::Base
 
   def adjust_statuses
     donation = self.donation
-    donation.update(status: MoneyTransaction.statuses[:completed]) if donation.request_completed?
+    donation.update(status: MoneyTransaction.statuses[:completed], profit_from_date: Time.zone.today) if donation.request_completed?
     
     withdrawal = self.withdrawal
     withdrawal.update(status: MoneyTransaction.statuses[:completed]) if withdrawal.request_completed?

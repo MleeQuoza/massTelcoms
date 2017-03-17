@@ -52,6 +52,7 @@ class Donation < MoneyRequest
   end
 
   def profit_counter
+    return 0 if self.pending?
     TimeDifference.between(self.profit_from_date, Time.zone.today).in_days
   end
 
