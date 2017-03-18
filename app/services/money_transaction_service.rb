@@ -27,12 +27,12 @@ class MoneyTransactionService
     sum = 0
     index = 0
     donations.each do |donation|
-      break if sum >= @money_request.amount
+      break if sum > @money_request.amount
       sum += donation.balance
       index += 1
     end
     
-    if sum == @money_request.amount
+    if sum <= @money_request.amount
       donations.slice(0..index)
     else
       []

@@ -29,9 +29,7 @@ RSpec.describe PaymentAccountsController, type: :controller do
 
       expect(PaymentAccount.count).to eq 1
       expect(response.status).to eq 302
-      expect(response).to redirect_to profile_path(user_id: @user.id)
-      expect(flash[:notice]).to eq'Payment Account saved'
-
+      expect(response).to redirect_to dashboard_index_path
     end
   end
 

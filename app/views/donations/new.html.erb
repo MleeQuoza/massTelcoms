@@ -9,10 +9,10 @@
                 <h2 class="pricing-plan"><%= image_tag('deposit.png', :alt => 'Community Wealth SA 2017') %></h2>
                 <%= form_for(@donation, remote: true, format: :json) do |f| %>
                   <h2> HOW MUCH IS YOUR DEPOSIT? <sup class="currency"></sup></h2><br/>
-                    <%= f.hidden_field :user_id, :value => current_user.id %>
                   <div class="price">
-                    <%= f.number_field(:amount, class: 'btn btn-primary btn-outline') %><sup class="currency"></sup>
-                    <%= f.hidden_field(:compounded, value: false) %>
+                    <%= select_tag(:amount, options_for_select(['Please select'].concat((1000..10000).step(100).to_a)), {class: 'btn btn-primary btn-outline', required: true}) %>
+                    <%= f.hidden_field :compounded, value => false %>
+                    <%= f.hidden_field :user_id, :value => current_user.id %>
                   </div>
                   <br/><br/>
 
