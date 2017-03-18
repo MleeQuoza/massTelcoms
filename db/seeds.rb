@@ -39,6 +39,10 @@ User.create([
   {first_name: 'Dave', last_name: 'Jones', password: 'P@ssword', cellphone: '0712345678', email: 'userz@mail.com', referrer_email: 'usera@mail.com'}
 ])
 
+User.all.each do |u|
+  PaymentAccount.create(user_id: u.id, bank_name: 'Absa', account_number: '40735679000', branch_code: '123456', account_type: 'Cheque')
+end
+
 # Donation.create([
 #   {user_id: 1, amount: 1000, balance: 1000, compounded: false, status: 1 },
 #   {user_id: 2, amount: 1000, balance: 1000, compounded: false, status: 1 },

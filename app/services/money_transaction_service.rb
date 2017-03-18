@@ -7,7 +7,7 @@ class MoneyTransactionService
   def match_with_donations
     donation = Donation.where("user_id != #{@money_request.user_id} AND balance >= #{@money_request.amount} AND status = #{MoneyRequest.statuses[:pending]}").first
     if donation
-      make_transaction_for_withdrawal(donation)
+      make_transaction_for_withdrawal(donation, true)
     else
       collect_donations.each do |d|
         make_transaction_for_withdrawal(d)
@@ -15,10 +15,10 @@ class MoneyTransactionService
     end
   end
   
-  def make_transaction_for_withdrawal(donation)
+  def make_transaction_for_withdrawal(donation, use_request=false)
     MoneyTransaction.create(withdrawal_id: @money_request.id,
                             donation_id: donation.id,
-                            amount: donation.balance,
+                            amount: use_request ? @money_request.balance : donation.balance,
                             status: MoneyRequest.statuses[:pending])
   end
   
@@ -42,7 +42,7 @@ class MoneyTransactionService
   def match_with_withdrawals
     withdrawal = Withdrawal.where("user_id != #{@money_request.user_id} AND balance >= #{@money_request.amount} AND status = #{MoneyRequest.statuses[:pending]}").first
     if withdrawal.present?
-      make_transaction_for_donation(withdrawal)
+      make_transaction_for_donation(withdrawal, true)
     else
       collect_withdrawals.each do |w|
         make_transaction_for_donation(w)
@@ -50,10 +50,10 @@ class MoneyTransactionService
     end
   end
 
-  def make_transaction_for_donation(withdrawal)
+  def make_transaction_for_donation(withdrawal, use_request=false)
     MoneyTransaction.create(withdrawal_id: withdrawal.id,
                             donation_id: @money_request.id,
-                            amount: withdrawal.balance,
+                            amount: use_request ? @money_request.balance : withdrawal.balance,
                             status: MoneyRequest.statuses[:pending]
     )
   end
