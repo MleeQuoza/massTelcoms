@@ -16,6 +16,17 @@ class AnnouncementsController < ApplicationController
     end
   end
   
+  def destroy
+    authorize! :create, Announcement
+    
+    announcement = Announcement.find(params[:id])
+    if announcement.destroy!
+      redirect_to announcements_path, notice: 'Record Deleted'
+    else
+      redirect_to announcements_path, notice: 'Deletion failed'
+    end
+  end
+  
   private
   
   def announcement_params

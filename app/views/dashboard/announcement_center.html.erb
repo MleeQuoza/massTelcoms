@@ -6,6 +6,46 @@
           <div class="pricing">
             <div class="col-md-10 animate-box">
               <div class="price-box" style="overflow-x:auto;">
+                <h2 class="pricing"> NEWS FEEDS UPDATE </h2>
+                <table style="overflow-x:auto;">
+                  <tr>
+                    <th>MESSAGE</th>
+                    <th>UPDATE</th>
+                  </tr>
+                  <tr>
+                    <td class="pricing-plan">
+                      <%= form_tag(announcements_path) do %>
+                          <%= text_area_tag(:content) %>
+                        <td colspan="2"><%= submit_tag 'POST', class: 'btn btn-primary btn-outline' %></td>
+                    <% end %>
+                  </tr>
+                  <% if @announcements.present? %>
+                    <% @announcements.each do |a| %>
+                      <tr>
+                        <td><%= a.content %></td>
+                        <td><%= link_to 'Destroy',
+                                        announcement_path(a.id),
+                                        class: 'btn btn-primary btn-outline',
+                                        method: :delete,
+                                        data: {confirm: 'Are you sure?'} %>
+                        </td>
+                      </tr>
+                    <% end %>
+                  <% end %>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container" >
+      <div class="row">
+        <div class="col-md-12 col-md-offset-2 text-center animate-box">
+          <div class="pricing">
+            <div class="col-md-10 animate-box">
+              <div class="price-box" style="overflow-x:auto;">
                 <h2 class="pricing"> SLIDER UPLOADS </h2>
                 <table style="overflow-x:auto;">
                   <tr>
@@ -35,33 +75,6 @@
                     <td><a href="#" class="btn btn-primary btn-outline">UPLOAD</a></td>
                   </tr>
 
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="container" >
-      <div class="row">
-        <div class="col-md-12 col-md-offset-2 text-center animate-box">
-          <div class="pricing">
-            <div class="col-md-10 animate-box">
-              <div class="price-box" style="overflow-x:auto;">
-                <h2 class="pricing"> NEWS FEEDS UPDATE </h2>
-                <table style="overflow-x:auto;">
-                  <tr>
-                    <th>MESSAGE</th>
-                    <th>UPDATE</th>
-                  </tr>
-                  <tr>
-                    <td class="pricing-plan">
-                      <%= form_tag(announcements_path) do %>
-                          <%= text_area_tag(:content) %>
-                    <td><%= submit_tag 'POST', class: 'btn btn-primary btn-outline' %></td>
-                    <% end %>
-                  </tr>
                 </table>
               </div>
             </div>
