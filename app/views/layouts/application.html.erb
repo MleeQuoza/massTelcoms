@@ -14,7 +14,13 @@
   <div class="simple-marquee-container">
     <div class="marquee">
       <ul class="marquee-content-items">
+      <% if @announcements.present? %>
+        <% @announcements.each do |a| %>
+          <li><%= a.content.upcase %> </li>
+        <% end %>
+      <% else %>
         <li>Community Wealth SA PRE-LAUNCH. 30% GROWTH PER MONTH. GLOBAL POOL BENEFITS!</li>
+      <% end %>
       </ul>
     </div>
   </div>
@@ -27,9 +33,9 @@
     <ul>
       <% if user_signed_in? %>
           <% if current_user.is?('admin') %>
-              <li class=<%= "fh5co-active" if params[:controller] == 'dashboard' && params[:action] == 'index' %>><%= link_to 'Dashboard', dashboard_admin_path %></li>
+              <li class=<%= "fh5co-active" if params[:controller] == 'dashboard' && (params[:action] == 'admin' || params[:action] == 'index') %>><%= link_to 'Dashboard', dashboard_admin_path %></li>
               <li class=<%= "fh5co-active" if params[:controller] == 'dashboard' && params[:action] == 'money_transactions' %>><%= link_to 'Transactions', all_transactions_path %></li>
-              <li class=<%= "fh5co-active" if params[:controller] == 'dashboard1' %>><%= link_to 'Announcements', dashboard_admin_path %></li>
+              <li class=<%= "fh5co-active" if params[:controller] == 'announcements' %>><%= link_to 'Announcements', announcements_path %></li>
               <li class=<%= "fh5co-active" if params[:controller] == 'dashboard1' %>><%= link_to 'Adverts', adverts_path %></li>
             <% else %>
               <li class=<%= "fh5co-active" if params[:controller] == 'dashboard' %>><%= link_to 'Dashboard', dashboard_index_path %></li>

@@ -4,7 +4,7 @@ class WalletsController < ApplicationController
   def add_to_wallet
     Wallet.transaction do
       donation = Donation.find(wallet_params[:donation_id])
-      donation.profit_from_date = Time.zone.now
+      donation.profit_from_date = Time.zone.today
       
       user = User.find(wallet_params[:user_id])
       wallet = user.wallet
@@ -36,7 +36,6 @@ class WalletsController < ApplicationController
       withdrawal.user_id = current_user.id
       withdrawal.amount = wallet.balance
       withdrawal.balance = wallet.balance
-      
       
       if withdrawal.save!
         wallet.update(amount: 0, balance: 0)

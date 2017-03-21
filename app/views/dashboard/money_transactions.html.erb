@@ -1,0 +1,41 @@
+<div id="fh5co-pricing-section" >
+  <div class="container" >
+    <div class="row">
+      <div class="col-md-12 col-md-offset-2 text-center animate-box">
+        <div class="pricing">
+          <div class="col-md-10 animate-box">
+            <div class="price-box" style="overflow-x:auto;">
+              <h2 class="pricing-plan"> MONTHLY TRANSACTIONS </h2>
+              <h2 class="price"> R 10 000</h2>
+              <table style="overflow-x:auto;">
+                <%= form_tag(filter_money_transactions_path) do %>
+                    FROM: <%= date_select('transaction_filter', 'from', { order: [:day, :month, :year], use_short_month: true, start_year: 2017 } ) %>
+                    TO: <%= date_select('transaction_filter', 'to', { order: [:day, :month, :year], use_short_month: true, start_year: 2017 }) %>
+                    <%= submit_tag 'Filter', class: 'btn btn-primary btn-outline' %>
+                <% end %>
+                <tr>
+                  <th>Date</th>
+                  <th>Receiver</th>
+                  <th>Donor</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                </tr>
+                <% if @all_transactions.present? %>
+                  <% @all_transactions.each do |trx| %>
+                    <tr>
+                      <td class="pricing-plan"> <%= trx.created_at %> </td>
+                      <td class="pricing-plan"> <%= trx.withdrawal_user_name %> </td>
+                      <td class="pricing-plan"> <%= trx.donation_user_name %> </td>
+                      <td class="pricing-plan"> <%= display_as_money(trx.amount) %></td>
+                      <td class="pricing-plan"> <%= trx.status %> </td>
+                    </tr>
+                 <% end %>
+                <% end %>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

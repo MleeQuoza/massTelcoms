@@ -1,7 +1,12 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :configure_permitted_parameters, if: :devise_controller?
-
+  before_action :load_announcements
+  
+  def load_announcements
+    @announcements = Announcement.all
+  end
+  
   def after_sign_in_path_for(user)
     assign_pending_money_requests(user)
     user.payment_account.present? ? dashboard_index_path : new_payment_account_path

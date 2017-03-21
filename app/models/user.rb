@@ -140,7 +140,7 @@ class User < ApplicationRecord
   end
   
   def referee_list
-    User.find(self.referees.map(&:referee_id).to_a)
+    User.find(self.referees.map{|r| r.referee_id })
   end
   
   def new_referees
@@ -167,12 +167,10 @@ class User < ApplicationRecord
   end
   
   def active_referrals
-    users = User.find(Referral.where(referrer_id: self.id).map(&:referee_id).to_a)
-    active_users = []
-    users.each do |user|
-        active_users.append(user) if user.completed_donations.present?
+    users = User.find(Referral.where(referrer_id: self.id).map{ |r| r.referee_id })
+    users.each_with_object([]) do |user, memo|
+        memo.append(user) if user.completed_donations.present?
     end
-    active_users
   end
   
   def referral_bonus

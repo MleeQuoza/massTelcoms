@@ -2,13 +2,13 @@ require 'rails_helper'
 
 RSpec.describe DonationsController, type: :controller do
   before do
-    allow(controller).to receive(:authenticate_user!).and_return true
     account = create(:payment_account)
     withdrawal_user = create(:user, payment_account: account)
     @withdrawal = create(:withdrawal, user: withdrawal_user)
     @user = create(:user, payment_account: account)
     @abilities = Ability.new(@user)
-    
+
+    allow(controller).to receive(:authenticate_user!).and_return true
     allow(@abilities).to receive(:can?).with(:manage, :PaymentAccount).and_return(true)
     allow(controller).to receive(:current_user).and_return(@user)
   end

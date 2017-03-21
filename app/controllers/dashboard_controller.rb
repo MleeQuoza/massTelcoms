@@ -11,6 +11,7 @@ class DashboardController < ApplicationController
   end
   
   def money_transactions
+    @all_transactions = MoneyTransaction.all
   end
   
   def profile
@@ -23,5 +24,17 @@ class DashboardController < ApplicationController
   def testing
     @donations = current_user.donations
     @withdrawals = current_user.withdrawals
+  end
+
+  def filter_money_transactions
+    f = filter_params
+    @all_transactions = MoneyTransaction.where("created_at >= '#{(Time.parse(f[:from]))}' AND created_at <= '#{(Time.parse(f[:to]))}'")
+    render 'dashboard/money_transactions'
+  end
+  
+  private
+  
+  def filter_params
+    params.require(:transaction_filter).permit(:from, :to)
   end
 end

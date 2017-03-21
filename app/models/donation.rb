@@ -21,6 +21,7 @@ class Donation < MoneyRequest
   belongs_to :user
   
   validates :amount, presence: :true
+  validates :user_id, presence: :true
   
   before_commit on: [:create] do
     self.maturity_date = Time.zone.today + 6.months
@@ -33,7 +34,7 @@ class Donation < MoneyRequest
   
   after_commit on: [:update] do
     if self.request_completed?
-      update_referral
+      update_referral_bonus_amount
     end
   end
 
@@ -44,24 +45,23 @@ class Donation < MoneyRequest
   
   def profit
     return 0 unless MoneyRequest.statuses[self.status] == MoneyRequest.statuses[:completed]
-    self.amount * (self.profit_counter / 100)
+    self.amount * (self.profit_counter / 100.0)
   end
 
   def expired?
-    TimeDifference.between(self.created_at, self.maturity_date).in_months > 6
+    TimeDifference.between(self.created_at, Time.zone.today).in_months > 6
   end
 
   def profit_counter
     return 0 if self.pending?
-    TimeDifference.between(self.profit_from_date, Time.zone.today).in_days
+    TimeDifference.between(self.profit_from_date, Time.zone.today).in_days.round(0)
   end
 
   def months_invested
-    number_of_months = TimeDifference.between(self.created_at, Time.zone.today).in_months
-    number_of_months < 1 ? 0 : number_of_months
+    TimeDifference.between(self.created_at, Time.zone.today).in_months.round(0)
   end
   
-  def update_referral
+  def update_referral_bonus_amount
     user = self.user
     referrer = User.find_by_email(user.referrer_email)
     return unless referrer.present?

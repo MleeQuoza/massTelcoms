@@ -10,7 +10,7 @@ class WithdrawalsController < ApplicationController
       withdrawal = MoneyRequestService.new(withdrawals_params, {type: Withdrawal.name }).call
       
       if withdrawal.save!
-        current_user.wallet.update!(amount: (current_user.wallet.amount - withdrawal.amount))
+        current_user.wallet.update!(balance: (current_user.wallet.balance - withdrawal.amount))
         format.js { render inline: 'location.reload();' }
         format.html { redirect_to dashboard_index_path, flash[:notice] => 'withdrawal Request Successful' }
       else
