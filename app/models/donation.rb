@@ -21,6 +21,7 @@ class Donation < MoneyRequest
   belongs_to :user
   
   validates :amount, presence: :true
+  validates_numericality_of :amount, greater_than: 0
   validates :user_id, presence: :true
   
   before_commit on: [:create] do

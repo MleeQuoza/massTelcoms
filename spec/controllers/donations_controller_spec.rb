@@ -43,6 +43,7 @@ RSpec.describe DonationsController, type: :controller do
     context 'compounded donation' do
       before do
         @donation = create(:donation, profit_from_date: (Time.zone.now - 2.months))
+        @user.wallet.update(balance: 2000)
         @params = {user_id: @user.id, amount: 2000, compounded: true, donation_id: @donation.id }
       end
       

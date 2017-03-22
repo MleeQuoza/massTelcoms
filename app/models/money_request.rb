@@ -18,7 +18,7 @@
 
 class MoneyRequest < ActiveRecord::Base
   enum status: { pending: 1, completed: 2, rejected: 3, expired: 4, blocked: 5 }
-
+  
   def requires_transaction
     !self.compounded && self.type != 'Wallet' && self.type != 'ReferralWallet'
   end
@@ -33,8 +33,8 @@ class MoneyRequest < ActiveRecord::Base
     self.money_transactions.present? &&
       self.money_transactions.where("status = #{MoneyTransaction.statuses[:pending]} OR status = #{MoneyTransaction.statuses[:rejected]}").count == 0
   end
-  
+
   def pending?
-    self.status == MoneyTransaction.statuses[:pending]
+    MoneyTransaction.statuses[self.status] == MoneyTransaction.statuses[:pending]
   end
 end

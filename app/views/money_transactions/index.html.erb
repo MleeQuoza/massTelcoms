@@ -72,6 +72,7 @@
                             <th>Donor Name</th>
                             <th>Amount</th>
                             <th>Status</th>
+                            <th>Hours Elapsed</th>
                             <th>Proof of payment</th>
                             <th colspan="2">Complete/Reject</th>
                             </thead>
@@ -82,15 +83,17 @@
                                   <td><%= tr.donation_user_name %></td>
                                   <td><%= display_as_money(tr.amount) %></td>
                                   <td><%= tr.status %></td>
-                                  <td><%= tr.status %></td>
+                                  <td><%= tr.hours_elapsed %></td>
+                                  <td>COMING SOON</td>
                                   <td>
                                     <%= form_tag(toggle_transaction_status_path(tr.id)) do %>
                                         <%= hidden_field_tag(:id, current_user.id) %>
                                         <%= hidden_field_tag(:status, MoneyTransaction.statuses[:completed]) %>
                                         <%= submit_tag 'Complete',
                                                        class: 'btn btn-primary btn-outline',
-                                                       disabled: tr.pending?,
-                                                       data: { confirm: 'Are you sure?' }%>
+                                                       data: { confirm: 'Are you sure?' },
+                                                       disabled: !tr.pending?
+                                        %>
                                     <% end %>
                                   </td>
                                   <td>
@@ -99,8 +102,9 @@
                                         <%= hidden_field_tag(:status, MoneyTransaction.statuses[:rejected]) %>
                                         <%= submit_tag 'Reject',
                                                        class: 'btn btn-primary btn-outline',
-                                                       disabled: tr.pending?,
-                                                       data: { confirm: 'Are you sure?' }%>
+                                                       data: { confirm: 'Are you sure?' },
+                                                       disabled: !tr.pending?
+                                        %>
                                     <% end %>
                                   </td>
                                 </tr>

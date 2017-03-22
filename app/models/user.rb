@@ -86,7 +86,7 @@ class User < ApplicationRecord
   end
 
   def can_donate_or_withdraw?
-     not (self.current_donation.present? || self.current_withdrawal.present?)
+      (self.current_donation.present? || self.current_withdrawal.present?)
   end
   
   def completed_donations

@@ -19,6 +19,7 @@
 class Withdrawal < MoneyRequest
   validates :user_id, presence: true
   validates :amount, presence: true
+  validates_numericality_of :amount, greater_than: 0
   validate :payment_details_provided
 
   belongs_to :user

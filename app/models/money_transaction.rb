@@ -51,8 +51,12 @@ class MoneyTransaction < ActiveRecord::Base
     self.withdrawal.user.payment_account&.branch_code
   end
   
+  def hours_elapsed
+    TimeDifference.between(self.created_at, Time.zone.now).in_hours.round(0)
+  end
+  
   def pending?
-    self.status == MoneyTransaction.statuses[:pending]
+    MoneyTransaction.statuses[self.status] == MoneyTransaction.statuses[:pending]
   end
 
   private

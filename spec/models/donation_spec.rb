@@ -113,7 +113,10 @@ RSpec.describe Donation, type: :model do
     end
   
     context 'donation in 3 months' do
-      before{ subject.profit_from_date = Time.zone.today + 3.days }
+      before do
+        subject.profit_from_date = Time.zone.today + 3.days
+        subject.status = MoneyTransaction.statuses[:completed]
+      end
       it 'calculates days since last profit checkout' do
         expect(subject.profit_counter).to eq 3
       end

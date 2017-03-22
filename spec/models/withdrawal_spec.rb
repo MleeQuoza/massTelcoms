@@ -22,11 +22,12 @@ RSpec.describe Withdrawal, type: :model do
   end
   
   describe 'pending_money_transactions' do
-    let(:pending) { create(:money_transaction, withdrawal: subject) }
+    let(:pending) { create(:money_transaction, withdrawal: subject, status: MoneyTransaction.statuses[:pending]) }
     let(:completed) { create(:money_transaction, withdrawal: subject, status: MoneyTransaction.statuses[:completed]) }
     
     context 'withdrawal with pending transactions' do
       it 'returns pending transactions' do
+        expect(subject.pending_money_transactions.count).to eq 1
         expect(subject.pending_money_transactions).to eq [pending]
       end
     end

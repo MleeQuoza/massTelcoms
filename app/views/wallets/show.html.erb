@@ -17,8 +17,16 @@
                       class="btn btn-primary btn-outline"
                       data-toggle="modal"
                       data-target="#withdraw"
-                      <%= current_user.wallet.amount < 300 ? "disabled='disabled'" : '' %>
+                      <%= current_user.wallet.balance < 300 ? "disabled='disabled'" : '' %>
               >Withdraw</button>
+              <button type="submit"
+                      name="submit"
+                      class="btn btn-primary btn-outline"
+                      required="required"
+                      data-toggle="modal"
+                      data-target="#compound"
+                      <%= current_user.wallet.balance < 1000 ? "disabled='disabled'" : '' %>
+              >Compound</button>
             </div>
           </div>
         </div>
@@ -58,7 +66,7 @@
                     <h2> HOW MUCH DO YOU WANT TO WITHDRAW?</h2><br/>
                     <%= hidden_field_tag(:user_id, current_user.id) %>
                     <div class="price">
-                      <%= number_field_tag(:amount, nil, class: 'btn btn-primary btn-outline') %><sup class="currency"></sup>
+                      <%= select_tag(:amount, options_for_select(['Please select'].concat((300..current_user.wallet.balance).step(100).to_a)), {class: 'btn btn-primary btn-outline', required: true}) %><sup class="currency"></sup>
                     </div>
                     <br/><br/>
 
@@ -67,7 +75,7 @@
                             data-dismiss="modal">Cancel</button>
                     <%= submit_tag 'Approve',
                                    class: 'btn btn-primary btn-outline',
-                                   data: { toggle: 'modal', target: '#Deposit' }%>
+                                   data: { toggle: 'modal', target: '#withdraw' }%>
                 <% end %>
               </div>
             </div>
@@ -93,12 +101,12 @@
                     <%= hidden_field_tag(:user_id, current_user.id) %>
                     <%= hidden_field_tag(:compounded, true) %>
                     <div class="price">
-                      <%= number_field_tag(:amount, nil, class: 'btn btn-primary btn-outline') %><sup class="currency"></sup>
+                      <%= select_tag(:amount, options_for_select(['Please select'].concat((1000..current_user.wallet.balance).step(500).to_a)), {class: 'btn btn-primary btn-outline', required: true}) %><sup class="currency"></sup>
                     </div>
                     <br/><br/>
 
                     <button type="button" class="btn btn-primary btn-outline" required="required" data-dismiss="modal" >Cancel</button>
-                    <%= submit_tag 'Approve', class: 'btn btn-primary btn-outline', required: 'required', data: { toggle: 'modal', target: '#Deposit' }%>
+                    <%= submit_tag 'Approve', class: 'btn btn-primary btn-outline', required: 'required', data: { toggle: 'modal', target: '#compound' }%>
                 <% end %>
               </div>
             </div>

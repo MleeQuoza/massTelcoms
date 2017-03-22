@@ -24,6 +24,7 @@ Rails.application.routes.draw do
   match '/withdrawals/:user_id' => 'withdrawals#user_withdrawals', as: 'user_withdrawals', via: :get
  
   match 'welcome/how_to' => 'welcome#how_to', as: 'how_to_donate', via: :get
+  match 'welcome/faq' => 'welcome#faq', as: 'faq', via: :get
   match 'welcome/terms' => 'welcome#terms', as: 'terms', via: :get
  
   match '/dashboard/admin' => 'dashboard#admin', as: 'dashboard_admin', via: :get
