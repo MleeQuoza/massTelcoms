@@ -24,7 +24,7 @@ class MoneyTransaction < ActiveRecord::Base
   end
   
   after_commit on: [:update] do
-    adjust_statuses
+    handle_status_update
   end
 
   def withdrawal_user_name
@@ -64,12 +64,32 @@ class MoneyTransaction < ActiveRecord::Base
     MoneyRequestService.new.adjust_balances(self.donation, self.withdrawal, self.amount)
   end
 
-  def adjust_statuses
+  def handle_status_update
+    if MoneyTransaction.statuses[self.status] == MoneyTransaction.statuses[:completed]
+      handle_transaction_completed
+    end
+
+    if MoneyTransaction.statuses[self.status] == MoneyTransaction.statuses[:rejected]
+      handle_transaction_rejected
+    end
+  end
+  
+  def handle_transaction_completed
     donation = self.donation
     donation.update(status: MoneyTransaction.statuses[:completed], profit_from_date: Time.zone.today) if donation.request_completed?
     
     withdrawal = self.withdrawal
     withdrawal.update(status: MoneyTransaction.statuses[:completed]) if withdrawal.request_completed?
+  end
+  
+  def handle_transaction_rejected
+    donation = self.donation
+    donation_balance = donation.balance
+    donation.update!(balance: donation_balance + self.amount, status: MoneyTransaction.statuses[:rejected])
+    
+    withdrawal = self.withdrawal
+    withdrawal_balance = withdrawal.balance
+    withdrawal.update!(balance: withdrawal_balance + self.amount)
   end
 
 end

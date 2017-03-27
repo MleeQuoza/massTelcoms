@@ -4,12 +4,6 @@ class MoneyTransactionService
     @money_request = money_request
   end
   
-  def match_with_donations
-    collect_donations.each do |d|
-      make_transaction_for_withdrawal(d)
-    end
-  end
-  
   def make_transaction_for_withdrawal(donation, use_request=false)
     MoneyTransaction.create(withdrawal_id: @money_request.id,
                             donation_id: donation.id,
@@ -17,10 +11,11 @@ class MoneyTransactionService
                             status: MoneyRequest.statuses[:pending]).save!
   end
   
-  def collect_donations
+  def match_with_donations
     donations = Donation.where("user_id != #{@money_request.user_id} AND balance > 0 AND status = #{MoneyRequest.statuses[:pending]} AND compounded = false").order(:balance).to_a
     sum = 0
     index = 0
+    use_request = false
     donations.each do |donation|
       break if sum > @money_request.balance
       sum += donation.balance
@@ -31,6 +26,11 @@ class MoneyTransactionService
       donations.slice(0..index)
     else
       donations.slice(0..index - 1)
+      use_request = true
+    end
+    
+    donations.each do |donation|
+      make_transaction_for_withdrawal(donation, use_request)
     end
   end
   
