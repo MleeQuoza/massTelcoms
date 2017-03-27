@@ -1,12 +1,12 @@
 <div id="fh5co-pricing-section" >
   <div class="container" >
     <div class="row">
-      <div class="col-md-10 col-md-offset-2 text-center fh5co-heading animate-box">
-        <h2 style = "font-size: 50px; color: #FFFFFF" >ADMINISTRATION</h2>
+      <div class="col-md-10 col-md-offset-1 text-center fh5co-heading animate-box">
+        <h2 style = "font-size: 50px; color: #FFFFFF" >UNPAID DONATIONS</h2>
       </div>
     </div>
     <div class="row">
-      <div class="col-md-12 col-md-offset-2 text-center animate-box">
+      <div class="col-md-12 col-md-offset-1 text-center animate-box">
         <div class="pricing">
           <div class="col-md-10 animate-box">
             <div class="price-box" style="overflow-x:auto;">
@@ -20,7 +20,7 @@
                   <th>Amount</th>
                   <th>Time</th>
                   <th>Buy Time</th>
-                  <th>New Donor</th>
+                  <th>Assign</th>
                 </tr>
                 <% if @money_transactions.present? %>
                   <% @money_transactions.each do |mt| %>
@@ -42,6 +42,54 @@
         </div>
       </div>
     </div>
+
+
+<div id="fh5co-pricing-section" >
+  <div class="container" >
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1 text-center fh5co-heading animate-box">
+        <h2 style = "font-size: 50px; color: #FFFFFF" >ADVERT ADMIN </h2>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 col-md-offset-1 text-center animate-box">
+        <div class="pricing">
+          <div class="col-md-10 animate-box">
+            <div class="price-box" style="overflow-x:auto;">
+              <h2 class="pricing-plan"> Advertisment Requests </h2>
+              <h2 class="price"> <%= unpaid_transactions_total(@money_transactions) %> </h2>
+              <table style="overflow-x:auto;">
+                <tr>
+                  <th>Date</th>
+                  <th>Active</th>
+                  <th>Name</th>
+                  <th>Title</th>
+                  <th>Image</th>
+                  <th>Info</th>
+                  <th> Decline </th>
+                  <th> Approve </th>
+                </tr>
+                <% if @money_transactions.present? %>
+                  <% @money_transactions.each do |mt| %>
+                    <tr>
+                      <td class="pricing-plan"> <%= mt.updated_at.strftime('%F') %> </td>
+                      <td class="pricing-plan"> </td>
+                      <td class="pricing-plan"> </td>
+                      <td class="pricing-plan"> </td>
+                      <td class="pricing-plan"> </td>
+                      <td class="pricing-plan"><%= text_area_tag(:body, nil, {rows: 5, cols: 20 }) %></td>
+                      <td><a href="#" class="btn btn-primary btn-outline"> Decline </a></td>
+                      <td><a href="#" class="btn btn-primary btn-outline"> Approve </a></td>
+                    </tr>
+                  <% end %>
+                <% end %>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
+  </div>
 </div>
