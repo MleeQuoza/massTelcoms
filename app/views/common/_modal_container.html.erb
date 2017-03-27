@@ -1,0 +1,10 @@
+<div id="modal-container-<%= modal_id %>">
+  <%= render partial: modal_path, locals: {modal_id: modal_id,
+                                           data: data
+  } %>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#modals').append($('#modal-container-' + '<%= modal_id %>').html());
+    });
+</script>

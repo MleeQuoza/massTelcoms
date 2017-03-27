@@ -80,7 +80,7 @@ RSpec.describe Donation, type: :model do
     
     context 'donation in one month' do
       before do
-        subject.profit_from_date = Time.zone.today - 30.days
+        subject.created_at = Time.zone.today - 30.days
         subject.amount = 1000
         subject.status = MoneyRequest.statuses[:completed]
       end
@@ -114,7 +114,7 @@ RSpec.describe Donation, type: :model do
   
     context 'donation in 3 months' do
       before do
-        subject.profit_from_date = Time.zone.today + 3.days
+        subject.created_at = Time.zone.today + 3.days
         subject.status = MoneyTransaction.statuses[:completed]
       end
       it 'calculates days since last profit checkout' do

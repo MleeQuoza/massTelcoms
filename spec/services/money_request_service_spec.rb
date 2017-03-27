@@ -4,7 +4,7 @@ describe MoneyRequestService do
   before do
     @acc = create(:payment_account)
     @user = create(:user, payment_account: @acc)
-    @params = { amount: 1000, balance: 1000 , status: 1, type: 'Donation', compounded: true, donation_id: nil }
+    @params = { amount: 1000, balance: 1000 , status: 1, type: 'Donation', compounded: 'true', donation_id: nil }
     @donation = create(:donation, user: @user)
   end
   

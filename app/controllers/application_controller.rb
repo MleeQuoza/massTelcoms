@@ -32,7 +32,6 @@ class ApplicationController < ActionController::Base
 
     withdrawals = user.withdrawals.where("balance > 0 AND status = #{MoneyRequest.statuses[:pending]}")
     withdrawals.each do |withdrawal|
-      pp withdrawal
       MoneyTransactionService.new(withdrawal).match_with_donations
     end
   end

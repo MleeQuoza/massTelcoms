@@ -26,11 +26,11 @@ class MoneyTransactionService
       sum += donation.balance
       index += 1
     end
-    pp index, sum
+    
     if sum <= @money_request.balance
       donations.slice(0..index)
     else
-      []
+      donations.slice(0..index - 1)
     end
   end
   

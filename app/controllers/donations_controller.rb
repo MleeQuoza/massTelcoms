@@ -43,6 +43,6 @@ class DonationsController < ApplicationController
   end
   
   def donation_update_params
-    params.require(:donation).permit(:user_id, :profit_from_date)
+    params.require(:donation).permit(:user_id, :created_at, :amount)
   end
 end

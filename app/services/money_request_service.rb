@@ -15,10 +15,10 @@ class MoneyRequestService
   end
   
   def adjust_for_compound
-      adjust_wallet_balance
-      
     if @donation_id.present?
       adjust_donation_profit_from_date
+    else
+      adjust_wallet_balance
     end
   end
 
@@ -41,7 +41,7 @@ class MoneyRequestService
   end
 
   def request_params
-    { user_id: user_id, amount: amount, balance: balance, status: status, type: type, compounded: compounded }
+    { user_id: user_id, amount: amount, balance: balance, status: status, type: type, compounded: @compounded, donation_id: @donation_id }
   end
 
   def adjust_withdrawal_balance(withdrawal, transaction_amount)
