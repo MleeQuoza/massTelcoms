@@ -1,4 +1,4 @@
-class AnnouncementsController < ApplicationController
+class Api::V1::AnnouncementsController < Api::V1::BaseController
   before_action :authenticate_user!
   
   def index

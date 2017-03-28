@@ -1,4 +1,4 @@
-class PaymentAccountsController < ApplicationController
+class Api::V1::PaymentAccountsController < Api::V1::BaseController
   before_action :authenticate_user!
 
   def new

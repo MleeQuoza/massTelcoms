@@ -1,4 +1,4 @@
-class WalletsController < ApplicationController
+class Api::V1::WalletsController < Api::V1::BaseController
   before_action :authenticate_user!
   
   def add_to_wallet

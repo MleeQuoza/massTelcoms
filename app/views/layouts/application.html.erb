@@ -27,44 +27,10 @@
 </div>
 <a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle"><i></i></a>
 <aside id="fh5co-aside" role="complementary" class="border js-fullheight">
-  <br/>
   <h1 id="fh5co-logo"><%= link_to image_tag('logo.png', :alt => 'Community Wealth SA 2017'), root_path %></h1>
-  <nav id="fh5co-main-menu" role="navigation">
-    <ul>
-      <% if user_signed_in? %>
-          <% if current_user.is?('admin') %>
-              <li class=<%= "fh5co-active" if params[:controller] == 'dashboard' && (params[:action] == 'admin' || params[:action] == 'index') %>><%= link_to 'Dashboard', dashboard_admin_path %></li>
-              <li class=<%= "fh5co-active" if params[:controller] == 'dashboard' && params[:action] == 'money_transactions' %>><%= link_to 'Transactions', all_transactions_path %></li>
-              <li class=<%= "fh5co-active" if params[:controller] == 'announcements' %>><%= link_to 'Announcements', announcements_path %></li>
-              <li class=<%= "fh5co-active" if params[:controller] == 'dashboard1' %>><%= link_to 'Adverts', adverts_path %></li>
-            <% else %>
-              <li class=<%= "fh5co-active" if params[:controller] == 'dashboard' %>><%= link_to 'Dashboard', dashboard_index_path %></li>
-              <% if current_user.payment_account.present? %>
-                  <li class=<%= "fh5co-active" if params[:controller] == 'payment_accounts' %>><%= link_to 'Bank Account', edit_payment_account_path(current_user.payment_account) %></a></li>
-              <% else %>
-                  <li class=<%= "fh5co-active" if params[:controller] == 'payment_accounts' %>><%= link_to 'Bank Account', new_payment_account_path %></a></li>
-              <% end %>
-              <li class=<%= "fh5co-active" if params[:controller] == 'devise/registrations' %>><%= link_to 'User Profile', edit_user_registration_path %></li>
-              <li class=<%= "fh5co-active" if params[:controller] == 'donations' %>><%= link_to 'Donations', user_donations_path(user_id: current_user.id) %></li>
-              <li class=<%= "fh5co-active" if params[:controller] == 'withdrawals' %>><%= link_to 'Withdrawals', user_withdrawals_path(user_id: current_user.id) %></li>
-              <li class=<%= "fh5co-active" if params[:controller] == 'money_transactions' %>><%= link_to 'Transactions', money_transactions_path %></li>
-              <li class=<%= "fh5co-active" if params[:controller] == 'tools' %>><%= link_to 'Tools', tools_path %></li>
-              <li class=<%= "fh5co-active" if params[:controller] == 'wallets' %>><%= link_to 'Wallet', wallet_path(id: current_user.id) %></li>
-          <% end %>
-          <li class=<%= "fh5co-active" if params[:controller] == 'dashboard' && params[:action] == 'testing' %>><%= link_to 'Testing', testing_path %></li>
-          <li><%= link_to 'Logout', destroy_user_session_path, method: :delete %></li>
-      <% else %>
-          <li class=<%= "fh5co-active" if params[:controller] == 'welcome'  && params[:action] == 'home'%>><%= link_to 'HOME', root_path %></li>
-          <li class=<%= "fh5co-active" if params[:controller] == 'welcome'  && params[:action] == 'how_to'%>><%= link_to 'Instructions', how_to_donate_path %></li>
-          <li class=<%= "fh5co-active" if params[:controller] == 'adverts' %>><%= link_to 'ADVERTS', adverts_path %></li>
-          <li class=<%= "fh5co-active" if params[:controller] == 'devise/sessions' %>><%= link_to 'LOGIN', user_session_path %></li>
-          <li class=<%= "fh5co-active" if params[:controller] == 'devise/registrations' %>><%= link_to 'SIGN UP', new_user_registration_path %></li>
-      <% end %>
-      <li class=<%= "fh5co-active" if params[:controller] == 'welcome'  && params[:action] == 'faq'%>><%= link_to 'FAQ', faq_path %></li>
-      <li  class=<%= "fh5co-active" if params[:controller] == 'welcome' && params[:action] == 'terms' %>><%= link_to 'T & C', terms_path %> </li>
-      <br/>
-    </ul>
-  </nav>
+  <br>
+    <%= react_component 'NavBar' %>
+    <br/>
   <div class="fh5co-footer">
     <p>
       <small>&copy; 2017 Community Wealth SA</small>
