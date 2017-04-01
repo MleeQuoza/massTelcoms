@@ -22,6 +22,7 @@
                       name="submit"
                       class="btn btn-primary btn-outline"
                       data-toggle="modal"
+                      <%= current_user.pending_donations.present? ? 'disabled=disabled' : '' %>
                       data-target="#deposit">
                 Donate
               </button>
@@ -48,7 +49,7 @@
               <h2 class="pricing-plan pricing-plan-offer">Donation<span>Count Down</span></h2>
               <div class="price">
                 <%= current_user.current_donation.present? ? number_with_precision(current_user.current_donation.profit_counter, precision: 0) : 0 %>
-                <sup class="currency"><%= 'day'.pluralize(current_user.current_donation.profit_counter) %></sup><small>Weekly Payments</small>
+                <sup class="currency"><%= 'day'.pluralize(current_user.current_donation&.profit_counter) %></sup><small>Weekly Payments</small>
               </div>
 
               <a href="#" class="btn btn-primary btn-outline">Select Plan</a>
