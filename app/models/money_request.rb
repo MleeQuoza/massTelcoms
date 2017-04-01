@@ -24,7 +24,7 @@ class MoneyRequest < ActiveRecord::Base
   end
   
   def adjust_balance(next_balance)
-    self.update(balance: next_balance)
+    self.update!(balance: next_balance)
   end
 
   def request_completed?

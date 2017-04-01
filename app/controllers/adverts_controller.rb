@@ -47,6 +47,10 @@ class AdvertsController < ApplicationController
   end
   
   private
+
+  def advert_params_js
+    params.permit(:user_id, :title, :advert_body, :phone, :address, :email)
+  end
   
   def advert_params
     params.require(:advert).permit(:user_id, :title, :advert_body, :phone, :address, :email)

@@ -70,7 +70,7 @@ class User < ApplicationRecord
   end
 
   def current_donation
-    self.donations.where(status: MoneyRequest.statuses[:pending]).first
+    self.donations.where(status: MoneyRequest.statuses[:completed]).first
   end
 
   def pending_withdrawals

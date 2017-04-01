@@ -4,64 +4,53 @@ class MoneyTransactionService
     @money_request = money_request
   end
   
-  def make_transaction_for_withdrawal(donation, use_request=false)
+  def make_withdrawal_transaction(donation, use_request=false, balance=0)
     MoneyTransaction.create(withdrawal_id: @money_request.id,
                             donation_id: donation.id,
-                            amount: use_request ? @money_request.balance : donation.balance,
+                            amount: use_request ? balance : donation.balance,
                             status: MoneyRequest.statuses[:pending]).save!
   end
   
   def match_with_donations
     donations = Donation.where("user_id != #{@money_request.user_id} AND balance > 0 AND status = #{MoneyRequest.statuses[:pending]} AND compounded = false").order(:balance).to_a
-    sum = 0
-    index = 0
-    use_request = false
-    donations.each do |donation|
-      break if sum > @money_request.balance
-      sum += donation.balance
-      index += 1
-    end
-    
-    if sum <= @money_request.balance
-      donations.slice(0..index)
-    else
-      donations.slice(0..index - 1)
-      use_request = true
-    end
+    balance = @money_request.balance
     
     donations.each do |donation|
-      make_transaction_for_withdrawal(donation, use_request)
-    end
-  end
-  
-  def match_with_withdrawals
-    collect_withdrawals.each do |w|
-        make_transaction_for_donation(w)
+      return if balance <= 0
+      
+      if balance > donation.balance
+        make_withdrawal_transaction(donation)
+        balance -= donation.balance
+      else
+        make_withdrawal_transaction(donation, true, balance)
+        balance -= balance
+      end
     end
   end
 
-  def make_transaction_for_donation(withdrawal, use_request=false)
+  def make_donation_transaction(withdrawal, use_request=false, balance=0)
     MoneyTransaction.create(withdrawal_id: withdrawal.id,
                             donation_id: @money_request.id,
-                            amount: use_request ? @money_request.balance : withdrawal.balance,
+                            amount: use_request ? balance : withdrawal.balance,
                             status: MoneyRequest.statuses[:pending]
     )
   end
   
-  def collect_withdrawals
+  def match_with_withdrawals
     withdrawals = Withdrawal.where("user_id != #{@money_request.user_id} AND balance > 0 AND status = #{MoneyRequest.statuses[:pending]}").order(:balance).to_a
-    sum = 0
-    index = 0
+    balance = @money_request.balance
+    
     withdrawals.each do |withdrawal|
-      break if sum >= @money_request.balance
-      sum += withdrawal.balance
-      index += 1
+      return if balance <= 0
+
+      if balance > withdrawal.balance
+        make_donation_transaction(withdrawal)
+        balance -= withdrawal.balance
+      else
+        make_donation_transaction(withdrawal, true, balance)
+        balance -= balance
+      end
     end
     
-    if sum <= @money_request.balance
-      withdrawals.slice(0..index)
-    else
-      []
-    end
   end
 end
