@@ -124,7 +124,10 @@
           <div class="col-md-3 animate-box">
             <div class="price-box popular">
               <h2 class="pricing-plan pricing-plan-offer">Advertise Here<span></span></h2>
-              <div> <sup class="currency"> 0 Posted <br/> 0 Approved <br/> 0 Pending <br/></sup><small>Free adverts</small></div>
+              <div> <sup class="currency">
+                <%= link_to "#{current_user.pending_adverts.count} Posted", adverts_path %><br/>
+                <%= current_user.published_adverts.count %> Approved <br/>
+                <%= current_user.pending_adverts.count - current_user.published_adverts.count%> Pending <br/></sup><small>Free adverts</small></div>
 
               <a href="#" class="btn btn-primary btn-outline" data-toggle="modal" data-target="#advert" >Advertise</a>
             </div>
@@ -239,10 +242,22 @@
                       <td><%= text_field_tag(:title, nil, class: 'btn btn-primary btn-outline') %></td>
                     </tr>
                     <tr>
-                      <th class="pricing-plan">Advert Text</th>
-                      <td><%= text_area_tag(:body, nil, {rows: 5, cols: 20 }) %></td>
+                      <th class="pricing-plan">Email</th>
+                      <td><%= text_field_tag(:email, nil, class: 'btn btn-primary btn-outline') %></td>
                     </tr>
                     <tr>
+                      <th class="pricing-plan">Phone</th>
+                      <td><%= text_field_tag(:phone, nil, class: 'btn btn-primary btn-outline') %></td>
+                    </tr>
+                    <tr>
+                      <th class="pricing-plan">Advert Text</th>
+                      <td><%= text_area_tag(:advert_body, nil, {rows: 5, cols: 20 }) %></td>
+                    </tr>
+                    <tr>
+                      <tr>
+                        <th class="pricing-plan">City</th>
+                        <td><%= text_field_tag(:address, nil, class: 'btn btn-primary btn-outline') %></td>
+                      </tr>
                       <td colspan="2" align="center">
                         <button type="button" class="btn btn-primary btn-outline" data-dismiss="modal" >Cancel</button>
                         <%= submit_tag 'Approve',

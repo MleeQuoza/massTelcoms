@@ -1,0 +1,41 @@
+<div id="fh5co-pricing-section">
+  <div class="container" >
+    <div class="row">
+      <div class="col-md-12 col-md-offset-2 text-center animate-box">
+        <div class="pricing">
+          <div class="col-md-10 animate-box">
+            <div class="price-box" style="overflow-x:auto;">
+              <h2 class="pricing-plan"> Manage ADVERTS </h2>
+              <table style="overflow-x:auto;">
+                <tr>
+                  <th>Posted On</th>
+                  <th>Content</th>
+                  <th>Phone</th>
+                  <th>Email</th>
+                  <th>Address</th>
+                  <th>Status</th>
+                  <th></th>
+                </tr>
+                <% if @adverts.present? %>
+                    <% @adverts.each do |ad| %>
+                        <tr>
+                          <td class="pricing-plan"> <%= ad.created_at.strftime('%F') %> </td>
+                          <td class="pricing-plan"><%= ad.advert_body %> </td>
+                          <td class="pricing-plan"><%= ad.phone %> </td>
+                          <td class="pricing-plan"><%= ad.email %> </td>
+                          <td class="pricing-plan"><%= ad.address %> </td>
+                          <td class="pricing-plan"> <%= ad.status %> </td>
+                          <td><%= link_to 'Delete', advert_path(ad.id), method: :delete ,
+                                          data: { confirm: 'You are about to delete this ad, are you sure?' }%>
+                          </td>
+                        </tr>
+                    <% end %>
+                <% end %>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

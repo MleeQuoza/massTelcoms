@@ -31,7 +31,9 @@ Rails.application.routes.draw do
   match '/dashboard/testing' => 'dashboard#testing', as: 'testing', via: :get
   match '/dashboard/money_transactions' => 'dashboard#money_transactions', as: 'all_transactions', via: :get
   match 'dashboard/filter_money_transactions' => 'dashboard#filter_money_transactions', as: 'filter_money_transactions', via: :post
-  
+
+  match '/adverts/toggle_advert_status/:id' => 'adverts#toggle_advert_status', as: 'toggle_advert_status', via: :post
+
 
   namespace :api do
     namespace :v1 do

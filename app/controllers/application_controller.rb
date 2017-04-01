@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
   
   def after_sign_in_path_for(user)
     assign_pending_money_requests(user)
+    return dashboard_index_path if user.is?('admin')
     user.payment_account.present? ? dashboard_index_path : new_payment_account_path
   end
 

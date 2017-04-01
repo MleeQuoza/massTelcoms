@@ -56,32 +56,50 @@
         <div class="pricing">
           <div class="col-md-10 animate-box">
             <div class="price-box" style="overflow-x:auto;">
-              <h2 class="pricing-plan"> Advertisment Requests </h2>
-              <h2 class="price"> <%= unpaid_transactions_total(@money_transactions) %> </h2>
+              <h2 class="pricing-plan"> Manage ADVERTS </h2>
               <table style="overflow-x:auto;">
                 <tr>
-                  <th>Date</th>
-                  <th>Active</th>
-                  <th>Name</th>
-                  <th>Title</th>
-                  <th>Image</th>
-                  <th>Info</th>
-                  <th> Decline </th>
-                  <th> Approve </th>
+                  <th>Posted On</th>
+                  <th>Content</th>
+                  <th>Phone</th>
+                  <th>Email</th>
+                  <th>Address</th>
+                  <th>Status</th>
+                  <th></th>
                 </tr>
-                <% if @money_transactions.present? %>
-                  <% @money_transactions.each do |mt| %>
-                    <tr>
-                      <td class="pricing-plan"> <%= mt.updated_at.strftime('%F') %> </td>
-                      <td class="pricing-plan"> </td>
-                      <td class="pricing-plan"> </td>
-                      <td class="pricing-plan"> </td>
-                      <td class="pricing-plan"> </td>
-                      <td class="pricing-plan"><%= text_area_tag(:body, nil, {rows: 5, cols: 20 }) %></td>
-                      <td><a href="#" class="btn btn-primary btn-outline"> Decline </a></td>
-                      <td><a href="#" class="btn btn-primary btn-outline"> Approve </a></td>
-                    </tr>
-                  <% end %>
+                <% if @adverts.present? %>
+                    <% @adverts.each do |ad| %>
+                        <tr>
+                          <td class="pricing-plan"> <%= ad.created_at.strftime('%F') %> </td>
+                          <td class="pricing-plan"><%= ad.advert_body %> </td>
+                          <td class="pricing-plan"><%= ad.phone %> </td>
+                          <td class="pricing-plan"><%= ad.email %> </td>
+                          <td class="pricing-plan"><%= ad.address %> </td>
+                          <td class="pricing-plan"> <%= ad.status %> </td>
+                          <td>
+                            <%= form_tag(toggle_advert_status_path(ad.id)) do %>
+                                <%= hidden_field_tag(:id, ad.id) %>
+                                <%= hidden_field_tag(:status, Advert.statuses[:published]) %>
+                                <%= submit_tag 'Approve',
+                                               class: 'btn btn-primary btn-outline',
+                                               data: { confirm: 'You are about to approve this ad, are you sure?' },
+                                               disabled: !ad.requested?
+                                %>
+                            <% end %>
+                          </td>
+                          <td>
+                            <%= form_tag(toggle_advert_status_path(ad.id)) do %>
+                                <%= hidden_field_tag(:id, ad.id) %>
+                                <%= hidden_field_tag(:status, Advert.statuses[:rejected]) %>
+                                <%= submit_tag 'Decline',
+                                               class: 'btn btn-primary btn-outline',
+                                               data: { confirm: 'You are about to decline this ad, are you sure?' },
+                                               disabled: !ad.requested?
+                                %>
+                            <% end %>
+                          </td>
+                        </tr>
+                    <% end %>
                 <% end %>
               </table>
             </div>

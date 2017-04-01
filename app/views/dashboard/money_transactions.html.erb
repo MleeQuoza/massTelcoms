@@ -6,11 +6,11 @@
           <div class="col-md-10 animate-box">
             <div class="price-box" style="overflow-x:auto;">
               <h2 class="pricing-plan"> MONTHLY TRANSACTIONS </h2>
-              <h2 class="price"> R 10 000</h2>
+              <h2 class="price"> <%= MoneyTransaction.total %></h2>
               <table style="overflow-x:auto;">
                 <%= form_tag(filter_money_transactions_path) do %>
-                    FROM: <%= date_select('transaction_filter', 'from', { order: [:day, :month, :year], use_short_month: true, start_year: 2017 } ) %>
-                    TO: <%= date_select('transaction_filter', 'to', { order: [:day, :month, :year], use_short_month: true, start_year: 2017 }) %>
+                    FROM: <%= text_field_tag(:from,'' ,placeholder: 'dd/mm/yyyy') %>
+                    TO: <%= text_field_tag(:to, '',placeholder: 'dd/mm/yyyy') %>
                     <%= submit_tag 'Filter', class: 'btn btn-primary btn-outline' %>
                 <% end %>
                 <tr>
@@ -23,8 +23,8 @@
                 <% if @all_transactions.present? %>
                   <% @all_transactions.each do |trx| %>
                     <tr>
-                      <td class="pricing-plan"> <%= trx.created_at %> </td>
-                      <td class="pricing-plan"> <%= trx.withdrawal_user_name %> </td>
+                      <td class="pricing-plan"> <%= trx.created_at.strftime('%F') %> </td>
+                      <td class="pricing-plan"><%= trx.withdrawal_user_name %> </td>
                       <td class="pricing-plan"> <%= trx.donation_user_name %> </td>
                       <td class="pricing-plan"> <%= display_as_money(trx.amount) %></td>
                       <td class="pricing-plan"> <%= trx.status %> </td>

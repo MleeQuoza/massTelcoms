@@ -91,5 +91,9 @@ class MoneyTransaction < ActiveRecord::Base
     withdrawal_balance = withdrawal.balance
     withdrawal.update!(balance: withdrawal_balance + self.amount)
   end
+  
+  def self.total
+    MoneyTransaction.pluck(:amount).sum
+  end
 
 end

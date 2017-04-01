@@ -32,6 +32,7 @@ class User < ApplicationRecord
 
   validates :last_name, presence: true
   validates :first_name, presence: true
+  validates :cellphone, presence: true, uniqueness: true
   validates :email, presence: true, uniqueness: true
   validate :referral_email_is_not_own_email
   
@@ -40,6 +41,7 @@ class User < ApplicationRecord
   has_one :payment_account
   has_many :withdrawals
   has_many :donations
+  has_many :adverts
   
   has_many :referees, class_name: 'Referral', foreign_key: 'referrer_id'
 
@@ -186,5 +188,13 @@ class User < ApplicationRecord
     if referrer_email.present? && referrer_email == email
       errors.add(:referrer_email, 'cannot be the same as your email')
     end
+  end
+  
+  def pending_adverts
+    self.adverts.where(status: Advert.statuses[:requested])
+  end
+
+  def published_adverts
+    self.adverts.where(status: Advert.statuses[:published])
   end
 end

@@ -4,6 +4,7 @@ class DashboardController < ApplicationController
   def index
     if current_user.is?('admin')
       @money_transactions = MoneyTransaction.where(status: 3)
+      @adverts = Advert.all
       render 'dashboard/admin'
     else
       render 'dashboard/index'
@@ -19,6 +20,9 @@ class DashboardController < ApplicationController
   end
   
   def admin
+    @money_transactions = MoneyTransaction.where(status: 3)
+    @adverts = Advert.all
+    render 'dashboard/admin'
   end
   
   def testing
@@ -35,6 +39,6 @@ class DashboardController < ApplicationController
   private
   
   def filter_params
-    params.require(:transaction_filter).permit(:from, :to)
+    params.permit(:from, :to)
   end
 end

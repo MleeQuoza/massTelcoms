@@ -1,0 +1,51 @@
+<div id="fh5co-pricing-section">
+  <div class="container">
+    <div class="row">
+      <div id="fh5co-pricing-section">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12 col-md-offset-3 text-center animate-box">
+              <div class="pricing">
+                <div class="col-md-8 animate-box">
+                  <div class="price-box">
+                    <h2 class="pricing-plan">PLEASE ENTER YOUR AD DETAILS HERE</h2>
+                    <table>
+                      <%= form_for(@advert) do |ad| %>
+                          <%= hidden_field_tag(:user_id, current_user.id) %>
+                          <tr>
+                            <th class="pricing-plan">Advert Title</th>
+                            <td colspan="2"><%= ad.text_field(:title, class: 'btn btn-primary btn-outline', colspan: 2) %></td>
+                          </tr>
+                          <tr>
+                            <th class="pricing-plan">Phone</th>
+                            <td><%= ad.text_field(:phone, class: 'btn btn-primary btn-outline') %></td>
+                          </tr>
+                          <tr>
+                            <th class="pricing-plan">Email</th>
+                            <td><%= ad.text_field(:email, class: 'btn btn-primary btn-outline') %></td>
+                          </tr>
+                          <tr>
+                            <th class="pricing-plan">Advert Text</th>
+                            <td colspan="2"><%= ad.text_area(:advert_body) %></td>
+                          </tr>
+                          <tr>
+                            <th class="pricing-plan">City</th>
+                            <td colspan="2"><%= ad.text_field(:address) %></td>
+                          </tr>
+                          <tr>
+                            <td colspan="2" align="center">
+                              <%= ad.submit 'Submit', class: 'btn btn-primary btn-outline' %>
+                            </td>
+                          </tr>
+                      <% end %>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
