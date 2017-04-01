@@ -51,7 +51,7 @@
               <li class=<%= "fh5co-active" if params[:controller] == 'tools' %>><%= link_to 'Tools', tools_path %></li>
               <li class=<%= "fh5co-active" if params[:controller] == 'wallets' %>><%= link_to 'Wallet', wallet_path(id: current_user.id) %></li>
           <% end %>
-          <% if Rails.env.development? %>
+          <% if Rails.env.development? && !current_user.is?('admin') %>
             <li class=<%= "fh5co-active" if params[:controller] == 'dashboard' && params[:action] == 'testing' %>><%= link_to 'Testing', testing_path %></li>
           <% end %>
           <li><%= link_to 'Logout', destroy_user_session_path, method: :delete %></li>
