@@ -124,7 +124,7 @@ class User < ApplicationRecord
   end
 
   def referral_link
-    "http://#{ENV['DOMAIN_NAME']}/users/sign_up?ref=#{self.guid}"
+    "https://#{ENV['DOMAIN_NAME']}/users/sign_up?ref=#{self.guid}"
   end
   
   def non_compounded_donations
