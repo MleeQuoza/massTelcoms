@@ -117,7 +117,7 @@
                       name="submit"
                       class="btn btn-primary btn-outline"
                       data-toggle="modal"
-                      <%= current_user.active_referrals.count > 0 ? '' : "disabled='true'" %>
+                      <%= current_user.active_referrals.count > 0 && current_user.paying_referrals_list.present? ? '' : "disabled='true'" %>
                       data-target="#ActiveReferrals">View All</button>
             </div>
           </div>
