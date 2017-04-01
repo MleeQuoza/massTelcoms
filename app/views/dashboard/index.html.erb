@@ -236,36 +236,37 @@
                 <h2 class="pricing-plan">PLEASE ENTER YOUR AD DETAILS HERE</h2>
                 <table>
                   <%= form_tag('adverts', remote: true, format: :json) do %>
-                    <%= hidden_field_tag(:user_id, current_user.id) %>
-                    <tr>
-                      <th class="pricing-plan">Advert Title</th>
-                      <td><%= text_field_tag(:title, nil, class: 'btn btn-primary btn-outline') %></td>
-                    </tr>
-                    <tr>
-                      <th class="pricing-plan">Email</th>
-                      <td><%= text_field_tag(:email, nil, class: 'btn btn-primary btn-outline') %></td>
-                    </tr>
-                    <tr>
-                      <th class="pricing-plan">Phone</th>
-                      <td><%= text_field_tag(:phone, nil, class: 'btn btn-primary btn-outline') %></td>
-                    </tr>
-                    <tr>
-                      <th class="pricing-plan">Advert Text</th>
-                      <td><%= text_area_tag(:advert_body, nil, {rows: 5, cols: 20 }) %></td>
-                    </tr>
-                    <tr>
-                      <tr>
-                        <th class="pricing-plan">City</th>
-                        <td><%= text_field_tag(:address, nil, class: 'btn btn-primary btn-outline') %></td>
-                      </tr>
-                      <td colspan="2" align="center">
-                        <button type="button" class="btn btn-primary btn-outline" data-dismiss="modal" >Cancel</button>
-                        <%= submit_tag 'Approve',
-                                       class: 'btn btn-primary btn-outline',
-                                       required: 'required',
-                                       data: { toggle: 'modal', target: '#advert' }%>
-                      </td>
-                    </tr>
+                     <%= fields_for :advert do |ad| %>
+                        <%= ad.hidden_field(:user_id, value: current_user.id) %>
+                        <tr>
+                          <th class="pricing-plan">Advert Title</th>
+                          <td><%= ad.text_field(:title, class: 'btn btn-primary btn-outline') %></td>
+                        </tr>
+                        <tr>
+                          <th class="pricing-plan">Email</th>
+                          <td><%= ad.text_field(:email, class: 'btn btn-primary btn-outline') %></td>
+                        </tr>
+                        <tr>
+                          <th class="pricing-plan">Phone</th>
+                          <td><%= ad.text_field(:phone, class: 'btn btn-primary btn-outline') %></td>
+                        </tr>
+                        <tr>
+                          <th class="pricing-plan">Advert Text</th>
+                          <td><%= ad.text_area(:advert_body, {rows: 5, cols: 20 }) %></td>
+                        </tr>
+                        <tr>
+                          <tr>
+                            <th class="pricing-plan">City</th>
+                            <td><%= ad.text_field(:address, class: 'btn btn-primary btn-outline') %></td>
+                          </tr>
+                          <td colspan="2" align="center">
+                            <button type="button" class="btn btn-primary btn-outline" data-dismiss="modal" >Cancel</button>
+                            <%= ad.submit 'Approve',
+                                           class: 'btn btn-primary btn-outline',
+                                           required: 'required',
+                                           data: { toggle: 'modal', target: '#advert' }%>
+                          </td>
+                      <% end %>
                   <% end %>
                 </table>
               </div>
