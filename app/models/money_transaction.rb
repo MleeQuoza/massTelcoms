@@ -52,6 +52,8 @@ class MoneyTransaction < ActiveRecord::Base
   end
   
   def hours_elapsed
+    return TimeDifference.between(self.created_at, self.updated_at).in_hours.round(0) unless self.pending?
+    
     TimeDifference.between(self.created_at, Time.zone.now).in_hours.round(0)
   end
   

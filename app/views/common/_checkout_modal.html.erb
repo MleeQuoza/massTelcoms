@@ -1,4 +1,4 @@
-<div class="modal fade" id="deposit" role="dialog">
+<div class="modal fade" id="checkout-<%= modal_id %>" role="dialog">
   <div id="fh5co-pricing-section" >
     <div class="container" >
       <div class="row">
@@ -7,12 +7,12 @@
             <div class="col-md-8 animate-box">
               <div class="price-box">
                 <h2 class="pricing-plan"><%= image_tag('deposit.png', :alt => 'Community Wealth SA 2017') %></h2>
-                <%= form_tag('donations', remote: true, format: :json) do %>
-                    <h2> HOW MUCH IS YOUR DEPOSIT? <sup class="currency"></sup></h2><br/>
+                <%= form_tag('/wallets/add', remote: true, format: :json) do %>
+                    <h2> HOW MUCH DO YOU WANT TO CHECKOUT? <sup class="currency"></sup></h2><br/>
                     <%= hidden_field_tag(:user_id, current_user.id) %>
-                    <%= hidden_field_tag(:compounded, false) %>
+                    <%= hidden_field_tag(:donation_id, modal_id) %>
                     <div class="price">
-                      <%= select_tag(:amount, options_for_select(['Please select'].concat((1000..10000).step(500).to_a)), {class: 'btn btn-primary btn-outline', required: true}) %><sup class="currency"></sup>
+                      <%= select_tag(:amount, options_for_select(['Please select'].concat((1000..data[:profit]).step(100).to_a)), {class: 'btn btn-primary btn-outline', required: true}) %><sup class="currency"></sup>
                     </div>
                     <br/><br/>
 

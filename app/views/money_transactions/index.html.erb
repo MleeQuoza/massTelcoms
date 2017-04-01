@@ -103,7 +103,7 @@
                                         <%= submit_tag 'Reject',
                                                        class: 'btn btn-primary btn-outline',
                                                        data: { confirm: 'Are you sure?' },
-                                                       disabled: !tr.pending?
+                                                       disabled: !tr.pending? && tr.hours_elapsed >= 48
                                         %>
                                     <% end %>
                                   </td>

@@ -38,21 +38,21 @@
                                   class="btn btn-primary btn-outline"
                                   data-toggle="modal"
                                   data-target="#deposit-<%= donation.id%>"
-                                  <%= donation.profit < 1000 ? 'disabled=true' : '' %>
+                                  <%= donation.profit < 1000 || donation.profit_counter < 7 ? 'disabled=true' : '' %>
                           >
                             Compound
                           </button>
                         </td>
                         <td>
-                          <%= form_tag(add_to_wallet_path) do %>
-                            <%= hidden_field_tag(:user_id, current_user.id) %>
-                            <%= hidden_field_tag(:amount, donation.profit) %>
-                            <%= hidden_field_tag(:donation_id, donation.id) %>
-                            <%= submit_tag 'Checkout',
-                                           class:    'btn btn-primary btn-outline',
-                                           disabled: donation.profit_counter < 7,
-                                           data: { confirm: 'Are you sure?' }%>
-                          <% end %>
+                          <button type="submit"
+                                  name="submit"
+                                  class="btn btn-primary btn-outline"
+                                  data-toggle="modal"
+                                  data-target="#checkout-<%= donation.id%>"
+                                  <%= donation.profit < 300 || donation.profit_counter < 7 ? 'disabled=true' : '' %>
+                          >
+                            Checkout
+                          </button>
                         </td>
                       </tr>
                     <% end %>
@@ -60,8 +60,14 @@
                   </table>
               <% else %>
                   <h3>You have no active donations</h3>
-                  <button type="submit" name="submit" class="btn btn-primary btn-outline"
-                          data-toggle="modal" data-target="#deposit">Donate
+                  <button type="submit"
+                          name="submit"
+                          class="btn btn-primary btn-outline"
+                          data-toggle="modal"
+                          data-target="#deposit"
+                          <%= current_user.pending_donations.present? ? 'disabled=disabled' : '' %>
+                  >
+                    Donate
                   </button>
               <% end %>
 
@@ -79,6 +85,47 @@
       modal_path: './common/deposit_modal'
   } %>
 <% end %>
+
+<% @donations.each do |donation| %>
+    <%= render partial: './common/modal_container', locals: {
+        modal_id:  donation.id,
+        data: { profit: donation.profit, donation_id: donation.id },
+        modal_path: './common/checkout_modal'
+    } %>
+<% end %>
+
+<div class="modal fade" id="deposit" role="dialog">
+  <div id="fh5co-pricing-section" >
+    <div class="container" >
+      <div class="row">
+        <div class="col-md-12 col-md-offset-3 text-center animate-box">
+          <div class="pricing">
+            <div class="col-md-8 animate-box">
+              <div class="price-box">
+                <h2 class="pricing-plan"><%= image_tag('deposit.png', :alt => 'Community Wealth SA 2017') %></h2>
+                <%= form_tag('/donations', remote: true, format: :json) do %>
+                    <h2> HOW MUCH IS YOUR DEPOSIT? <sup class="currency"></sup></h2><br/>
+                    <%= hidden_field_tag(:user_id, current_user.id) %>
+                    <%= hidden_field_tag(:compounded, false) %>
+                    <div class="price">
+                      <%= select_tag(:amount, options_for_select(['Please select'].concat((1000..50000).step(500).to_a)), {class: 'btn btn-primary btn-outline', required: true}) %><sup class="currency"></sup>
+                    </div>
+                    <br/><br/>
+
+                    <button type="button"
+                            class="btn btn-primary btn-outline"
+                            data-dismiss="modal" >Cancel</button>
+                    <%= submit_tag 'Approve', class: 'btn btn-primary btn-outline', required: 'required', data: { toggle: 'modal', target: '#deposit' }%>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="fh5co-counters" style="background-image: url(<%= image_path('2.jpg') %>); width: 100%" data-stellar-background-ratio="0.5" id="counter-animate">
           <div class="fh5co-narrow-content animate-box">
             <div class="row" >

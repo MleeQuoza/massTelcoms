@@ -4,6 +4,10 @@ class MoneyTransactionsController < ApplicationController
   def index
     @donations = current_user.non_compounded_donations
     @withdrawals = current_user.pending_withdrawals
+    respond_to do |format|
+      format.js { render 'index' }
+      format.html { render 'money_transactions/index' }
+    end
   end
   
   def toggle_transaction_status

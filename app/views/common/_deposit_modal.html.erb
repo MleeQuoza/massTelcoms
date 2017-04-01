@@ -8,7 +8,7 @@
               <div class="price-box">
                 <h2 class="pricing-plan"><%= image_tag('deposit.png', :alt => 'Community Wealth SA 2017') %></h2>
                 <%= form_tag('/donations', remote: true, format: :json) do %>
-                    <h2> HOW MUCH IS YOUR DEPOSIT? <sup class="currency"></sup></h2><br/>
+                    <h2> HOW MUCH DO YOU WANT TO COMPOUND? <sup class="currency"></sup></h2><br/>
                     <%= hidden_field_tag(:user_id, current_user.id) %>
                     <%= hidden_field_tag(:compounded, true) %>
                     <%= hidden_field_tag(:donation_id, data[:donation_id]) %>

@@ -21,19 +21,20 @@ class DonationsController < ApplicationController
   def create
     service = MoneyRequestService.new(donation_params, { type: Donation.name })
     donation = service.call
-    respond_to do |format|
-      if donation.save
-        if donation.compounded
-          service.adjust_for_compound
-        end
-        format.js { render inline: 'location.reload();' }
-        format.html { redirect_to user_donations_path(user_id: current_user.id) }
+    if donation.save
+      if donation.compounded
+        service.adjust_for_compound
       end
+      redirect_to money_transactions_path
     end
   end
 
   def user_donations
     @donations = Donation.order(:created_at).where(user_id: params[:user_id], status: MoneyRequest.statuses[:completed])
+    respond_to do |format|
+      format.js { render inline: 'location.reload();' }
+      format.html { render 'donations/user_donations' }
+    end
   end
 
   private
