@@ -10,9 +10,28 @@ class MoneyTransactionsController < ApplicationController
     end
   end
   
+  def edit
+    @money_transaction = MoneyTransaction.find(params[:id])
+  end
+  
+  def update
+    @money_transaction = MoneyTransaction.find(params[:id])
+    if @money_transaction.update!(update_params)
+      redirect_to money_transactions_path
+    else
+      render 'edit'
+    end
+  end
+  
   def toggle_transaction_status
     mt = MoneyTransaction.find(params[:id])
     mt.update!(status: params[:status].to_i)
     redirect_to money_transactions_path, flash[:notice] => 'Transaction Updated'
+  end
+  
+  private
+  
+  def update_params
+    params.require(:money_transaction).permit(:proof_of_payment)
   end
 end

@@ -18,7 +18,9 @@ class MoneyTransaction < ActiveRecord::Base
   validates_numericality_of :amount, greater_than: 0
 
   enum status: { pending: 1, completed: 2, rejected: 3, blocked: 4 }
-
+  
+  mount_uploader :proof_of_payment, ProofOfPaymentUploader
+  
   after_commit on: [:create] do
     adjust_balances
   end

@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   resources :donations, only: [:new, :edit, :create, :update]
   resources :withdrawals, only: [:new, :create]
   resources :payment_accounts
-  resources :money_transactions, only: [:index]
+  resources :money_transactions, only: [:index, :edit, :update]
   resources :tools
   resources :wallets, only: [:show]
   resources :adverts

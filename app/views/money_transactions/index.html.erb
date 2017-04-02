@@ -31,6 +31,7 @@
                             <th>Account Type</th>
                             <th>Amount</th>
                             <th>Status</th>
+                            <th>Upload Proof</th>
                             </thead>
                             <tbody>
                             <% donation.money_transactions.each_with_index do |tr, index| %>
@@ -43,6 +44,10 @@
                                   <td><%= tr.recipient_account_type %></td>
                                   <td><%= tr.amount %></td>
                                   <td><%= tr.status %></td>
+                                  <td>
+                                    <%= link_to 'Upload', edit_money_transaction_path(tr.id), class: 'btn btn-primary btn-outline' %>
+                                    </button>
+                                  </td>
                                 </tr>
                             <% end %>
                             </tbody>
@@ -84,7 +89,13 @@
                                   <td><%= display_as_money(tr.amount) %></td>
                                   <td><%= tr.status %></td>
                                   <td><%= tr.hours_elapsed %></td>
-                                  <td>COMING SOON</td>
+                                  <td>
+                                    <% if tr.proof_of_payment.present? %>
+                                        <%= image_tag tr.proof_of_payment.thumb.url %>
+                                    <% else %>
+                                      NOT YET UPLOADED
+                                    <% end %>
+                                  </td>
                                   <td>
                                     <%= form_tag(toggle_transaction_status_path(tr.id)) do %>
                                         <%= hidden_field_tag(:id, current_user.id) %>

@@ -12,7 +12,6 @@ gem 'cucumber-rails', require: false
 gem 'selenium-webdriver'
 gem 'time_difference', '~> 0.5.0'
 gem 'aws-sdk-rails'
-
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.2'
@@ -24,6 +23,8 @@ gem 'memcachier'
 gem 'sidekiq-cron'
 gem 'responders'
 gem 'react-rails'
+gem 'carrierwave'
+gem 'mini_magick'
 
 group :production do
   gem 'unicorn'
