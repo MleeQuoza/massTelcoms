@@ -25,7 +25,10 @@ class DonationsController < ApplicationController
       if donation.compounded
         service.adjust_for_compound
       end
-      redirect_to money_transactions_path
+      respond_to do |format|
+        format.js { render inline: 'location.reload();' }
+        format.html { render 'donations/user_donations' }
+      end
     end
   end
 
