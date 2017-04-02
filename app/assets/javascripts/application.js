@@ -51,4 +51,6 @@ $(document).ready(function() {
     $(this).siblings(".more-text").contents().unwrap();
     $(this).remove();
   });
+
+  $('[data-toggle="tooltip"]').tooltip();
 });

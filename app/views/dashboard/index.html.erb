@@ -23,7 +23,8 @@
                       class="btn btn-primary btn-outline"
                       data-toggle="modal"
                       <%= current_user.pending_donations.present? ? 'disabled=disabled' : '' %>
-                      data-target="#deposit">
+                      data-target="#deposit"
+                      data-toggle="tooltip" title="You still have pending donations">
                 Donate
               </button>
               <div class="tooltip">
