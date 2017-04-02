@@ -7,15 +7,6 @@ class ApplicationController < ActionController::Base
     @announcements = Announcement.all
   end
   
-  def after_sign_in_path_for(user)
-    assign_pending_money_requests(user)
-    user.payment_account.present? ? dashboard_index_path : new_payment_account_path
-  end
-
-  def after_sign_out_path_for(user)
-    new_user_session_path
-  end
-  
   protected
 
   def configure_permitted_parameters
@@ -24,6 +15,7 @@ class ApplicationController < ActionController::Base
   end
   
   private
+  
   def assign_pending_money_requests(user)
     donations = user.donations.where("balance > 0 AND status = #{MoneyRequest.statuses[:pending]}")
     donations.each do |donation|
