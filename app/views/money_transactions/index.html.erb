@@ -111,18 +111,14 @@
                                     <% end %>
                                   </td>
                                   <td>
-                                    <% if tr.proof_of_payment.present? %>
-                                        <%= image_tag tr.proof_of_payment.thumb.url %>
-                                    <% else %>
-                                      <%= form_tag(toggle_transaction_status_path(tr.id)) do %>
-                                          <%= hidden_field_tag(:id, current_user.id) %>
-                                          <%= hidden_field_tag(:status, MoneyTransaction.statuses[:rejected]) %>
-                                          <%= submit_tag 'Reject',
-                                                         class: 'btn btn-primary btn-outline',
-                                                         data: { confirm: 'Are you sure?' },
-                                                         disabled: !tr.pending? && tr.hours_elapsed >= 48
-                                          %>
-                                      <% end %>
+                                    <%= form_tag(toggle_transaction_status_path(tr.id)) do %>
+                                      <%= hidden_field_tag(:id, current_user.id) %>
+                                      <%= hidden_field_tag(:status, MoneyTransaction.statuses[:rejected]) %>
+                                      <%= submit_tag 'Reject',
+                                                     class: 'btn btn-primary btn-outline',
+                                                     data: { confirm: 'Are you sure?' },
+                                                     disabled: !tr.pending? && tr.hours_elapsed >= 48
+                                      %>
                                     <% end %>
                                   </td>
                                 </tr>
