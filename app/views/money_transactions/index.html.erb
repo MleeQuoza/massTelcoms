@@ -45,8 +45,17 @@
                                   <td><%= tr.amount %></td>
                                   <td><%= tr.status %></td>
                                   <td>
-                                    <%= link_to 'Upload', edit_money_transaction_path(tr.id), class: 'btn btn-primary btn-outline' %>
-                                    </button>
+                                    <% if tr.proof_of_payment.thumb.url.present? %>
+                                        <%= link_to(image_tag(tr.proof_of_payment.thumb.url))
+                                        %>
+                                    <% else %>
+                                      <%= form_for(tr, multipart: true) do |mt| %>
+                                        <p>
+                                          <%= mt.file_field(:proof_of_payment, { class: 'btn btn-sm btn-outline', required: true }) %>
+                                          <%= submit_tag 'Upload', class: 'btn btn-sm btn-outline'%>
+                                        </p>
+                                      <% end %>
+                                    <% end %>
                                   </td>
                                 </tr>
                             <% end %>
@@ -134,6 +143,14 @@
     </div>
   </div>
 </div>
+
+<% @donations.flat_map{ |i| i.money_transactions }.each do |mt| %>
+    <%= render partial: './common/modal_container', locals: {
+        modal_id:  mt.id,
+        data: { url: mt.proof_of_payment },
+        modal_path: './common/image_modal'
+    } %>
+<% end %>
 
 <div class="fh5co-counters" style="background-image: url(<%= image_path('2.jpg') %>);" data-stellar-background-ratio="0.5" id="counter-animate">
     <div class="fh5co-narrow-content animate-box">
