@@ -23,12 +23,13 @@
                       class="btn btn-primary btn-outline"
                       data-toggle="modal"
                       data-target="#deposit"
+                      <% if current_user.pending_donations.present? %>
+                        data-toggle="tooltip" title="You still have pending donations"
+                        disabled="disabled"
+                      <% end %>
                       >
                 Donate
               </button>
-              <div class="tooltip">
-                <span class="tooltiptext"> Donation in progress must complete </span>
-              </div>
             </div>
           </div>
 
