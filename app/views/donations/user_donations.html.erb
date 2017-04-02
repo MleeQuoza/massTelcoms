@@ -38,7 +38,10 @@
                                   class="btn btn-primary btn-outline"
                                   data-toggle="modal"
                                   data-target="#deposit-<%= donation.id%>"
-                                  <%= donation.profit < 1000 || donation.profit_counter < 7 ? 'disabled=true' : '' %>
+                                  <% if donation.profit < 300 || donation.profit_counter < 7 %>
+                                  disabled="disabled"
+                                  data-toggle="tooltip" title="You can only compound after 7 days and have more than 300"
+                                  <% end %>
                           >
                             Compound
                           </button>
@@ -49,7 +52,10 @@
                                   class="btn btn-primary btn-outline"
                                   data-toggle="modal"
                                   data-target="#checkout-<%= donation.id%>"
-                                  <%= donation.profit < 300 || donation.profit_counter < 7 ? 'disabled=true' : '' %>
+                                  <% if donation.profit < 300 || donation.profit_counter < 7 %>
+                                    disabled="disabled"
+                                    data-toggle="tooltip" title="You can only checkout after 7 days and have more than 300"
+                                  <% end %>
                           >
                             Checkout
                           </button>
@@ -65,7 +71,10 @@
                           class="btn btn-primary btn-outline"
                           data-toggle="modal"
                           data-target="#deposit"
-                          <%= current_user.pending_donations.present? ? 'disabled=disabled' : '' %>
+                          <% if current_user.pending_donations.present? %>
+                          disabled="disabled"
+                          data-toggle="tooltip" title="You still have pending donations"
+                          <% end %>
                   >
                     Donate
                   </button>
