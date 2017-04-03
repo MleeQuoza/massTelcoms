@@ -18,9 +18,8 @@
                   <th>Reporter</th>
                   <th>Donor</th>
                   <th>Amount</th>
-                  <th>Time</th>
-                  <th>Buy Time</th>
-                  <th>Assign</th>
+                  <th>Re-assign</th>
+                  <th>Remove</th>
                 </tr>
                 <% if @money_transactions.present? %>
                   <% @money_transactions.each do |mt| %>
@@ -29,10 +28,23 @@
                       <td class="pricing-plan"> <%= mt.withdrawal.user.first_name %> </td>
                       <td class="pricing-plan"> <%= mt.donation.user.first_name %> </td>
                       <td class="pricing-plan"><%= mt.amount %> </td>
-                      <td class="pricing-plan"><input type="number" name="hours" style ="width: 50%; padding: 9px 10px;	margin: 8px 0;
-                          box-sizing: border-box;	border: 2px solid red;	border-radius: 4px;"></td>
-                      <td><a href="#" class="btn btn-primary btn-outline">Increase Time</a></td>
-                      <td><a href="#" class="btn btn-primary btn-outline">Reject Donor</a></td>
+                      <td><%= form_tag(toggle_transaction_status_path(mt.id)) do %>
+                            <%= hidden_field_tag(:status, MoneyTransaction.statuses[:pending]) %>
+                            <%= submit_tag 'Re-assign',
+                                           class: 'btn btn-primary btn-outline',
+                                           data: { confirm: 'Are you sure?' }
+                            %>
+                        <% end %>
+                      </td>
+                      <td>
+                        <%= form_tag(toggle_transaction_status_path(mt.id)) do %>
+                            <%= hidden_field_tag(:status, MoneyTransaction.statuses[:blocked]) %>
+                            <%= submit_tag 'Remove Donation',
+                                           class: 'btn btn-primary btn-outline',
+                                           data: { confirm: 'Are you sure?' }
+                            %>
+                        <% end %>
+                      </td>
                     </tr>
                   <% end %>
                 <% end %>

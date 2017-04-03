@@ -69,18 +69,25 @@ class MoneyTransaction < ActiveRecord::Base
   end
 
   def handle_status_update
-    if MoneyTransaction.statuses[self.status] == MoneyTransaction.statuses[:completed]
-      handle_transaction_completed
-    end
-
-    if MoneyTransaction.statuses[self.status] == MoneyTransaction.statuses[:rejected]
-      handle_transaction_rejected
+    
+    case MoneyTransaction.statuses[self.status]
+      when MoneyTransaction.statuses[:completed]
+        handle_transaction_completed
+        
+      when MoneyTransaction.statuses[:rejected]
+        handle_transaction_rejected
+        
+      when MoneyTransaction.statuses[:blocked]
+        handle_transaction_blocked
+        
+      else
+        #DO NOTHING
     end
   end
   
   def handle_transaction_completed
     donation = self.donation
-    donation.update(status: MoneyTransaction.statuses[:completed], profit_from_date: Time.zone.today) if donation.request_completed?
+    donation.update(status: MoneyTransaction.statuses[:completed]) if donation.request_completed?
     
     withdrawal = self.withdrawal
     withdrawal.update(status: MoneyTransaction.statuses[:completed]) if withdrawal.request_completed?
@@ -94,6 +101,11 @@ class MoneyTransaction < ActiveRecord::Base
     withdrawal = self.withdrawal
     withdrawal_balance = withdrawal.balance
     withdrawal.update!(balance: withdrawal_balance + self.amount)
+  end
+  
+  def handle_transaction_blocked
+    donation = self.donation
+    donation.update!(status: MoneyTransaction.statuses[:blocked])
   end
   
   def self.total

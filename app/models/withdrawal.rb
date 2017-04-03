@@ -43,4 +43,12 @@ class Withdrawal < MoneyRequest
       errors.add(:payment_account, 'required for withdrawal')
     end
   end
+
+  def self.unmatched
+    Withdrawal.where('balance > 0 and status = 1').to_a
+  end
+  
+  def self.unmatched_total
+    Withdrawal.unmatched.map(&:balance).sum
+  end
 end

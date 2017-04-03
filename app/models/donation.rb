@@ -96,4 +96,12 @@ class Donation < MoneyRequest
     referral = Referral.where(referee_id: user.id, referrer_id: referrer.id).first
     referral.update(bonus_amount: (self.amount * 0.1))
   end
+  
+  def self.unmatched
+    Donation.where('balance > 0 and status = 1').to_a
+  end
+  
+  def self.unmatched_total
+    Donation.unmatched.map(&:balance).sum
+  end
 end

@@ -32,6 +32,12 @@
                             <th class="pricing-plan">City</th>
                             <td colspan="2"><%= ad.text_field(:address) %></td>
                           </tr>
+                          <% if current_user.is?('admin') %>
+                              <tr>
+                                <th class="pricing-plan">Status</th>
+                                <td colspan="2"><%= ad.select(:status, %w(requested published rejected)) %></td>
+                              </tr>
+                          <% end %>
                           <tr>
                             <td colspan="2" align="center">
                               <%= ad.submit 'Submit', class: 'btn btn-primary btn-outline' %>

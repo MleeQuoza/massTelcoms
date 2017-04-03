@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   resources :money_transactions, only: [:index, :edit, :update]
   resources :tools
   resources :wallets, only: [:show]
-  resources :adverts
+  resources :adverts, only: [:index, :edit, :update, :new]
   devise_for :users
   resources :announcements
 
@@ -28,11 +28,13 @@ Rails.application.routes.draw do
   match 'welcome/terms' => 'welcome#terms', as: 'terms', via: :get
  
   match '/dashboard/admin' => 'dashboard#admin', as: 'dashboard_admin', via: :get
+  match '/dashboard/users' => 'dashboard#users', as: 'admin_users', via: :get
   match '/dashboard/testing' => 'dashboard#testing', as: 'testing', via: :get
   match '/dashboard/money_transactions' => 'dashboard#money_transactions', as: 'all_transactions', via: :get
   match 'dashboard/filter_money_transactions' => 'dashboard#filter_money_transactions', as: 'filter_money_transactions', via: :post
 
   match '/adverts/toggle_advert_status/:id' => 'adverts#toggle_advert_status', as: 'toggle_advert_status', via: :post
+  match '/adverts/user_ads' => 'adverts#user_ads', as: 'user_ads', via: :get
 
 
   namespace :api do

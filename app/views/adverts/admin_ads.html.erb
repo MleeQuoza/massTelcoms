@@ -28,6 +28,7 @@
                           <td><%= link_to 'Delete', advert_path(ad.id), method: :delete ,
                                           data: { confirm: 'You are about to delete this ad, are you sure?' }%>
                           </td>
+                          <td><%= link_to 'Edit', edit_advert_path(ad.id)%></td>
                         </tr>
                     <% end %>
                 <% end %>

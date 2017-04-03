@@ -13,6 +13,13 @@ class DashboardController < ApplicationController
   
   def money_transactions
     @all_transactions = MoneyTransaction.all
+    @unmatched_donations = Donation.unmatched
+    @unmatched_withdrawals = Withdrawal.unmatched
+  end
+  
+  def users
+    @active_users = User.active_users
+    @inactive_users = User.inactive_users
   end
   
   def profile
@@ -32,7 +39,11 @@ class DashboardController < ApplicationController
 
   def filter_money_transactions
     f = filter_params
-    @all_transactions = MoneyTransaction.where("created_at >= '#{(Time.parse(f[:from]))}' AND created_at <= '#{(Time.parse(f[:to]))}'")
+    if Time.valid_date_string?(f[:from]) && Time.valid_date_string?(f[:to])
+      @all_transactions = MoneyTransaction.where("created_at >= '#{(Time.parse(f[:from]))}' AND created_at <= '#{(Time.parse(f[:to]))}'")
+    else
+      @all_transactions = MoneyTransaction.all
+    end
     render 'dashboard/money_transactions'
   end
   

@@ -22,7 +22,12 @@ class MoneyTransactionsController < ApplicationController
   def toggle_transaction_status
     mt = MoneyTransaction.find(params[:id])
     mt.update!(status: params[:status].to_i)
-    redirect_to money_transactions_path, flash[:notice] => 'Transaction Updated'
+    if current_user.is?('admin')
+      redirect_to dashboard_admin_path, flash[:notice] => 'Transaction Updated'
+    else
+      redirect_to money_transactions_path, flash[:notice] => 'Transaction Updated'
+    end
+    
   end
   
   private

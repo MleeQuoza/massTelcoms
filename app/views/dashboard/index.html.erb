@@ -127,7 +127,7 @@
             <div class="price-box popular">
               <h2 class="pricing-plan pricing-plan-offer">Advertise Here<span></span></h2>
               <div> <sup class="currency">
-                <%= link_to "#{current_user.pending_adverts.count} Posted", adverts_path %><br/>
+                <%= link_to "#{current_user.pending_adverts.count} Posted", user_ads_path %><br/>
                 <%= current_user.published_adverts.count %> Approved <br/>
                 <%= current_user.pending_adverts.count - current_user.published_adverts.count%> Pending <br/></sup><small>Free adverts</small></div>
 

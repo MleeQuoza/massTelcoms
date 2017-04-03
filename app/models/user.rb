@@ -197,4 +197,15 @@ class User < ApplicationRecord
   def published_adverts
     self.adverts.where(status: Advert.statuses[:published])
   end
+  
+  def self.active_users
+    User.find(Donation.pluck(:user_id)).to_a
+  end
+  
+  def self.inactive_users
+    active = self.active_users
+    User.all.each_with_object([]) do |u, memo|
+      memo.push(u) unless active.include?(u)
+    end
+  end
 end

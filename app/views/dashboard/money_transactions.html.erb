@@ -7,18 +7,18 @@
             <div class="price-box" style="overflow-x:auto;">
               <h2 class="pricing-plan"> MONTHLY TRANSACTIONS </h2>
               <h2 class="price"> <%= MoneyTransaction.total %></h2>
-              <table style="overflow-x:auto;">
+              <table style="overflow-x:auto;" id="transactions-table">
                 <%= form_tag(filter_money_transactions_path) do %>
                     FROM: <%= text_field_tag(:from,'' ,placeholder: 'dd/mm/yyyy') %>
                     TO: <%= text_field_tag(:to, '',placeholder: 'dd/mm/yyyy') %>
                     <%= submit_tag 'Filter', class: 'btn btn-primary btn-outline' %>
                 <% end %>
                 <tr>
-                  <th>Date</th>
-                  <th>Receiver</th>
-                  <th>Donor</th>
-                  <th>Amount</th>
-                  <th>Status</th>
+                  <th onclick="sortTable(0, 'transactions-table')">Date</th>
+                  <th onclick="sortTable(1, 'transactions-table')">Receiver</th>
+                  <th onclick="sortTable(2, 'transactions-table')">Donor</th>
+                  <th onclick="sortTable(3, 'transactions-table')">Amount</th>
+                  <th onclick="sortTable(4, 'transactions-table')">Status</th>
                 </tr>
                 <% if @all_transactions.present? %>
                   <% @all_transactions.each do |trx| %>
@@ -36,6 +36,87 @@
           </div>
         </div>
       </div>
+     </div>
+
+
+
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1 text-center fh5co-heading animate-box">
+          <h2 style="font-size: 50px; color: #FFFFFF"> Pending Donations </h2>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 col-md-offset-0 text-center animate-box">
+          <div class="pricing">
+            <div class="col-md-12 animate-box">
+              <div class="price-box" style="overflow-x:auto;">
+                <h2 class="pricing-plan"> Unmatched Donations Balance Total:  <%= display_as_money(Donation.unmatched_total) %></h2>
+                <% if @unmatched_donations.present? %>
+                    <table>
+                      <thead>
+                      <th>Created Date</th>
+                      <th>Amount</th>
+                      <th>Balance</th>
+                      <th>User</th>
+                      </thead>
+                      <tbody>
+                      <% @unmatched_donations.each do |donation| %>
+                          <tr>
+                            <td><%= donation.created_at.strftime('%d/%m/%Y') %></td>
+                            <td><%= display_as_money(donation.amount) %></td>
+                            <td><%= display_as_money(donation.balance) %></td>
+                            <td><%= donation.user.name %></td>
+                          </tr>
+                      <% end %>
+                      </tbody>
+                    </table>
+                <% else %>
+                    <h3>There are no pending donations</h3>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1 text-center fh5co-heading animate-box">
+          <h2 style="font-size: 50px; color: #FFFFFF"> Pending Withdrawals </h2>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 col-md-offset-0 text-center animate-box">
+          <div class="pricing">
+            <div class="col-md-12 animate-box">
+              <div class="price-box" style="overflow-x:auto;">
+                <h2 class="pricing-plan"> Unmatched Withdrawals Balance Total:  <%= display_as_money(Withdrawal.unmatched_total) %></h2>
+                <% if @unmatched_withdrawals.present? %>
+                    <table>
+                      <thead>
+                      <th>Created Date</th>
+                      <th>Amount</th>
+                      <th>Balance</th>
+                      <th>Donor</th>
+                      </thead>
+                      <tbody>
+                      <% @unmatched_withdrawals.each do |withdrawal| %>
+                          <tr>
+                            <td><%= withdrawal.created_at.strftime('%d/%m/%Y') %></td>
+                            <td><%= display_as_money(withdrawal.amount) %></td>
+                            <td><%= display_as_money(withdrawal.balance) %></td>
+                            <td><%= withdrawal.user.name %></td>
+                          </tr>
+                      <% end %>
+                      </tbody>
+                    </table>
+                <% else %>
+                    <h3>There are no pending donations</h3>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
 </div>
+

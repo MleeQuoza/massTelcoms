@@ -1,0 +1,74 @@
+<div id="fh5co-pricing-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1 text-center fh5co-heading animate-box">
+        <h2 style="font-size: 50px; color: #FFFFFF"> Active Users </h2>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 col-md-offset-0 text-center animate-box">
+        <div class="pricing">
+          <div class="col-md-12 animate-box">
+            <div class="price-box" style="overflow-x:auto;">
+              <h2 class="pricing-plan"> <%= @active_users.count %> Active Users </h2>
+              <% if @active_users.present? %>
+                  <input type="text" id="myInput" onkeyup="searchTable('myInput', 'active-users-table')" placeholder="Search for user email..">
+                  <table id="active-users-table">
+                    <thead>
+                    <th onclick="sortTable(0, 'active-users-table')">Registration Date</th>
+                    <th onclick="sortTable(1, 'active-users-table')">Name</th>
+                    <th onclick="sortTable(2, 'active-users-table')">Email</th>
+                    <th onclick="sortTable(3, 'active-users-table')">Cellphone</th>
+                    <th onclick="sortTable(4, 'active-users-table')">Referrals</th>
+                    <th onclick="sortTable(5, 'active-users-table')">Donations</th>
+                    </thead>
+                    <tbody>
+                    <% @active_users.each do |user| %>
+                        <tr>
+                          <td><%= user.created_at.strftime('%F') %></td>
+                          <td><%= user.name %></td>
+                          <td><%= user.email %></td>
+                          <td><%= user.cellphone %></td>
+                          <td><%= user.referees.count %></td>
+                          <td><%= user.donations.count %></td>
+                        </tr>
+                    <% end %>
+                    </tbody>
+                  </table>
+              <% end %>
+            </div>
+
+            <div class="price-box" style="overflow-x:auto;">
+              <h2 class="pricing-plan"> <%= @inactive_users.count %> Inactive Users </h2>
+              <% if @inactive_users.present? %>
+                  <input type="text" id="myInput2" onkeyup="searchTable('myInput2', 'inactive-users-table')" placeholder="Search for user email..">
+                  <table id="inactive-users-table">
+                    <thead>
+                    <th onclick="sortTable(0, 'inactive-users-table')">Registration Date</th>
+                    <th onclick="sortTable(1, 'inactive-users-table')">Name</th>
+                    <th onclick="sortTable(2, 'inactive-users-table')">Email</th>
+                    <th onclick="sortTable(3, 'inactive-users-table')">Cellphone</th>
+                    <th onclick="sortTable(4, 'inactive-users-table')">Referrals</th>
+                    <th onclick="sortTable(5, 'inactive-users-table')">Donations</th>
+                    </thead>
+                    <tbody>
+                    <% @inactive_users.each do |user| %>
+                        <tr>
+                          <td><%= user.created_at.strftime('%F') %></td>
+                          <td><%= user.name %></td>
+                          <td><%= user.email %></td>
+                          <td><%= user.cellphone %></td>
+                          <td><%= user.referees.count %></td>
+                          <td><%= user.donations.count %></td>
+                        </tr>
+                    <% end %>
+                    </tbody>
+                  </table>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
