@@ -35,7 +35,7 @@ class Withdrawal < MoneyRequest
   end
   
   def pending_money_transactions
-    self.money_transactions.where(status: MoneyTransaction.statuses[:pending])
+    self.money_transactions.where(status: [MoneyTransaction.statuses[:pending], MoneyTransaction.statuses[:rejected]])
   end
   
   def payment_details_provided

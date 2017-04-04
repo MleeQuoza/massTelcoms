@@ -79,7 +79,8 @@ class MoneyTransaction < ActiveRecord::Base
         
       when MoneyTransaction.statuses[:blocked]
         handle_transaction_blocked
-        
+      when  MoneyTransaction.statuses[:pending]
+        handle_transaction_reassigned
       else
         #DO NOTHING
     end
@@ -95,17 +96,25 @@ class MoneyTransaction < ActiveRecord::Base
   
   def handle_transaction_rejected
     donation = self.donation
-    donation_balance = donation.balance
-    donation.update!(balance: donation_balance + self.amount, status: MoneyTransaction.statuses[:rejected])
-    
-    withdrawal = self.withdrawal
-    withdrawal_balance = withdrawal.balance
-    withdrawal.update!(balance: withdrawal_balance + self.amount)
+    donation.update!( status: MoneyTransaction.statuses[:rejected])
   end
   
   def handle_transaction_blocked
     donation = self.donation
     donation.update!(status: MoneyTransaction.statuses[:blocked])
+    
+    donation.money_transactions.each do |mt|
+      withdrawal = mt.withdrawal
+      if mt.status != MoneyTransaction.statuses[:completed]
+        withdrawal_balance = withdrawal.balance
+        withdrawal.update!(balance: withdrawal_balance + mt.amount)
+      end
+    end
+  end
+  
+  def handle_transaction_reassigned
+    donation = self.donation
+    donation.update!(status: MoneyTransaction.statuses[:pending])
   end
   
   def self.total
