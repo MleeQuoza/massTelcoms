@@ -23,8 +23,8 @@
                       class="btn btn-primary btn-outline"
                       data-toggle="modal"
                       data-target="#deposit"
-                      <% if current_user.pending_donations.present? %>
-                        data-toggle="tooltip" title="You still have pending donations"
+                      <% if current_user.pending_donations.present? || current_user.rejected_donations.present? %>
+                        data-toggle="tooltip" title="You have uncompleted donations"
                         disabled="disabled"
                       <% end %>
                       >

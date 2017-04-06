@@ -77,6 +77,10 @@ class User < ApplicationRecord
     self.withdrawals.where(status: MoneyRequest.statuses[:pending])
   end
 
+  def rejected_donations
+    self.donations.where(status: MoneyRequest.statuses[:rejected])
+  end
+
   def pending_donations
     self.donations.where(status: MoneyRequest.statuses[:pending])
   end
@@ -128,7 +132,7 @@ class User < ApplicationRecord
   end
   
   def non_compounded_donations
-    self.donations.where('status = 1 AND compounded = false')
+    self.donations.where('status = 1 OR status = 3 AND compounded = false')
   end
   
   def update_referrer
