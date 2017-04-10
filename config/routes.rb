@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   resources :money_transactions, only: [:index, :edit, :update]
   resources :tools
   resources :wallets, only: [:show]
-  resources :adverts, only: [:index, :edit, :update, :new]
+  resources :adverts, only: [:index, :edit, :update, :new, :create]
   devise_for :users
   resources :announcements
 
