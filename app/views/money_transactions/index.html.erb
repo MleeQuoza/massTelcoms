@@ -85,7 +85,7 @@
                             <th colspan="2">Complete/Reject</th>
                             </thead>
                             <tbody>
-                            <% withdrawal.money_transactions.each_with_index do |tr, index| %>
+                            <% withdrawal.pending_money_transactions.each_with_index do |tr, index| %>
                                 <tr>
                                   <td><%= index + 1 %></td>
                                   <td><%= tr.donation_user_name %></td>

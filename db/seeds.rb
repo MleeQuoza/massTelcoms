@@ -44,16 +44,6 @@ User.all.each do |u|
 end
 
 Donation.create([
-  {user_id: 1, amount: 1000, balance: 1000, compounded: false, status: 1 },
-  {user_id: 2, amount: 1000, balance: 1000, compounded: false, status: 1 },
-  {user_id: 3, amount: 1000, balance: 1000, compounded: false, status: 1 },
-  {user_id: 4, amount: 1000, balance: 1000, compounded: false, status: 1 },
-  {user_id: 5, amount: 1000, balance: 1000, compounded: false, status: 1 },
-  {user_id: 6, amount: 1000, balance: 1000, compounded: false, status: 1 },
-  {user_id: 7, amount: 1000, balance: 1000, compounded: false, status: 1 },
-  {user_id: 8, amount: 1000, balance: 1000, compounded: false, status: 1 },
-  {user_id: 9, amount: 1000, balance: 1000, compounded: false, status: 1 },
-  {user_id: 10, amount: 1000, balance: 1000, compounded: false, status: 1 },
   {user_id: 11, amount: 1000, balance: 1000, compounded: false, status: 1 },
   {user_id: 12, amount: 1000, balance: 1000, compounded: false, status: 1 },
   {user_id: 13, amount: 1000, balance: 1000, compounded: false, status: 1 },
@@ -76,15 +66,5 @@ Withdrawal.create([
   {user_id: 7, amount: 1000, balance: 1000, compounded: false, status: 1 },
   {user_id: 8, amount: 1000, balance: 1000, compounded: false, status: 1 },
   {user_id: 9, amount: 1000, balance: 1000, compounded: false, status: 1 },
-  {user_id: 10, amount: 1000, balance: 1000, compounded: false, status: 1 },
-  {user_id: 11, amount: 1000, balance: 1000, compounded: false, status: 1 },
-  {user_id: 12, amount: 1000, balance: 1000, compounded: false, status: 1 },
-  {user_id: 13, amount: 1000, balance: 1000, compounded: false, status: 1 },
-  {user_id: 14, amount: 1000, balance: 1000, compounded: false, status: 1 },
-  {user_id: 15, amount: 1000, balance: 1000, compounded: false, status: 1 },
-  {user_id: 16, amount: 1000, balance: 1000, compounded: false, status: 1 },
-  {user_id: 17, amount: 1000, balance: 1000, compounded: false, status: 1 },
-  {user_id: 18, amount: 1000, balance: 1000, compounded: false, status: 1 },
-  {user_id: 19, amount: 1000, balance: 1000, compounded: false, status: 1 },
-  {user_id: 20, amount: 1000, balance: 1000, compounded: false, status: 1 }
+  {user_id: 10, amount: 1000, balance: 1000, compounded: false, status: 1 }
 ])

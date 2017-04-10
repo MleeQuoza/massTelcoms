@@ -37,4 +37,12 @@ class MoneyRequest < ActiveRecord::Base
   def pending?
     MoneyTransaction.statuses[self.status] == MoneyTransaction.statuses[:pending]
   end
+  
+  def blocked?
+    MoneyTransaction.statuses[self.status] == MoneyTransaction.statuses[:blocked]
+  end
+  
+  def rejected?
+    MoneyTransaction.statuses[self.status] == MoneyTransaction.statuses[:rejected]
+  end
 end

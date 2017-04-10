@@ -87,7 +87,7 @@ class User < ApplicationRecord
 
   def donation_total
     sum = 0
-    self.donations.all.each{ |d| sum += d.amount }
+    self.donations.where(status: MoneyRequest.statuses[:completed]).each{ |d| sum += d.amount }
     sum
   end
 

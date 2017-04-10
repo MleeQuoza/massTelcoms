@@ -63,6 +63,14 @@ class MoneyTransaction < ActiveRecord::Base
     MoneyTransaction.statuses[self.status] == MoneyTransaction.statuses[:pending]
   end
 
+  def blocked?
+    MoneyTransaction.statuses[self.status] == MoneyTransaction.statuses[:blocked]
+  end
+
+  def rejected?
+    MoneyTransaction.statuses[self.status] == MoneyTransaction.statuses[:rejected]
+  end
+
   private
   def adjust_balances
     MoneyRequestService.new.adjust_balances(self.donation, self.withdrawal, self.amount)
@@ -79,6 +87,7 @@ class MoneyTransaction < ActiveRecord::Base
         
       when MoneyTransaction.statuses[:blocked]
         handle_transaction_blocked
+        
       when  MoneyTransaction.statuses[:pending]
         handle_transaction_reassigned
       else
@@ -101,14 +110,16 @@ class MoneyTransaction < ActiveRecord::Base
   
   def handle_transaction_blocked
     donation = self.donation
-    donation.update!(status: MoneyTransaction.statuses[:blocked])
+    donation.update!(status: MoneyTransaction.statuses[:blocked]) unless donation.blocked?
     
     donation.money_transactions.each do |mt|
       withdrawal = mt.withdrawal
-      if mt.status != MoneyTransaction.statuses[:completed]
-        withdrawal_balance = withdrawal.balance
+      withdrawal_balance = withdrawal.balance
+      withdrawal_amount = withdrawal.amount
+      if withdrawal_balance + mt.amount <= withdrawal_amount
         withdrawal.update!(balance: withdrawal_balance + mt.amount)
       end
+      mt.update!(status: MoneyTransaction.statuses[:blocked]) unless mt.blocked?
     end
   end
   
