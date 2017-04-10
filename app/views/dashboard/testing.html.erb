@@ -50,23 +50,5 @@
         </div>
       </div>
     </div>
-
-    <div class="row">
-      <div class="col-md-12 col-md-offset-2 text-center animate-box">
-        <div class="pricing">
-          <div class="col-md-10 animate-box">
-            <div class="price-box" style="overflow-x:auto;">
-              <h2 class="pricing-plan"> Fund Wallet </h2>
-              <%= form_tag(fund_wallet_path, method: :put) do %>
-                  <%= hidden_field_tag(:user_id, current_user.id) %>
-                  <%= number_field_tag(:amount) %>
-                  <%= submit_tag 'Fund' %>
-              <% end %>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
-</div>
 </div>

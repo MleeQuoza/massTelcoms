@@ -48,13 +48,16 @@ class WalletsController < ApplicationController
   
   def fund_wallet
     amount = wallet_params[:amount]
-    current_user.wallet.update!(balance: amount, amount: amount)
-    redirect_to dashboard_index_path(user_id: current_user.id), notice: "#{amount} Added to wallet"
+    user = User.find_by_email(wallet_params[:email])
+    if user
+      user.wallet.update!(balance: amount, amount: amount)
+    end
+    redirect_to dashboard_index_path, notice: "#{amount} Added to wallet"
   end
   
   private
   
   def wallet_params
-    params.permit(:user_id, :amount, :donation_id)
+    params.permit(:user_id, :amount, :donation_id, :email)
   end
 end

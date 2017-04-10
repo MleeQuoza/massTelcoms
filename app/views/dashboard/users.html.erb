@@ -66,6 +66,33 @@
                   </table>
               <% end %>
             </div>
+
+            <div class="row">
+              <div class="col-md-12 col-md-offset-2 text-center animate-box">
+                <div class="pricing">
+                  <div class="col-md-10 animate-box">
+                    <div class="price-box" style="overflow-x:auto;">
+                      <h2 class="pricing-plan"> Fund Wallet </h2>
+                      <table>
+                        <%= form_tag(fund_wallet_path, method: :put) do %>
+                            <tr>
+                              <th class="pricing-plan">Email</th>
+                                <td><%= text_field_tag(:email, nil) %></td>
+                            </tr>
+                            <tr>
+                              <th class="pricing-plan">Amount</th>
+                              <td><%= number_field_tag(:amount) %></td>
+                            </tr>
+                            <tr>
+                              <td colspan="2"><%= submit_tag 'Fund' %></td>
+                            </tr>
+                        <% end %>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
