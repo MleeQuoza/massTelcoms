@@ -30,7 +30,7 @@
                           <td><%= user.email %></td>
                           <td><%= user.cellphone %></td>
                           <td><%= user.referees.count %></td>
-                          <td><%= user.donations.count %></td>
+                          <td><%= display_as_money(user.donation_total) %></td>
                         </tr>
                     <% end %>
                     </tbody>
@@ -59,7 +59,7 @@
                           <td><%= user.email %></td>
                           <td><%= user.cellphone %></td>
                           <td><%= user.referees.count %></td>
-                          <td><%= user.donations.count %></td>
+                          <td><%= display_as_money(user.donation_total) %></td>
                         </tr>
                     <% end %>
                     </tbody>

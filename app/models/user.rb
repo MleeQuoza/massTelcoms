@@ -203,7 +203,7 @@ class User < ApplicationRecord
   end
   
   def self.active_users
-    User.find(Donation.pluck(:user_id)).to_a
+    User.find(Donation.where(status: MoneyTransaction.statuses[:completed]).pluck(:user_id)).to_a
   end
   
   def self.inactive_users

@@ -129,7 +129,7 @@ class MoneyTransaction < ActiveRecord::Base
   end
   
   def self.total
-    MoneyTransaction.pluck(:amount).sum
+    MoneyTransaction.where('status != 4').pluck(:amount).sum
   end
 
 end
