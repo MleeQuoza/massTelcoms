@@ -10,7 +10,7 @@
         <div class="pricing">
           <div class="col-md-12 animate-box">
             <div class="price-box" style="overflow-x:auto;">
-              <h2 class="pricing-plan"> <%= @active_users.count %> Active Users </h2>
+              <h2> <%= @active_users.count %> Active Users </h2>
               <% if @active_users.present? %>
                   <input type="text" id="myInput" onkeyup="searchTable('myInput', 'active-users-table')" placeholder="Search for user email..">
                   <table id="active-users-table">
@@ -39,7 +39,7 @@
             </div>
 
             <div class="price-box" style="overflow-x:auto;">
-              <h2 class="pricing-plan"> <%= @inactive_users.count %> Inactive Users </h2>
+              <h2> <%= @inactive_users.count %> Inactive Users </h2>
               <% if @inactive_users.present? %>
                   <input type="text" id="myInput2" onkeyup="searchTable('myInput2', 'inactive-users-table')" placeholder="Search for user email..">
                   <table id="inactive-users-table">
@@ -68,11 +68,11 @@
             </div>
 
             <div class="row">
-              <div class="col-md-12 col-md-offset-2 text-center animate-box">
+              <div class="col-md-12 col-md-offset-0 text-center animate-box">
                 <div class="pricing">
-                  <div class="col-md-10 animate-box">
+                  <div class="col-md-12 animate-box">
                     <div class="price-box" style="overflow-x:auto;">
-                      <h2 class="pricing-plan"> Fund Wallet </h2>
+                      <h2> Fund Wallet </h2>
                       <table>
                         <%= form_tag(fund_wallet_path, method: :put) do %>
                             <tr>
