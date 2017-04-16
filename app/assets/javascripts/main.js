@@ -1,6 +1,6 @@
 ;(function () {
   
-	let isMobile = {
+	var isMobile = {
 		Android: function() {
 			return navigator.userAgent.match(/Android/i);
 		},
@@ -21,7 +21,7 @@
 		}
 	};
 
-	let fullHeight = function() {
+	var fullHeight = function() {
 
 		// if ( !isMobile.any() ) {
 			$('.js-fullheight').css('height', $(window).height());
@@ -32,7 +32,7 @@
 
 	};
 
-	let parallax = function() {
+	var parallax = function() {
 		$(window).stellar({
 			horizontalScrolling: false,
 			hideDistantElements: false, 
@@ -41,8 +41,8 @@
 		});
 	};
 
-	let testimonialCarousel = function(){
-		let owl = $('.owl-carousel-fullwidth');
+	var testimonialCarousel = function(){
+		var owl = $('.owl-carousel-fullwidth');
 		owl.owlCarousel({
 			items: 1,
 		    loop: true,
@@ -58,8 +58,8 @@
 
 	// Animations
 
-	let contentWayPoint = function() {
-		let i = 0;
+	var contentWayPoint = function() {
+		var i = 0;
 		$('.animate-box').waypoint( function( direction ) {
 
 			if( direction === 'down' && !$(this.element).hasClass('animated') ) {
@@ -70,9 +70,9 @@
 				setTimeout(function(){
 
 					$('body .animate-box.item-animate').each(function(k){
-						let el = $(this);
+						var el = $(this);
 						setTimeout( function () {
-							let effect = el.data('animate-effect');
+							var effect = el.data('animate-effect');
 							if ( effect === 'fadeIn') {
 								el.addClass('fadeIn animated');
 							} else if ( effect === 'fadeInLeft') {
@@ -94,7 +94,7 @@
 		} , { offset: '85%' } );
 	};
 
-	let counter = function() {
+	var counter = function() {
 		$('.js-counter').countTo({
 			 formatter: function (value, options) {
 	      return value.toFixed(options.decimals);
@@ -102,7 +102,7 @@
 		});
 	};
 
-	let counterWayPoint = function() {
+	var counterWayPoint = function() {
 		if ($('#counter-animate').length > 0 ) {
 			$('#counter-animate').waypoint( function( direction ) {
 										
@@ -115,11 +115,11 @@
 		}
 	};
 
-	let burgerMenu = function() {
+	var burgerMenu = function() {
 
 		$('.js-fh5co-nav-toggle').on('click', function(event){
 			event.preventDefault();
-			let $this = $(this);
+			var $this = $(this);
 
 			if ($('body').hasClass('offcanvas')) {
 				$this.removeClass('active');
@@ -135,10 +135,10 @@
 	};
 
 	// Click outside of offcanvass
-	let mobileMenuOutsideClick = function() {
+	var mobileMenuOutsideClick = function() {
 
 		$(document).click(function (e) {
-	    let container = $("#fh5co-aside, .js-fh5co-nav-toggle");
+	    var container = $("#fh5co-aside, .js-fh5co-nav-toggle");
 	    if (!container.is(e.target) && container.has(e.target).length === 0) {
 
 	    	if ( $('body').hasClass('offcanvas') ) {
