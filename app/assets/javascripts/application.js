@@ -26,17 +26,17 @@
 //= require components
 //= require_tree .
 
-function myFunction() {
-  var x = document.getElementById('myDIV');
-  if (x.style.display === 'none') {
-    x.style.display = 'block';
-  } else {
-    x.style.display = 'none';
-  }
-}
+// function myFunction() {
+//   let x = document.getElementById('myDIV');
+//   if (x.style.display === 'none') {
+//     x.style.display = 'block';
+//   } else {
+//     x.style.display = 'none';
+//   }
+// }
 
 function sortTable(n, tableId) {
-  var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+  let table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
   table = document.getElementById(tableId);
   switching = true;
   //Set the sorting direction to ascending:
@@ -58,13 +58,13 @@ function sortTable(n, tableId) {
       y = rows[i + 1].getElementsByTagName("TD")[n];
       /*check if the two rows should switch place,
        based on the direction, asc or desc:*/
-      if (dir == "asc") {
+      if (dir === "asc") {
         if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
           //if so, mark as a switch and break the loop:
           shouldSwitch= true;
           break;
         }
-      } else if (dir == "desc") {
+      } else if (dir === "desc") {
         if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
           //if so, mark as a switch and break the loop:
           shouldSwitch= true;
@@ -82,7 +82,7 @@ function sortTable(n, tableId) {
     } else {
       /*If no switching has been done AND the direction is "asc",
        set the direction to "desc" and run the while loop again.*/
-      if (switchcount == 0 && dir == "asc") {
+      if (switchcount === 0 && dir === "asc") {
         dir = "desc";
         switching = true;
       }
@@ -112,12 +112,12 @@ function searchTable(inputId, tableId) {
 }
 
 $(document).ready(function() {
-  var maxLength = 150;
+  let maxLength = 150;
   $(".show-read-more").each(function () {
-    var myStr = $(this).text();
+    let myStr = $(this).text();
     if ($.trim(myStr).length > maxLength) {
-      var newStr = myStr.substring(0, maxLength);
-      var removedStr = myStr.substring(maxLength, $.trim(myStr).length);
+      let newStr = myStr.substring(0, maxLength);
+      let removedStr = myStr.substring(maxLength, $.trim(myStr).length);
       $(this).empty().html(newStr);
       $(this).append(' <a href="javascript:void(0);" class="read-more">read more...</a>');
       $(this).append('<span class="more-text">' + removedStr + '</span>');
@@ -131,22 +131,22 @@ $(document).ready(function() {
   $('[data-toggle="tooltip"]').tooltip();
 
   // Set the date we're counting down to
-var countDownDate = new Date("Apr 21, 2017 00:00:00").getTime();
+let countDownDate = new Date("Apr 21, 2017 00:00:00").getTime();
 
 // Update the count down every 1 second
-var x = setInterval(function() {
+let x = setInterval(function() {
 
   // Get todays date and time
-  var now = new Date().getTime();
+  let now = new Date().getTime();
 
   // Find the distance between now an the count down date
-  var distance = countDownDate - now;
+  let distance = countDownDate - now;
 
   // Time calculations for days, hours, minutes and seconds
-  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+  let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  let seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
   // Display the result in the element with id="demo"
   document.getElementById("demo").innerHTML = days + "d " + hours + "h "
