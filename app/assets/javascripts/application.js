@@ -27,7 +27,7 @@
 //= require_tree .
 
 // function myFunction() {
-//   let x = document.getElementById('myDIV');
+//   var x = document.getElementById('myDIV');
 //   if (x.style.display === 'none') {
 //     x.style.display = 'block';
 //   } else {
@@ -36,7 +36,7 @@
 // }
 
 function sortTable(n, tableId) {
-  let table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+  var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
   table = document.getElementById(tableId);
   switching = true;
   //Set the sorting direction to ascending:
@@ -92,7 +92,7 @@ function sortTable(n, tableId) {
 
 function searchTable(inputId, tableId) {
   // Declare variables
-  let input, filter, table, tr, td, i;
+  var input, filter, table, tr, td, i;
   input = document.getElementById(inputId);
   filter = input.value.toUpperCase();
   table = document.getElementById(tableId);
@@ -112,12 +112,12 @@ function searchTable(inputId, tableId) {
 }
 
 $(document).ready(function() {
-  let maxLength = 150;
+  var maxLength = 150;
   $(".show-read-more").each(function () {
-    let myStr = $(this).text();
+    var myStr = $(this).text();
     if ($.trim(myStr).length > maxLength) {
-      let newStr = myStr.substring(0, maxLength);
-      let removedStr = myStr.substring(maxLength, $.trim(myStr).length);
+      var newStr = myStr.substring(0, maxLength);
+      var removedStr = myStr.substring(maxLength, $.trim(myStr).length);
       $(this).empty().html(newStr);
       $(this).append(' <a href="javascript:void(0);" class="read-more">read more...</a>');
       $(this).append('<span class="more-text">' + removedStr + '</span>');
@@ -131,22 +131,22 @@ $(document).ready(function() {
   $('[data-toggle="tooltip"]').tooltip();
 
   // Set the date we're counting down to
-let countDownDate = new Date("Apr 21, 2017 00:00:00").getTime();
+var countDownDate = new Date("Apr 21, 2017 00:00:00").getTime();
 
 // Update the count down every 1 second
-let x = setInterval(function() {
+var x = setInterval(function() {
 
   // Get todays date and time
-  let now = new Date().getTime();
+  var now = new Date().getTime();
 
   // Find the distance between now an the count down date
-  let distance = countDownDate - now;
+  var distance = countDownDate - now;
 
   // Time calculations for days, hours, minutes and seconds
-  let days = Math.floor(distance / (1000 * 60 * 60 * 24));
-  let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-  let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
   // Display the result in the element with id="demo"
   document.getElementById("demo").innerHTML = days + "d " + hours + "h "
