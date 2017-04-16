@@ -3,6 +3,7 @@ ruby '2.3.3'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
+gem 'activeadmin', github: 'activeadmin'
 gem 'rails', '~> 5.0.1'
 gem 'pg'
 gem 'devise'

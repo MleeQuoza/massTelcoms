@@ -24,7 +24,6 @@
 //= require react
 //= require react_ujs
 //= require components
-//= require_tree .
 
 // function myFunction() {
 //   var x = document.getElementById('myDIV');

@@ -68,3 +68,4 @@ Withdrawal.create([
   {user_id: 9, amount: 1000, balance: 1000, compounded: false, status: 1 },
   {user_id: 10, amount: 1000, balance: 1000, compounded: false, status: 1 }
 ])
+AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password')
