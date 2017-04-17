@@ -136,11 +136,17 @@ class User < ApplicationRecord
   end
   
   def update_referrer
-    return unless self.referrer_email.present?
-    referrer = User.find_by_email(self.referrer_email)
     
+    if self.referrer_email.present?
+      referrer = User.find_by_email(self.referrer_email)
+    end
+    
+    if self.referer_guid.present?
+      referrer = User.find_by_guid(self.referer_guid)
+    end
+
     return unless referrer.present?
-    
+
     referral = Referral.create(referrer_id: referrer.id, referee_id: self.id, bonus_paid_out: false)
     referral.save!
   end
