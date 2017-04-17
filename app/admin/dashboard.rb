@@ -1,31 +1,18 @@
-ActiveAdmin.register_page "Dashboard" do
+ActiveAdmin.register_page 'Dashboard' do
 
-  menu priority: 1, label: proc{ I18n.t("active_admin.dashboard") }
+  menu priority: 1, label: proc{ I18n.t('active_admin.dashboard') }
 
-  content title: proc{ I18n.t("active_admin.dashboard") } do
-    div class: "blank_slate_container", id: "dashboard_default_message" do
-      span class: "blank_slate" do
-        span I18n.t("active_admin.dashboard_welcome.welcome")
-        small I18n.t("active_admin.dashboard_welcome.call_to_action")
+  content title: proc{ I18n.t('active_admin.dashboard') } do
+    div class: 'blank_slate_container', id: 'dashboard_default_message' do
+      span class: 'blank_slate' do
+        span I18n.t('active_admin.dashboard_welcome.welcome')
+        small I18n.t('active_admin.dashboard_welcome.call_to_action')
       end
     end
 
-    # Here is an example of a simple dashboard with columns and panels.
-    #
-    # columns do
-    #   column do
-    #     panel "Recent Posts" do
-    #       ul do
-    #         Post.recent(5).map do |post|
-    #           li link_to(post.title, admin_post_path(post))
-    #         end
-    #       end
-    #     end
-    #   end
-
     columns do
       column do
-        panel 'Unpaid Donations' do
+        panel "Unpaid Donations: #{MoneyTransaction.unpaid_total}" do
           table do
             thead do
               tr do
@@ -49,18 +36,51 @@ ActiveAdmin.register_page "Dashboard" do
           end
         end
       end
+
+      column do
+        panel "Unmatched Donations: #{Donation.unmatched_total}" do
+          table do
+            thead do
+              tr do
+                %w(Date Amount Balance User).each &method(:th)
+              end
+            end
+            tbody do
+              Donation.unmatched.each do |d|
+                tr do
+                  [d.created_at.strftime('%F'),
+                   d.amount,
+                   d.balance,
+                   d.user.name].each &method(:td)
+                end
+              end
+            end
+          end
+        end
+      end
+
+      column do
+        panel "Unmatched Withdrawals: #{Withdrawal.unmatched_total}" do
+          table do
+            thead do
+              tr do
+                %w(Date Amount Balance User).each &method(:th)
+              end
+            end
+            tbody do
+              Withdrawal.unmatched.each do |d|
+                tr do
+                  [d.created_at.strftime('%F'),
+                   d.amount,
+                   d.balance,
+                   d.user.name].each &method(:td)
+                end
+              end
+            end
+          end
+        end
+      end
+      
     end
-  
-    
-    
-    
-
-
-    #   column do
-    #     panel "Info" do
-    #       para "Welcome to ActiveAdmin."
-    #     end
-    #   end
-    # end
-  end # content
+  end
 end
