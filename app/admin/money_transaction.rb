@@ -25,7 +25,8 @@ ActiveAdmin.register MoneyTransaction do
     column 'Status', &:status
   end
   
-  filter :withdrawal_user_name
+  filter :withdrawal
+  filter :donation
   filter :amount
   
   member_action :reassign, method: :patch do

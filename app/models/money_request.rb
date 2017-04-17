@@ -45,4 +45,8 @@ class MoneyRequest < ActiveRecord::Base
   def rejected?
     MoneyTransaction.statuses[self.status] == MoneyTransaction.statuses[:rejected]
   end
+
+  def to_s
+    "#{id}: Amount: #{amount} Balance: #{balance} User: #{user.name}"
+  end
 end
