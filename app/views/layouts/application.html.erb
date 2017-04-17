@@ -13,8 +13,8 @@
   <div class="simple-marquee-container">
     <div class="marquee">
       <ul class="marquee-content-items">
-      <% if @announcements.present? %>
-        <% @announcements.each do |a| %>
+      <% if @all_announcements.present? %>
+        <% @all_announcements.each do |a| %>
           <li><%= a.content.upcase %> </li>
         <% end %>
       <% else %>

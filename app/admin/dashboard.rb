@@ -26,14 +26,32 @@ ActiveAdmin.register_page "Dashboard" do
     columns do
       column do
         panel 'Unpaid Donations' do
-          ul do
-            MoneyTransaction.where(status: 3).map do |mt|
-              li link_to(mt.id, admin_post_path(mt))
+          table do
+            thead do
+              tr do
+                %w(Date Reporter Donor Amount Re-assign Remove).each &method(:th)
+              end
+            end
+            tbody do
+              MoneyTransaction.where(status: 3).each do |mt|
+                tr do
+                  [mt.updated_at.strftime('%F'),
+                   mt.withdrawal_user_name,
+                   mt.donation_user_name,
+                   mt.amount,
+                   link_to('Re-assign', reassign_admin_money_transaction_path(mt),
+                           method: :patch),
+                   link_to('Remove', remove_admin_money_transaction_path(mt),
+                           method: :patch)].each &method(:td)
+                end
+              end
             end
           end
         end
       end
     end
+  
+    
     
     
 

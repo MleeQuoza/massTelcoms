@@ -11,5 +11,5 @@ ActiveAdmin.register Announcement do
 #   permitted << :other if params[:action] == 'create' && current_user.admin?
 #   permitted
 # end
-
+  permit_params :content
 end

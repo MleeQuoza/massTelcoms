@@ -11,5 +11,28 @@ ActiveAdmin.register MoneyTransaction do
 #   permitted << :other if params[:action] == 'create' && current_user.admin?
 #   permitted
 # end
+  
+  index do
+    column 'Date' do |mt|
+      mt.created_at.strftime('%F')
+    end
 
+    column 'Receiver', &:withdrawal_user_name
+    column 'Donor', &:donation_user_name
+    column 'Amount', &:amount
+    column 'Status', &:status
+  end
+  
+  filter :withdrawal_user_name
+  filter :amount
+  
+  member_action :reassign, method: :patch do
+    resource.update!(status: 'pending')
+    redirect_to resource_path, notice: 'Donation reassigned'
+  end
+
+  member_action :remove, method: :patch do
+    resource.update!(status: 'blocked')
+    redirect_to resource_path, notice: 'Donation removed'
+  end
 end
