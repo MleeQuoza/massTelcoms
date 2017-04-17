@@ -19,7 +19,7 @@ Rails.application.routes.draw do
   match '/wallets/withdraw/' => 'wallets#withdraw_from_wallet', via: :post, as: 'withdraw_from_wallet'
   match '/wallets/fund/' => 'wallets#fund_wallet', via: :put, as: 'fund_wallet'
  
-  #match '/money_transactions/toggle_transaction_status/:id' => 'money_transactions#toggle_transaction_status', as: 'toggle_transaction_status', via: :post
+  match '/money_transactions/toggle_transaction_status/:id' => 'money_transactions#toggle_transaction_status', as: 'toggle_transaction_status', via: :post
  
   match '/donations/:user_id' => 'donations#user_donations', as: 'user_donations', via: :get
  
