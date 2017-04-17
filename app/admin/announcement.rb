@@ -12,4 +12,5 @@ ActiveAdmin.register Announcement do
 #   permitted
 # end
   permit_params :content
+  menu label: 'Announcements'
 end
