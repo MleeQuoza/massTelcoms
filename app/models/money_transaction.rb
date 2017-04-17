@@ -131,5 +131,9 @@ class MoneyTransaction < ActiveRecord::Base
   def self.total
     MoneyTransaction.where('status != 4').pluck(:amount).sum
   end
+  
+  def self.unpaid_total
+    MoneyTransaction.where(status: 3).pluck(:amount).sum
+  end
 
 end

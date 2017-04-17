@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  devise_for :admin_users, ActiveAdmin::Devise.config
+  ActiveAdmin.routes(self)
   root 'welcome#home'
   
   resources :dashboard, only: [:index]
@@ -28,7 +30,6 @@ Rails.application.routes.draw do
   match 'welcome/terms' => 'welcome#terms', as: 'terms', via: :get
  
   match '/dashboard/admin' => 'dashboard#admin', as: 'dashboard_admin', via: :get
-  match '/dashboard/users' => 'dashboard#users', as: 'admin_users', via: :get
   match '/dashboard/testing' => 'dashboard#testing', as: 'testing', via: :get
   match '/dashboard/money_transactions' => 'dashboard#money_transactions', as: 'all_transactions', via: :get
   match 'dashboard/filter_money_transactions' => 'dashboard#filter_money_transactions', as: 'filter_money_transactions', via: :post
