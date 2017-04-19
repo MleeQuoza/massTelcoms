@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  mount UserImpersonate::Engine => '/impersonate', as: 'impersonate_engine'
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   root 'welcome#home'
