@@ -128,7 +128,7 @@ class User < ApplicationRecord
   end
 
   def referral_link
-    "https://#{ENV['DOMAIN_NAME']}/users/sign_up?ref=#{self.guid}"
+    "https://communitywealthsa.group/users/sign_up?ref=#{self.guid}"
   end
   
   def non_compounded_donations
@@ -136,11 +136,17 @@ class User < ApplicationRecord
   end
   
   def update_referrer
-    return unless self.referrer_email.present?
-    referrer = User.find_by_email(self.referrer_email)
     
+    if self.referrer_email.present?
+      referrer = User.find_by_email(self.referrer_email)
+    end
+    
+    if self.referer_guid.present?
+      referrer = User.find_by_guid(self.referer_guid)
+    end
+
     return unless referrer.present?
-    
+
     referral = Referral.create(referrer_id: referrer.id, referee_id: self.id, bonus_paid_out: false)
     referral.save!
   end

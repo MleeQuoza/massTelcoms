@@ -3,7 +3,7 @@
   var js, fjs = d.getElementsByTagName(s)[0];
   if (d.getElementById(id)) return;
   js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8&appId=1640441819592537";
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8&appId=1657572204549516";
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
 
@@ -24,7 +24,7 @@
                 <i class="icon-lightbulb"></i>
               </div>
               <div class="fh5co-text">
-                <h3><b> SHARE ON FACEBOOK </b></h3>
+                <h3> SHARE ON FACEBOOK </h3>
                  <div class="fb-share-button"
                      data-href=<%= "#{current_user.referral_link}"  %>
                      data-layout="button_count">
@@ -38,8 +38,8 @@
                 <i class="icon-lightbulb"></i>
               </div>
               <div class="fh5co-text">
-                <h3><b> COPY & SHARE BELOW LINK FOR REFERRAL PROFITS </b></h3>
-               <h3><%= current_user.referral_link  %></h3>
+                <h3>COPY & SHARE YOUR PERONAL LINK FOR REFERRAL PROFITS </h3>
+               <h2><%= current_user.referral_link  %></h2>
 
               </div>
             </div>
