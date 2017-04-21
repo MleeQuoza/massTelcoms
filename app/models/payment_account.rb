@@ -13,6 +13,6 @@
 #  updated_at          :datetime         not null
 #
 
-class PaymentAccount < ActiveRecord::Base
+class PaymentAccount < ApplicationRecord
   belongs_to :user
 end

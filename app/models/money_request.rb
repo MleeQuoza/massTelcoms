@@ -16,7 +16,7 @@
 #  profit_from_date :datetime
 #
 
-class MoneyRequest < ActiveRecord::Base
+class MoneyRequest < ApplicationRecord
   enum status: { pending: 1, completed: 2, rejected: 3, expired: 4, blocked: 5 }
   
   def requires_transaction

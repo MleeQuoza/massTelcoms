@@ -6,11 +6,14 @@ class WalletsController < ApplicationController
       donation = Donation.find(wallet_params[:donation_id])
       donation.profit_from_date = Time.zone.today
       
+      history = DonationCheckoutHistory.new(donation: donation, amount: wallet_params[:amount].to_d)
+      
       user = User.find(wallet_params[:user_id])
       wallet = user.wallet
       wallet.update!(balance: wallet.balance + wallet_params[:amount].to_d)
       
       donation.save!
+      history.save!
       wallet.save!
     end
     redirect_to user_donations_path(user_id: current_user.id), notice: 'Checkout Complete'

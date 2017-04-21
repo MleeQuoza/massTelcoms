@@ -12,7 +12,7 @@
 #  updated_at       :datetime         not null
 #
 
-class MoneyTransaction < ActiveRecord::Base
+class MoneyTransaction < ApplicationRecord
   belongs_to :withdrawal
   belongs_to :donation
   validates_numericality_of :amount, greater_than: 0

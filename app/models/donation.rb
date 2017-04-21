@@ -18,6 +18,8 @@
 
 class Donation < MoneyRequest
   has_many :money_transactions
+  has_many :donation_checkout_histories
+  has_many :donations
   belongs_to :user
   
   validates :amount, presence: :true
@@ -45,19 +47,34 @@ class Donation < MoneyRequest
   end
   
   def profit
-    return 0 unless MoneyRequest.statuses[self.status] == MoneyRequest.statuses[:completed]
+    donation_profit = 0
+    return donation_profit unless MoneyRequest.statuses[self.status] == MoneyRequest.statuses[:completed]
+    
+    donation_profit = self.amount * 0.01 * self.total_days_invested # 1 % for every day invested
+    
     if self.compounded_profits.present?
-      (self.amount * 0.01 * self.total_days_invested) - self.compounded_profits
-    else
-      self.amount * 0.01 * self.total_days_invested # 1 % for every day invested
+      donation_profit -= self.compounded_profits
     end
+    
+    if self.donation_checkout_histories.present?
+      donation_profit -= self.donation_checkout_histories.pluck(:amount).sum
+    end
+    
+    donation_profit
   end
   
   def compounded_profits
-    profit_donations = self.user.donations.where(compounded: true, donation_id: self.id)
+    profit_donations = self.donations
     return nil unless profit_donations.present?
     
-    profit_donations.each_with_object([]){ |donation, memo| memo.push(donation.amount) }.sum
+    profit_donations.pluck(:amount).sum
+  end
+  
+  def checked_out_profits
+    checkouts = self.donation_checkout_histories
+    return nil unless checkouts.present?
+    
+    checkouts.pluck(:amount).sum
   end
 
   def expired?

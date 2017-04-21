@@ -11,7 +11,7 @@
 #  updated_at     :datetime         not null
 #
 
-class Referral< ActiveRecord::Base
+class Referral< ApplicationRecord
   belongs_to :user
   
   def referee
