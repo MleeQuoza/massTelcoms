@@ -11,6 +11,7 @@
           <div class="col-md-6 animate-box">
             <div class="price-box">
               <h2 class="pricing-plan">Banking Details</h2>
+              <h3 class="pricing-plan" style = "color: green" >Note: Banking details are only for depositing donations to you, nothing else. </h3>
               <%= form_for(@account) do |account| %>
                   <%= account.hidden_field :user_id, :value => current_user.id %>
                   <table>

@@ -51,6 +51,7 @@ ActiveAdmin.register_page 'Dashboard' do
                   [d.created_at.strftime('%F'),
                    d.amount,
                    d.balance,
+                   d.user.email,
                    d.user.name].each &method(:td)
                 end
               end
