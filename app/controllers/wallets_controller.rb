@@ -2,6 +2,8 @@ class WalletsController < ApplicationController
   before_action :authenticate_user!
   
   def add_to_wallet
+    return unless wallet_params[:amount].to_d > 0
+    
     Wallet.transaction do
       donation = Donation.find(wallet_params[:donation_id])
       donation.profit_from_date = Time.zone.today

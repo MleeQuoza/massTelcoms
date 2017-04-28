@@ -1,6 +1,8 @@
 ActiveAdmin.register Advert, as: 'Advertisement' do
   menu priority: 7
   menu label: 'Adverts'
+  permit_params :status
+  
 # See permitted parameters documentation:
 # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
 #

@@ -1,0 +1,14 @@
+<div id="fh5co-pricing-section" class="fh5co-light-grey-section ">
+  <% if adverts.present? %>
+      <% adverts.each do |ad| %>
+          <%= render partial: 'advert', locals: {
+              advert: ad
+          } %>
+      <% end %>
+  <% else %>
+    <div class="col-md-10 col-md-offset-1 text-center fh5co-heading animate-box">
+      <h2 style="font-size: 25px; color: #FFFFFF">Your advert could be here! Advertise with us.
+        <%= link_to 'SIGN UP', new_user_registration_path %> or <%= link_to 'SIGN IN', user_session_path %></h2>
+    </div>
+  <% end %>
+</div>

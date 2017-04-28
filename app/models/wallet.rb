@@ -14,6 +14,7 @@
 #  updated_at       :datetime         not null
 #  compounded       :boolean          default(FALSE)
 #  profit_from_date :datetime
+#  donation_id      :integer
 #
 
 class Wallet < MoneyRequest

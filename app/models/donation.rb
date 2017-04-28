@@ -14,6 +14,7 @@
 #  updated_at       :datetime         not null
 #  compounded       :boolean          default(FALSE)
 #  profit_from_date :datetime
+#  donation_id      :integer
 #
 
 class Donation < MoneyRequest
@@ -120,5 +121,13 @@ class Donation < MoneyRequest
   
   def self.unmatched_total
     Donation.unmatched.map(&:balance).sum
+  end
+  
+  def can_compound?
+    self.profit > 1000 && (self.profit_counter > 7 || self.months_invested > 1)
+  end
+  
+  def can_checkout?
+    self.profit > 300 && (self.profit_counter > 7 || self.months_invested > 1)
   end
 end

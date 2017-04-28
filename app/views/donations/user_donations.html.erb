@@ -38,9 +38,9 @@
                                   class="btn btn-primary btn-outline"
                                   data-toggle="modal"
                                   data-target="#deposit-<%= donation.id%>"
-                                  <% if donation.profit < 300 || donation.profit_counter < 7 %>
-                                  disabled="disabled"
-                                  data-toggle="tooltip" title="You can only compound after 7 days and have more than 1000"
+                                  <% unless donation.can_compound? %>
+                                    disabled="disabled"
+                                    data-toggle="tooltip" title="You can only compound after 7 days and have more than 1000"
                                   <% end %>
                           >
                             Compound
@@ -52,7 +52,7 @@
                                   class="btn btn-primary btn-outline"
                                   data-toggle="modal"
                                   data-target="#checkout-<%= donation.id%>"
-                                  <% if donation.profit < 300 || donation.profit_counter < 7 %>
+                                  <% unless donation.can_checkout? %>
                                     disabled="disabled"
                                     data-toggle="tooltip" title="You can only checkout after 7 days and have more than 300"
                                   <% end %>
@@ -102,38 +102,6 @@
         modal_path: './common/checkout_modal'
     } %>
 <% end %>
-
-<div class="modal fade" id="deposit" role="dialog">
-  <div id="fh5co-pricing-section" >
-    <div class="container" >
-      <div class="row">
-        <div class="col-md-12 col-md-offset-3 text-center animate-box">
-          <div class="pricing">
-            <div class="col-md-8 animate-box">
-              <div class="price-box">
-                <h2 class="pricing-plan"><%= image_tag('deposit.png', :alt => 'Community Wealth SA 2017') %></h2>
-                <%= form_tag('/donations', remote: true, format: :json) do %>
-                    <h2> HOW MUCH IS YOUR DEPOSIT? <sup class="currency"></sup></h2><br/>
-                    <%= hidden_field_tag(:user_id, current_user.id) %>
-                    <%= hidden_field_tag(:compounded, false) %>
-                    <div class="price">
-                      <%= select_tag(:amount, options_for_select(['Please select'].concat((1000..50000).step(500).to_a)), {class: 'btn btn-primary btn-outline', required: true}) %><sup class="currency"></sup>
-                    </div>
-                    <br/><br/>
-
-                    <button type="button"
-                            class="btn btn-primary btn-outline"
-                            data-dismiss="modal" >Cancel</button>
-                    <%= submit_tag 'Approve', class: 'btn btn-primary btn-outline', required: 'required', data: { toggle: 'modal', target: '#deposit' }%>
-                <% end %>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
 
 <div class="fh5co-counters" style="background-image: url(<%= image_path('2.jpg') %>); width: 100%" data-stellar-background-ratio="0.5" id="counter-animate">
           <div class="fh5co-narrow-content animate-box">

@@ -8,6 +8,7 @@ class AdvertsController < ApplicationController
     elsif current_user && current_user.is?('user')
       render 'user_ads'
     end
+    @adverts = Advert.where(status: Advert.statuses[:published])
   end
   
   def edit

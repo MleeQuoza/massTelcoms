@@ -1,3 +1,4 @@
+
 # == Schema Information
 #
 # Table name: money_requests
@@ -14,5 +15,5 @@
 #  updated_at       :datetime         not null
 #  compounded       :boolean          default(FALSE)
 #  profit_from_date :datetime
+#  donation_id      :integer
 #
-
