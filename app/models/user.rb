@@ -91,8 +91,9 @@ class User < ApplicationRecord
     sum
   end
 
-  def can_donate_or_withdraw?
-      (self.current_donation.present? || self.current_withdrawal.present?)
+  def can_withdraw?
+    pp self.current_withdrawal.blank?
+    self.current_withdrawal.blank?
   end
   
   def completed_donations
@@ -217,5 +218,16 @@ class User < ApplicationRecord
     User.all.each_with_object([]) do |u, memo|
       memo.push(u) unless active.include?(u)
     end
+  end
+  
+  def my_shares
+    Time.zone = 'Pretoria'
+    cut_off_date = Time.zone.parse('2017-05-02')
+    donation ||= Donation.order(:created_at).where('created_at < ? and status = ?',
+                                                 cut_off_date,
+                                                 MoneyRequest.statuses[:completed])
+    
+    return 0 unless donation.present?
+    donation.first.amount / 1000
   end
 end

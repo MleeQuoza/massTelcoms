@@ -12,7 +12,7 @@
                     <%= hidden_field_tag(:user_id, current_user.id) %>
                     <%= hidden_field_tag(:donation_id, modal_id) %>
                     <div class="price">
-                      <%= select_tag(:amount, options_for_select(['Please select'].concat((1000..data[:profit]).step(100).to_a)), {class: 'btn btn-primary btn-outline', required: true}) %><sup class="currency"></sup>
+                      <%= select_tag(:amount, options_for_select(['Please select'].concat((300..data[:profit]).step(100).to_a)), {class: 'btn btn-primary btn-outline', required: true}) %><sup class="currency"></sup>
                     </div>
                     <br/><br/>
 
