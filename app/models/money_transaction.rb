@@ -29,12 +29,20 @@ class MoneyTransaction < ApplicationRecord
     handle_status_update
   end
 
+  def withdrawal_user_contact
+    self.withdrawal.user.cellphone
+  end
+  
   def withdrawal_user_name
     self.withdrawal.user.name
   end
 
   def donation_user_name
     self.donation.user.name
+  end
+
+  def donation_user_contact
+    self.donation.user.cellphone
   end
   
   def recipient_bank_name

@@ -25,6 +25,7 @@
                             <thead>
                             <th></th>
                             <th>Recipient Name</th>
+                            <th>Contact</th>
                             <th>Bank Name</th>
                             <th>Account Number</th>
                             <th>Branch Code</th>
@@ -38,6 +39,7 @@
                                 <tr>
                                   <td><%= index + 1 %></td>
                                   <td><%= tr.withdrawal_user_name %></td>
+                                  <td><%= tr.withdrawal_user_contact %></td>
                                   <td><%= tr.recipient_bank_name %></td>
                                   <td><%= tr.recipient_account_number %></td>
                                   <td><%= tr.recipient_branch_code %></td>
@@ -78,6 +80,7 @@
                             <thead>
                             <th></th>
                             <th>Donor Name</th>
+                            <th>Contact</th>
                             <th>Amount</th>
                             <th>Status</th>
                             <th>Hours Elapsed</th>
@@ -89,6 +92,7 @@
                                 <tr>
                                   <td><%= index + 1 %></td>
                                   <td><%= tr.donation_user_name %></td>
+                                  <td><%= tr.donation_user_contact %></td>
                                   <td><%= display_as_money(tr.amount) %></td>
                                   <td><%= tr.status %></td>
                                   <td><%= tr.hours_elapsed %></td>
