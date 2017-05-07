@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
     else
       assign_pending_money_requests(user)
       load_announcements
-      user.payment_account.present? ? dashboard_index_path : new_payment_account_path
+      user.payment_account.present? ? money_transactions_path : new_payment_account_path
     end
   end
 
